@@ -4,7 +4,7 @@
  * Loading spinner with pulse animation for loading states.
  */
 
-import { HTMLAttributes } from 'react';
+import { type HTMLAttributes } from 'react';
 import { ANIMATION_CLASSES } from '../lib/animations';
 
 export interface LoadingSpinnerProps extends HTMLAttributes<HTMLDivElement> {

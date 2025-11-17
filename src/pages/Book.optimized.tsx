@@ -1,4 +1,4 @@
-import { useEffect, useCallback, memo } from 'react'
+import { useEffect, memo } from 'react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import Header from '@/components/layout/Header'
@@ -103,15 +103,6 @@ export default function Book() {
     }
   }, [])
 
-  // Memoized scroll handler for accessibility
-  const scrollToCalendar = useCallback(() => {
-    const element = document.getElementById('cal-embed')
-    if (element) {
-      requestAnimationFrame(() => {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      })
-    }
-  }, [])
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

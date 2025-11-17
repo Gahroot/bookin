@@ -4,7 +4,7 @@
  * List with staggered entrance animations for children.
  */
 
-import { Children, ReactNode, cloneElement, isValidElement } from 'react';
+import { Children, type ReactNode, cloneElement, isValidElement } from 'react';
 import { useStaggerAnimation } from '../hooks/useAnimations';
 import { ANIMATION_CLASSES } from '../lib/animations';
 

@@ -5,7 +5,7 @@
  * Use when you need to apply animations programmatically.
  */
 
-import { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import { ANIMATION_DURATIONS, ANIMATION_EASINGS } from './animations';
 
 /**

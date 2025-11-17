@@ -4,7 +4,7 @@
  * Example card component with entrance animation and hover effects.
  */
 
-import { HTMLAttributes, forwardRef } from 'react';
+import { type HTMLAttributes, forwardRef } from 'react';
 import { useInViewAnimation } from '../hooks/useAnimations';
 import { ANIMATION_CLASSES } from '../lib/animations';
 

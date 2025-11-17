@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import MicroTrustBadges from '@/components/MicroTrustBadges'
-import TrustSidebar from '@/components/TrustSidebar'
-import StickyMobileCTA from '@/components/StickyMobileCTA'
+import TrustSidebar from '@/components/cro/TrustSidebar'
+import StickyMobileCTA from '@/components/cro/StickyMobileCTA'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { CheckCircle, Clock, Zap } from 'lucide-react'
 
@@ -170,7 +170,7 @@ export default function Book() {
       <Footer />
 
       {/* Sticky Mobile CTA - Shows after 300px scroll on mobile */}
-      <StickyMobileCTA targetRef={calendarRef} />
+      <StickyMobileCTA targetElementId="cal-embed" />
     </div>
   )
 }

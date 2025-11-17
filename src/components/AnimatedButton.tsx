@@ -4,7 +4,7 @@
  * Example button component with subtle lift animation and ripple effect.
  */
 
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { type ButtonHTMLAttributes, forwardRef } from 'react';
 import { useRipple } from '../hooks/useAnimations';
 import { ANIMATION_CLASSES } from '../lib/animations';
 

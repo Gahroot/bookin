@@ -4,7 +4,7 @@
  * Toggle switch with smooth slide animation.
  */
 
-import { InputHTMLAttributes, forwardRef } from 'react';
+import { type InputHTMLAttributes, forwardRef } from 'react';
 import { ANIMATION_CLASSES } from '../lib/animations';
 
 export interface AnimatedToggleProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {

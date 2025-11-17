@@ -4,7 +4,7 @@
  * Wrapper for page transitions with slide horizontal animation.
  */
 
-import { ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { ANIMATION_CLASSES } from '../lib/animations';
 import { usePrefersReducedMotion } from '../hooks/useAnimations';

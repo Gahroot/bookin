@@ -4,8 +4,8 @@
  * React hooks for handling animations with accessibility support.
  */
 
-import { useEffect, useState, useRef, useCallback, MouseEvent } from 'react';
-import { prefersReducedMotion, getSafeAnimationDuration, AnimationDuration } from '../lib/animations';
+import { useEffect, useState, useRef, useCallback, type MouseEvent } from 'react';
+import { prefersReducedMotion, getSafeAnimationDuration, type AnimationDuration } from '../lib/animations';
 
 /**
  * Hook to check if user prefers reduced motion
@@ -53,7 +53,7 @@ export function useStaggerAnimation(itemCount: number, baseDelay: number = 100) 
       return;
     }
 
-    const timers: NodeJS.Timeout[] = [];
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     for (let i = 0; i < itemCount; i++) {
       const timer = setTimeout(() => {

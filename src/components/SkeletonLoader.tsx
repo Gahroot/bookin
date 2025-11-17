@@ -4,7 +4,7 @@
  * Skeleton loading placeholder with pulse animation.
  */
 
-import { HTMLAttributes } from 'react';
+import { type HTMLAttributes } from 'react';
 import { ANIMATION_CLASSES } from '../lib/animations';
 
 export interface SkeletonLoaderProps extends HTMLAttributes<HTMLDivElement> {
