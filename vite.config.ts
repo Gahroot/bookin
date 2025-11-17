@@ -11,4 +11,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  appType: 'spa',
+  server: {
+    middlewareMode: false,
+    middlewares: [],
+  },
 })
