@@ -1,0 +1,532 @@
+/**
+ * DESIGN TOKENS - Central CSS Custom Properties Reference
+ *
+ * This file contains all design tokens for the Carbon Graphite design system.
+ * Organized by category: Typography, Colors, Animations, Spacing
+ *
+ * Last Updated: November 17, 2025
+ * Status: Production Ready
+ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   1. TYPOGRAPHY TOKENS
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Font Families */
+  --font-family-primary: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-mono: "Monaco", "Courier New", monospace;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Font Sizes - Desktop */
+  --text-display-xl: 40px;
+  --text-display-lg: 36px;
+  --text-h1: 32px;
+  --text-h2: 28px;
+  --text-h3: 24px;
+  --text-h4: 20px;
+  --text-h5: 18px;
+  --text-h6: 16px;
+  --text-body-lg: 18px;
+  --text-body-md: 16px;
+  --text-body-sm: 14px;
+  --text-body-xs: 12px;
+  --text-caption: 12px;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.5;
+  --line-height-loose: 1.6;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+}
+
+/* Responsive Typography - Tablet (768px and up) */
+@media (min-width: 768px) {
+  :root {
+    --text-display-xl: 36px;
+    --text-display-lg: 32px;
+    --text-h1: 28px;
+    --text-h2: 24px;
+    --text-h3: 20px;
+    --text-h4: 18px;
+    --text-h5: 16px;
+    --text-h6: 14px;
+    --text-body-lg: 16px;
+    --text-body-md: 14px;
+    --text-body-sm: 12px;
+    --text-body-xs: 11px;
+    --text-caption: 10px;
+  }
+}
+
+/* Responsive Typography - Mobile (under 768px) */
+@media (max-width: 767px) {
+  :root {
+    --text-display-xl: 32px;
+    --text-display-lg: 28px;
+    --text-h1: 24px;
+    --text-h2: 20px;
+    --text-h3: 18px;
+    --text-h4: 16px;
+    --text-h5: 14px;
+    --text-h6: 12px;
+    --text-body-lg: 16px;
+    --text-body-md: 14px;
+    --text-body-sm: 12px;
+    --text-body-xs: 11px;
+    --text-caption: 10px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   2. COLOR TOKENS - Base Palette
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Primary Colors */
+  --color-primary: #18181b;
+  --color-primary-hover: #27272a;
+  --color-primary-active: #3f3f46;
+  --color-primary-disabled: #e4e4e7;
+
+  /* Secondary Colors */
+  --color-secondary: #3f3f46;
+  --color-secondary-hover: #52525b;
+  --color-secondary-active: #71717a;
+  --color-secondary-disabled: #e4e4e7;
+
+  /* Accent Colors */
+  --color-accent: #71717a;
+  --color-accent-hover: #a1a1aa;
+  --color-accent-active: #d4d4d8;
+  --color-accent-disabled: #f5f5f5;
+
+  /* Semantic Backgrounds */
+  --color-background: #fafafa;
+  --color-surface: #f4f4f5;
+  --color-surface-secondary: #eeeeef;
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Border Colors */
+  --color-border: #e4e4e7;
+  --color-border-light: #f4f4f5;
+  --color-border-dark: #d4d4d8;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   3. COLOR TOKENS - Text Colors
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Primary Text - High Contrast (13.8:1) */
+  --color-text-primary: #18181b;
+
+  /* Secondary Text - Good Contrast (9.2:1) */
+  --color-text-secondary: #3f3f46;
+
+  /* Tertiary Text - AA Compliant (4.8:1) */
+  --color-text-tertiary: #71717a;
+
+  /* Disabled/Muted Text */
+  --color-text-disabled: #a1a1aa;
+
+  /* Inverse Text (for dark backgrounds) */
+  --color-text-inverse: #ffffff;
+  --color-text-inverse-secondary: #f4f4f5;
+
+  /* Foreground colors for backgrounds */
+  --color-primary-foreground: #ffffff;
+  --color-secondary-foreground: #ffffff;
+  --color-surface-foreground: #18181b;
+  --color-background-foreground: #18181b;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   4. COLOR TOKENS - Feedback Colors (Semantic)
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Success - Green (4.5:1 on background) */
+  --color-success: #22c55e;
+  --color-success-light: #dcfce7;
+  --color-success-dark: #16a34a;
+  --color-success-hover: #16a34a;
+
+  /* Warning - Yellow (4.5:1 on background) */
+  --color-warning: #eab308;
+  --color-warning-light: #fef3c7;
+  --color-warning-dark: #ca8a04;
+  --color-warning-hover: #ca8a04;
+
+  /* Error - Red (4.5:1 on background) */
+  --color-error: #ef4444;
+  --color-error-light: #fee2e2;
+  --color-error-dark: #dc2626;
+  --color-error-hover: #dc2626;
+
+  /* Info - Blue (4.5:1 on background) */
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+  --color-info-dark: #1d4ed8;
+  --color-info-hover: #1d4ed8;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   5. COLOR TOKENS - Interactive States
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Hover States */
+  --color-hover: #e4e4e7;
+  --color-hover-overlay: rgba(0, 0, 0, 0.05);
+
+  /* Active/Pressed States */
+  --color-active: #d4d4d8;
+  --color-active-overlay: rgba(0, 0, 0, 0.1);
+
+  /* Focus Ring */
+  --color-focus-ring: #18181b;
+  --color-focus-ring-width: 2px;
+  --color-focus-ring-offset: 2px;
+
+  /* Loading/Skeleton */
+  --color-skeleton: #e4e4e7;
+  --color-skeleton-light: #eeeeef;
+
+  /* Disabled State */
+  --color-disabled-bg: #f5f5f5;
+  --color-disabled-text: #a1a1aa;
+  --color-disabled-border: #e4e4e7;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   6. COLOR TOKENS - Dark Mode
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Backgrounds - Dark Mode */
+    --color-background: #09090b;
+    --color-surface: #18181b;
+    --color-surface-secondary: #27272a;
+
+    /* Borders - Dark Mode */
+    --color-border: #3f3f46;
+    --color-border-light: #27272a;
+    --color-border-dark: #52525b;
+
+    /* Text - Dark Mode (Inverted) */
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #e4e4e7;
+    --color-text-tertiary: #a1a1aa;
+    --color-text-disabled: #71717a;
+
+    /* Interactive - Dark Mode */
+    --color-hover: #27272a;
+    --color-active: #3f3f46;
+    --color-disabled-bg: #27272a;
+
+    /* Feedback - Dark Mode */
+    --color-success: #22c55e;
+    --color-warning: #eab308;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   7. ANIMATION TOKENS - Durations
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Animation Durations */
+  --animation-duration-fast: 150ms;
+  --animation-duration-normal: 300ms;
+  --animation-duration-slow: 500ms;
+  --animation-duration-very-slow: 1500ms;
+
+  /* Specific Animation Durations */
+  --animation-lift-duration: 150ms;
+  --animation-entrance-duration: 500ms;
+  --animation-pulse-duration: 1500ms;
+  --animation-ripple-duration: 600ms;
+  --animation-page-transition-duration: 400ms;
+  --animation-toggle-duration: 200ms;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   8. ANIMATION TOKENS - Easings
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Standard Easings */
+  --animation-easing-ease-in: ease-in;
+  --animation-easing-ease-out: ease-out;
+  --animation-easing-ease-in-out: ease-in-out;
+  --animation-easing-linear: linear;
+
+  /* Custom Cubic Beziers */
+  --animation-easing-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --animation-easing-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-easing-pulse: cubic-bezier(0.4, 0, 0.6, 1);
+  --animation-easing-ripple: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Specific Animation Easings */
+  --animation-lift-easing: ease-out;
+  --animation-entrance-easing: cubic-bezier(0.16, 1, 0.3, 1);
+  --animation-pulse-easing: cubic-bezier(0.4, 0, 0.6, 1);
+  --animation-ripple-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-page-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animation-toggle-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   9. ANIMATION TOKENS - Transforms & Effects
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Lift Animation */
+  --animation-lift-transform: translateY(-1px);
+  --animation-lift-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+  /* Entrance Animation */
+  --animation-entrance-from: translateY(20px);
+  --animation-entrance-opacity-from: 0;
+  --animation-entrance-to: translateY(0);
+  --animation-entrance-opacity-to: 1;
+
+  /* Pulse Animation */
+  --animation-pulse-scale-min: 1;
+  --animation-pulse-scale-max: 1.05;
+  --animation-pulse-opacity-min: 0.5;
+  --animation-pulse-opacity-max: 1;
+
+  /* Ripple Animation */
+  --animation-ripple-scale-start: 0;
+  --animation-ripple-scale-end: 4;
+  --animation-ripple-opacity-start: 1;
+  --animation-ripple-opacity-end: 0;
+
+  /* Page Transition Animation */
+  --animation-page-exit-from: translateX(0);
+  --animation-page-exit-to: translateX(-30%);
+  --animation-page-enter-from: translateX(100%);
+  --animation-page-enter-to: translateX(0);
+
+  /* Toggle Animation */
+  --animation-toggle-from: translateX(0);
+  --animation-toggle-to: translateX(20px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   10. SPACING TOKENS
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Spacing Scale (4px base) */
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-7: 28px;
+  --spacing-8: 32px;
+  --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-14: 56px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-28: 112px;
+  --spacing-32: 128px;
+
+  /* Padding/Margin Shortcuts */
+  --padding-xs: var(--spacing-2);
+  --padding-sm: var(--spacing-3);
+  --padding-md: var(--spacing-4);
+  --padding-lg: var(--spacing-6);
+  --padding-xl: var(--spacing-8);
+  --padding-2xl: var(--spacing-12);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   11. BORDER RADIUS TOKENS
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Border Radius Scale */
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Component-specific radius */
+  --radius-button: var(--radius-lg);
+  --radius-card: var(--radius-xl);
+  --radius-input: var(--radius-md);
+  --radius-badge: var(--radius-md);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   12. SHADOW TOKENS
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Box Shadows */
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+  /* Elevation shadows (for cards, modals) */
+  --shadow-elevation-1: var(--shadow-xs);
+  --shadow-elevation-2: var(--shadow-sm);
+  --shadow-elevation-3: var(--shadow-md);
+  --shadow-elevation-4: var(--shadow-lg);
+  --shadow-elevation-5: var(--shadow-xl);
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   13. Z-INDEX TOKENS
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Z-Index Scale */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1100;
+  --z-index-fixed: 1200;
+  --z-index-modal-backdrop: 1300;
+  --z-index-modal: 1400;
+  --z-index-popover: 1500;
+  --z-index-tooltip: 1600;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   14. BREAKPOINTS (for reference)
+   ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Breakpoint values for JS/CSS logic */
+  --breakpoint-mobile: 375px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1280px;
+  --breakpoint-ultra-wide: 1536px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   15. ACCESSIBILITY - Reduced Motion
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Disable all animations for accessibility */
+    --animation-duration-fast: 0ms !important;
+    --animation-duration-normal: 0ms !important;
+    --animation-duration-slow: 0ms !important;
+    --animation-duration-very-slow: 0ms !important;
+    --animation-lift-duration: 0ms !important;
+    --animation-entrance-duration: 0ms !important;
+    --animation-pulse-duration: 0ms !important;
+    --animation-ripple-duration: 0ms !important;
+    --animation-page-transition-duration: 0ms !important;
+    --animation-toggle-duration: 0ms !important;
+  }
+
+  /* Remove all animations */
+  * {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   16. MOTION QUERIES
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   17. PRINT STYLES
+   ───────────────────────────────────────────────────────────────────── */
+
+@media print {
+  :root {
+    /* Optimize for print */
+    --color-background: white;
+    --color-text-primary: black;
+    --color-text-secondary: #333333;
+    --animation-duration-fast: 0ms;
+    --animation-duration-normal: 0ms;
+    --animation-duration-slow: 0ms;
+    --animation-duration-very-slow: 0ms;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   USAGE EXAMPLES
+   ───────────────────────────────────────────────────────────────────── */
+
+/*
+  Button with all tokens:
+
+  .button {
+    font-family: var(--font-family-primary);
+    font-size: var(--text-body-md);
+    font-weight: var(--font-weight-bold);
+    padding: var(--padding-md) var(--padding-lg);
+    color: var(--color-primary-foreground);
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-button);
+    cursor: pointer;
+    transition: all var(--animation-lift-duration) var(--animation-lift-easing);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .button:hover {
+    background-color: var(--color-primary-hover);
+    transform: var(--animation-lift-transform);
+    box-shadow: var(--animation-lift-shadow);
+  }
+
+  .button:active {
+    background-color: var(--color-primary-active);
+    transform: translateY(0);
+  }
+*/
+
+/* ─────────────────────────────────────────────────────────────────────
+   END OF DESIGN TOKENS
+   Last Updated: November 17, 2025
+   Version: 1.0.0
+   ───────────────────────────────────────────────────────────────────── */

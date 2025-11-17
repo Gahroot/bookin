@@ -1,0 +1,336 @@
+/**
+ * Animation System
+ *
+ * Hardware-accelerated animations using transform and opacity.
+ * Includes accessibility support with prefers-reduced-motion.
+ *
+ * Categories:
+ * - Button & Hover (Subtle Lift)
+ * - Entrance (Slide Up)
+ * - Loading (Pulse)
+ * - Feedback (Ripple Effect)
+ * - Page Transition (Slide Horizontal)
+ * - Micro-interaction (Toggle Slide)
+ */
+
+@layer utilities {
+  /* ========================================
+     ANIMATION TOKENS
+     ======================================== */
+
+  @theme {
+    /* Duration Tokens */
+    --duration-subtle: 150ms;
+    --duration-micro: 200ms;
+    --duration-transition: 400ms;
+    --duration-entrance: 500ms;
+    --duration-feedback: 600ms;
+    --duration-loading: 1500ms;
+
+    /* Easing Tokens */
+    --ease-out: ease-out;
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-pulse: cubic-bezier(0.4, 0, 0.6, 1);
+
+    /* Transform Tokens */
+    --lift-subtle: -1px;
+    --slide-entrance: 20px;
+    --slide-exit: -30%;
+    --slide-enter: 100%;
+    --toggle-distance: 20px;
+
+    /* Shadow Tokens */
+    --shadow-lift: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ========================================
+     BUTTON & HOVER - SUBTLE LIFT
+     ======================================== */
+
+  .animate-lift {
+    transition: transform var(--duration-subtle) var(--ease-out),
+                box-shadow var(--duration-subtle) var(--ease-out);
+    will-change: transform;
+  }
+
+  .animate-lift:hover {
+    transform: translateY(var(--lift-subtle));
+    box-shadow: var(--shadow-lift);
+  }
+
+  .animate-lift:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* ========================================
+     ENTRANCE - SLIDE UP
+     ======================================== */
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(var(--slide-entrance));
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up var(--duration-entrance) var(--ease-entrance);
+  }
+
+  /* Staggered entrance animations */
+  .animate-slide-up-delay-1 {
+    animation: slide-up var(--duration-entrance) var(--ease-entrance);
+    animation-delay: 100ms;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .animate-slide-up-delay-2 {
+    animation: slide-up var(--duration-entrance) var(--ease-entrance);
+    animation-delay: 200ms;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .animate-slide-up-delay-3 {
+    animation: slide-up var(--duration-entrance) var(--ease-entrance);
+    animation-delay: 300ms;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  /* ========================================
+     LOADING - PULSE
+     ======================================== */
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse var(--duration-loading) var(--ease-pulse) infinite;
+  }
+
+  /* Skeleton loading variant */
+  @keyframes pulse-skeleton {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-pulse-skeleton {
+    animation: pulse-skeleton var(--duration-loading) var(--ease-pulse) infinite;
+  }
+
+  /* ========================================
+     FEEDBACK - RIPPLE EFFECT
+     ======================================== */
+
+  @keyframes ripple {
+    from {
+      transform: scale(0);
+      opacity: 1;
+    }
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple var(--duration-feedback) var(--ease-smooth);
+  }
+
+  /* Ripple container setup */
+  .ripple-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: currentColor;
+    opacity: 0.3;
+    pointer-events: none;
+    animation: ripple var(--duration-feedback) var(--ease-smooth);
+  }
+
+  /* ========================================
+     PAGE TRANSITION - SLIDE HORIZONTAL
+     ======================================== */
+
+  @keyframes slide-exit {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(var(--slide-exit));
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-enter {
+    from {
+      transform: translateX(var(--slide-enter));
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-exit {
+    animation: slide-exit var(--duration-transition) var(--ease-smooth);
+  }
+
+  .animate-slide-enter {
+    animation: slide-enter var(--duration-transition) var(--ease-smooth);
+  }
+
+  /* ========================================
+     MICRO-INTERACTION - TOGGLE SLIDE
+     ======================================== */
+
+  .animate-toggle {
+    transition: transform var(--duration-micro) var(--ease-smooth);
+    will-change: transform;
+  }
+
+  .animate-toggle[data-state="checked"],
+  .animate-toggle.checked {
+    transform: translateX(var(--toggle-distance));
+  }
+
+  .animate-toggle[data-state="unchecked"],
+  .animate-toggle:not(.checked) {
+    transform: translateX(0);
+  }
+
+  /* ========================================
+     ADDITIONAL UTILITIES
+     ======================================== */
+
+  /* Fade animations */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in var(--duration-entrance) var(--ease-smooth);
+  }
+
+  .animate-fade-out {
+    animation: fade-out var(--duration-entrance) var(--ease-smooth);
+  }
+
+  /* Scale animations */
+  @keyframes scale-in {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-scale-in {
+    animation: scale-in var(--duration-entrance) var(--ease-entrance);
+  }
+
+  /* Spin animation for loaders */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  /* ========================================
+     ACCESSIBILITY - REDUCED MOTION
+     ======================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .animate-lift:hover {
+      transform: none;
+    }
+
+    .animate-lift:active {
+      transform: none;
+    }
+
+    .animate-toggle[data-state="checked"],
+    .animate-toggle.checked {
+      transform: translateX(var(--toggle-distance));
+      transition: none;
+    }
+  }
+
+  /* ========================================
+     PERFORMANCE OPTIMIZATIONS
+     ======================================== */
+
+  /* Enable hardware acceleration */
+  .animate-lift,
+  .animate-slide-up,
+  .animate-pulse,
+  .animate-ripple,
+  .animate-slide-exit,
+  .animate-slide-enter,
+  .animate-toggle,
+  .animate-fade-in,
+  .animate-fade-out,
+  .animate-scale-in {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
