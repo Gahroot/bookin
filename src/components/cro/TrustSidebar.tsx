@@ -2,14 +2,13 @@ import { memo } from 'react'
 import { CheckCircle, Star, Users, Clock } from 'lucide-react'
 
 /**
- * Performance-optimized Trust Sidebar with sticky positioning
- * 
+ * Performance-optimized Trust Section - Displays trust signals, testimonials, and urgency
+ *
  * Optimizations:
  * 1. React.memo to prevent unnecessary re-renders
  * 2. CSS containment for layout optimization
- * 3. No JavaScript scroll listeners (pure CSS sticky)
- * 4. Optimized for paint performance
- * 5. Minimal layout shifts
+ * 3. Content visibility: auto for paint optimization
+ * 4. Minimal layout shifts
  */
 
 interface TrustSidebarProps {
@@ -40,8 +39,7 @@ const TrustSidebar = memo(({ className = '' }: TrustSidebarProps) => {
   return (
     <aside
       className={`
-        sticky top-24
-        space-y-6
+        grid sm:grid-cols-3 gap-6
         ${className}
       `}
       style={{
@@ -53,7 +51,7 @@ const TrustSidebar = memo(({ className = '' }: TrustSidebarProps) => {
     >
       {/* Trust Signals */}
       <div className="bg-card rounded-xl border border-border p-6 space-y-4">
-        <h3 className="font-bold text-lg">Why Book Now?</h3>
+        <h3 className="font-bold text-lg">Our Track Record</h3>
         
         <div className="space-y-3">
           <MicroTrustBadge
