@@ -1,10 +1,37 @@
-import { Link } from 'react-router'
+import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
-import { Calendar, Zap, Clock, TrendingUp, Mail, Bot, Settings, Link2, Monitor, Smartphone, Film, MessageCircle } from 'lucide-react'
+import { Calendar, Zap, Clock, TrendingUp, Mail, Bot, Settings, Link2, Monitor, Smartphone, Film, CheckCircle } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import MicroTrustBadges from '@/components/MicroTrustBadges'
+import TrustSidebar from '@/components/cro/TrustSidebar'
+import StickyMobileCTA from '@/components/cro/StickyMobileCTA'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function Home() {
+  const calendarRef = useRef<HTMLDivElement>(null)
+
+  // Responsive height logic for Cal.com embed
+  const isMobile = useMediaQuery('(max-width: 640px)')
+  const isTablet = useMediaQuery('(min-width: 641px) and (max-width: 1023px)')
+  const embedHeight = isMobile ? 450 : isTablet ? 550 : 600
+
+  useEffect(() => {
+    // Load Cal.com script when component mounts
+    const script = document.createElement('script')
+    script.src = 'https://cdn.cal.com/cal.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      try {
+        document.body.removeChild(script)
+      } catch {
+        // Ignore if script already removed
+      }
+    }
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -42,11 +69,13 @@ export default function Home() {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button size="lg" asChild className="text-lg">
-                <Link to="/book" className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  Book a 30-Min Call
-                </Link>
+              <Button
+                size="lg"
+                className="text-lg flex items-center gap-2"
+                onClick={() => document.getElementById('cal-embed')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Calendar className="w-5 h-5" />
+                Book a 30-Min Call
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <a href="mailto:SOLD@NolanGrout.com" className="flex items-center gap-2">
@@ -258,36 +287,134 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Booking Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <div className="space-y-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="space-y-4 mb-12 text-center lg:text-left">
             <h2 className="text-4xl sm:text-5xl font-bold tracking-tighter">
-              Ready to automate?
+              Schedule a <span className="text-primary">30-Min Call</span>
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Schedule a 30-minute consultation. No fluff, just solutions.
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
+              Let's discuss your automation challenges and explore solutions. No commitment, no pressure.
             </p>
           </div>
 
-          <Button size="lg" asChild className="text-lg inline-flex">
-            <Link to="/book" className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              Book a Call Now
-            </Link>
-          </Button>
+          {/* Calendar & Trust Section */}
+          <div className="space-y-12">
+            {/* Cal.com Embed */}
+            <div
+              ref={calendarRef}
+              id="cal-embed"
+              className="bg-card rounded-xl border border-border shadow-sm overflow-hidden"
+            >
+              <div className="cal-embed-wrapper aspect-video sm:aspect-auto">
+                <iframe
+                  src="https://cal.com/nolan-grout-nolan-grout-real-estate-y2trgn/30min"
+                  width="100%"
+                  height={embedHeight}
+                  frameBorder="0"
+                  title="Schedule a 30-min meeting with Nolan Grout"
+                  className="w-full"
+                  style={{ minHeight: `${embedHeight}px` }}
+                />
+              </div>
+            </div>
 
-          <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-            <MessageCircle className="w-4 h-4" />
-            Or email{' '}
-            <a href="mailto:SOLD@NolanGrout.com" className="text-primary hover:underline">
-              SOLD@NolanGrout.com
-            </a>
-          </p>
+            {/* Micro Trust Badges */}
+            <MicroTrustBadges />
+
+            {/* What to Expect & Call Info */}
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold">What to Expect</h3>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex gap-3">
+                    <span className="text-primary font-bold flex-shrink-0">✓</span>
+                    <span>Diagnose your automation gaps</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-primary font-bold flex-shrink-0">✓</span>
+                    <span>Identify quick wins (40+ hours/month possible)</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-primary font-bold flex-shrink-0">✓</span>
+                    <span>Discuss your tech stack & integration needs</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-primary font-bold flex-shrink-0">✓</span>
+                    <span>Custom roadmap for your business</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold">About This Call</h3>
+                <div className="space-y-4 text-sm text-muted-foreground">
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Ideal For</p>
+                    <p>Founders, agencies, and teams struggling with manual processes.</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Come Prepared</p>
+                    <p>List any tools you currently use. (CRM, email, forms, etc.)</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground mb-1">Timezone</p>
+                    <p>Automatically detects and adjusts to your timezone.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Why Book Now */}
+            <div className="space-y-6 pt-6 border-t border-border">
+              <h3 className="text-lg font-bold">Why Book Now?</h3>
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="flex gap-3">
+                  <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-semibold">30 Minutes</p>
+                    <p className="text-muted-foreground">Quick, focused conversation</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-semibold">No Fluff</p>
+                    <p className="text-muted-foreground">Actionable insights & strategy</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <Zap className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-semibold">Direct</p>
+                    <p className="text-muted-foreground">1-on-1 with Nolan directly</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Trust Sidebar */}
+            <TrustSidebar />
+          </div>
+
+          {/* Bottom Email Option */}
+          <div className="mt-12 pt-8 border-t border-border text-center space-y-4">
+            <p className="text-muted-foreground">
+              Questions before booking? Email{' '}
+              <a href="mailto:SOLD@NolanGrout.com" className="text-primary hover:underline font-semibold">
+                SOLD@NolanGrout.com
+              </a>
+            </p>
+          </div>
         </div>
       </section>
 
       <Footer />
+
+      {/* Sticky Mobile CTA */}
+      <StickyMobileCTA targetElementId="cal-embed" />
     </div>
   )
 }
