@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Performance Test</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #0f0f0f;
+      color: #fff;
+    }
+    .metrics {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      font-family: monospace;
+      font-size: 14px;
+      z-index: 10000;
+    }
+    .metric {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .metric-label {
+      color: #888;
+    }
+    .metric-value {
+      font-weight: bold;
+    }
+    .good { color: #22c55e; }
+    .warning { color: #eab308; }
+    .bad { color: #ef4444; }
+    .test-content {
+      margin-top: 80px;
+      max-width: 800px;
+    }
+    .test-section {
+      min-height: 100vh;
+      padding: 40px;
+      margin: 20px 0;
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="metrics" id="metrics">
+    <div style="font-weight: bold; margin-bottom: 12px; color: #3b82f6;">Scroll Performance Monitor</div>
+    <div class="metric">
+      <span class="metric-label">FPS:</span>
+      <span class="metric-value" id="fps">--</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Frame Time:</span>
+      <span class="metric-value" id="frameTime">--</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Dropped Frames:</span>
+      <span class="metric-value" id="droppedFrames">0</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Scroll Events/sec:</span>
+      <span class="metric-value" id="scrollRate">0</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Layout Shifts:</span>
+      <span class="metric-value" id="layoutShifts">0</span>
+    </div>
+    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #333;">
+      <button onclick="startTest()">Start Auto-Scroll Test</button>
+      <button onclick="stopTest()">Stop Test</button>
+    </div>
+  </div>
+
+  <div class="test-content">
+    <h1>Scroll Performance Test Page</h1>
+    <p>This page measures scroll performance metrics in real-time.</p>
+    
+    <div class="test-section">
+      <h2>Section 1</h2>
+      <p>Scroll down to see performance metrics update in real-time.</p>
+      <p>Target: 60 FPS (16.67ms per frame)</p>
+    </div>
+    
+    <div class="test-section">
+      <h2>Section 2</h2>
+      <p>The metrics panel shows:</p>
+      <ul>
+        <li>FPS: Frames per second (target: 60)</li>
+        <li>Frame Time: Time to render each frame (target: &lt;16.67ms)</li>
+        <li>Dropped Frames: Frames that took &gt;16.67ms</li>
+        <li>Scroll Events: Events fired per second</li>
+      </ul>
+    </div>
+    
+    <div class="test-section">
+      <h2>Section 3</h2>
+      <p>Good performance indicators:</p>
+      <ul>
+        <li>FPS consistently at or near 60</li>
+        <li>Frame time under 16.67ms</li>
+        <li>Minimal dropped frames</li>
+        <li>Low layout shift count</li>
+      </ul>
+    </div>
+    
+    <div class="test-section">
+      <h2>Section 4</h2>
+      <p>Use the auto-scroll test button to simulate user scrolling.</p>
+    </div>
+  </div>
+
+  <script>
+    // Performance monitoring
+    let fps = 0
+    let frameTime = 0
+    let droppedFrames = 0
+    let lastFrameTime = performance.now()
+    let frameCount = 0
+    let scrollEventCount = 0
+    let layoutShiftCount = 0
+    let testInterval = null
+
+    function updateFPS() {
+      const now = performance.now()
+      const delta = now - lastFrameTime
+      
+      frameTime = delta
+      fps = 1000 / delta
+      
+      if (delta > 16.67) {
+        droppedFrames++
+      }
+      
+      lastFrameTime = now
+      frameCount++
+      
+      requestAnimationFrame(updateFPS)
+    }
+
+    // Update display every 100ms
+    setInterval(() => {
+      const fpsEl = document.getElementById('fps')
+      const frameTimeEl = document.getElementById('frameTime')
+      const droppedEl = document.getElementById('droppedFrames')
+      const scrollRateEl = document.getElementById('scrollRate')
+      const layoutShiftsEl = document.getElementById('layoutShifts')
+      
+      const fpsValue = Math.round(fps)
+      fpsEl.textContent = fpsValue
+      fpsEl.className = 'metric-value ' + (fpsValue >= 55 ? 'good' : fpsValue >= 30 ? 'warning' : 'bad')
+      
+      const frameTimeValue = frameTime.toFixed(2) + 'ms'
+      frameTimeEl.textContent = frameTimeValue
+      frameTimeEl.className = 'metric-value ' + (frameTime <= 16.67 ? 'good' : frameTime <= 33 ? 'warning' : 'bad')
+      
+      droppedEl.textContent = droppedFrames
+      droppedEl.className = 'metric-value ' + (droppedFrames < 5 ? 'good' : droppedFrames < 20 ? 'warning' : 'bad')
+      
+      scrollRateEl.textContent = scrollEventCount * 10
+      scrollEventCount = 0
+      
+      layoutShiftsEl.textContent = layoutShiftCount
+    }, 100)
+
+    // Track scroll events
+    window.addEventListener('scroll', () => {
+      scrollEventCount++
+    }, { passive: true })
+
+    // Track layout shifts
+    if ('PerformanceObserver' in window) {
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            layoutShiftCount++
+          }
+        }
+      })
+      observer.observe({ type: 'layout-shift', buffered: true })
+    }
+
+    // Auto-scroll test
+    function startTest() {
+      if (testInterval) return
+      
+      let scrollPosition = 0
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      
+      testInterval = setInterval(() => {
+        scrollPosition += 5
+        if (scrollPosition >= maxScroll) {
+          scrollPosition = 0
+        }
+        window.scrollTo({ top: scrollPosition, behavior: 'instant' })
+      }, 16) // ~60fps
+    }
+
+    function stopTest() {
+      if (testInterval) {
+        clearInterval(testInterval)
+        testInterval = null
+      }
+    }
+
+    // Start FPS monitoring
+    requestAnimationFrame(updateFPS)
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "budget": {
+    "description": "Performance budget for bookin CRO pages",
+    "targets": {
+      "timings": {
+        "firstContentfulPaint": 1800,
+        "largestContentfulPaint": 2500,
+        "timeToInteractive": 3500,
+        "speedIndex": 3400,
+        "totalBlockingTime": 200,
+        "cumulativeLayoutShift": 0.1,
+        "maxPotentialFID": 100
+      },
+      "resourceSizes": {
+        "total": 500,
+        "document": 50,
+        "stylesheet": 30,
+        "script": 150,
+        "image": 200,
+        "font": 50,
+        "media": 0,
+        "other": 20
+      },
+      "resourceCounts": {
+        "total": 50,
+        "script": 15,
+        "stylesheet": 5,
+        "font": 3,
+        "image": 20,
+        "third-party": 5
+      }
+    },
+    "paths": [
+      {
+        "path": "/book",
+        "resourceSizes": {
+          "total": 600,
+          "script": 180,
+          "third-party": 300
+        },
+        "resourceCounts": {
+          "third-party": 10
+        }
+      }
+    ]
+  },
+  "notes": {
+    "LCP": "Target <2.5s. Cal.com iframe is main content, so preconnect is critical.",
+    "CLS": "Target <0.1. Height reservation on iframe prevents layout shifts.",
+    "TBT": "Target <200ms. Intersection Observer instead of scroll events reduces blocking.",
+    "Bundle": "CRO components add ~12KB (4.7KB gzipped). Acceptable for conversion uplift.",
+    "ThirdParty": "Cal.com embed adds ~300KB. No control, but preconnect helps."
+  }
+}
