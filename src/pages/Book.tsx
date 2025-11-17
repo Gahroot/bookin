@@ -13,9 +13,11 @@ export default function Book() {
   const calendarRef = useRef<HTMLDivElement>(null)
 
   // Responsive height logic for Cal.com embed
+  // Reduced to prevent internal scrolling within iframe
+  // Mobile: 320px | Tablet: 380px | Desktop: 450px
   const isMobile = useMediaQuery('(max-width: 640px)')
   const isTablet = useMediaQuery('(min-width: 641px) and (max-width: 1023px)')
-  const embedHeight = isMobile ? 450 : isTablet ? 550 : 600
+  const embedHeight = isMobile ? 320 : isTablet ? 380 : 450
 
   useEffect(() => {
     // Load Cal.com script when component mounts
