@@ -6,6 +6,7 @@
  */
 
 import { useThemeToggle } from '../../hooks/useColors'
+import { Sun, Moon } from 'lucide-react'
 
 /**
  * Primary Button - Main action
@@ -228,10 +229,21 @@ export function ThemeToggle() {
         px-3 py-2 rounded-md
         transition-colors duration-200
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+        flex items-center gap-2
       "
       aria-label="Toggle theme"
     >
-      {mode === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
+      {mode === 'light' ? (
+        <>
+          <Moon className="w-4 h-4" />
+          Dark Mode
+        </>
+      ) : (
+        <>
+          <Sun className="w-4 h-4" />
+          Light Mode
+        </>
+      )}
     </button>
   )
 }

@@ -110,12 +110,23 @@ src/
 ### Theme Toggle
 ```tsx
 import { useThemeToggle } from '@/lib/colors'
+import { Moon, Sun } from 'lucide-react'
 
 function ThemeButton() {
   const [mode, toggle] = useThemeToggle()
   return (
-    <button onClick={toggle}>
-      {mode === 'light' ? '🌙 Dark' : '☀️ Light'}
+    <button onClick={toggle} className="flex items-center gap-2">
+      {mode === 'light' ? (
+        <>
+          <Moon className="w-4 h-4" />
+          Dark
+        </>
+      ) : (
+        <>
+          <Sun className="w-4 h-4" />
+          Light
+        </>
+      )}
     </button>
   )
 }

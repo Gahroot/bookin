@@ -6,6 +6,7 @@
  */
 
 import { ColorSystemDemo } from '../components/examples/ColorExamples'
+import { FileText, Zap, BarChart, Palette, Wrench, Code } from 'lucide-react'
 
 /**
  * Color Swatch Component
@@ -210,12 +211,24 @@ export default function ColorDemo() {
         <div className="bg-card border border-border rounded-lg p-6">
           <h3 className="text-text-primary text-xl font-bold mb-4">Documentation</h3>
           <div className="space-y-2 text-text-secondary">
-            <p>📄 Full documentation: <code className="text-text-primary">/COLOR_SYSTEM.md</code></p>
-            <p>⚡ Quick reference: <code className="text-text-primary">/COLOR_QUICK_REFERENCE.md</code></p>
-            <p>📊 Implementation summary: <code className="text-text-primary">/COLOR_IMPLEMENTATION_SUMMARY.md</code></p>
-            <p>🎨 Styles: <code className="text-text-primary">/src/index.css</code></p>
-            <p>🔧 Types: <code className="text-text-primary">/src/types/colors.ts</code></p>
-            <p>⚛️ Hooks: <code className="text-text-primary">/src/hooks/useColors.ts</code></p>
+            <p className="flex items-center gap-2">
+              <FileText className="w-4 h-4" /> Full documentation: <code className="text-text-primary">/COLOR_SYSTEM.md</code>
+            </p>
+            <p className="flex items-center gap-2">
+              <Zap className="w-4 h-4" /> Quick reference: <code className="text-text-primary">/COLOR_QUICK_REFERENCE.md</code>
+            </p>
+            <p className="flex items-center gap-2">
+              <BarChart className="w-4 h-4" /> Implementation summary: <code className="text-text-primary">/COLOR_IMPLEMENTATION_SUMMARY.md</code>
+            </p>
+            <p className="flex items-center gap-2">
+              <Palette className="w-4 h-4" /> Styles: <code className="text-text-primary">/src/index.css</code>
+            </p>
+            <p className="flex items-center gap-2">
+              <Wrench className="w-4 h-4" /> Types: <code className="text-text-primary">/src/types/colors.ts</code>
+            </p>
+            <p className="flex items-center gap-2">
+              <Code className="w-4 h-4" /> Hooks: <code className="text-text-primary">/src/hooks/useColors.ts</code>
+            </p>
           </div>
         </div>
       </div>

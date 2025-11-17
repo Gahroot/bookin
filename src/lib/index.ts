@@ -1,9 +1,10 @@
 /**
- * Animation Library
+ * Design System Library
  *
- * Centralized export of all animation utilities.
+ * Centralized export of all design system utilities.
  */
 
+// Animation exports
 export {
   ANIMATION_DURATIONS,
   ANIMATION_EASINGS,
@@ -38,3 +39,16 @@ export {
   responsiveAnimation,
   createKeyframeAnimation,
 } from './animationStyles';
+
+// Icon exports
+export {
+  iconMap,
+  getIcon,
+  defaultIconProps,
+  iconSizes,
+} from './lucide-icons';
+
+export type {
+  IconName,
+  IconSize,
+} from './lucide-icons';

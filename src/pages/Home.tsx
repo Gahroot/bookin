@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
-import { Calendar, Zap, Clock, TrendingUp, Mail } from 'lucide-react'
+import { Calendar, Zap, Clock, TrendingUp, Mail, Bot, Settings, Link2, Monitor, Smartphone, Film, MessageCircle } from 'lucide-react'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -145,37 +145,55 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">🤖 AI Agents</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Bot className="w-6 h-6 text-primary" />
+                AI Agents
+              </h3>
               <p className="text-muted-foreground">
                 Autonomous agents using Claude Agent SDK. Multi-platform access, RAG-powered knowledge, voice/text/image processing.
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">⚙️ Automations</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Settings className="w-6 h-6 text-primary" />
+                Automations
+              </h3>
               <p className="text-muted-foreground">
                 Workflow automation with n8n, webhooks, and custom code. Eliminate manual work at scale. 40+ hours saved/month.
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">🔗 Integrations</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Link2 className="w-6 h-6 text-primary" />
+                Integrations
+              </h3>
               <p className="text-muted-foreground">
                 Connect any platform. GoHighLevel, Follow Up Boss, KvCore, Stripe, Zapier. Real-time data sync across ecosystems.
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">💻 Full-Stack Apps</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Monitor className="w-6 h-6 text-primary" />
+                Full-Stack Apps
+              </h3>
               <p className="text-muted-foreground">
                 React frontends. Node.js/TypeScript backends. Databases, APIs, auth, payments. SaaS-ready infrastructure.
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">📱 Lead Systems</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Smartphone className="w-6 h-6 text-primary" />
+                Lead Systems
+              </h3>
               <p className="text-muted-foreground">
                 End-to-end lead capture, qualification, and nurturing. Generated 150+ leads/month. $10M+ in revenue attributed.
               </p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">🎬 Content</h3>
+              <h3 className="text-2xl font-bold flex items-center gap-2">
+                <Film className="w-6 h-6 text-primary" />
+                Content
+              </h3>
               <p className="text-muted-foreground">
                 Video production, copywriting, graphic design. Built YouTube channels to 10k+ subscribers. Full creative pipeline.
               </p>
@@ -259,8 +277,9 @@ export default function Home() {
             </Link>
           </Button>
 
-          <p className="text-sm text-muted-foreground">
-            💬 Or email{' '}
+          <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+            <MessageCircle className="w-4 h-4" />
+            Or email{' '}
             <a href="mailto:SOLD@NolanGrout.com" className="text-primary hover:underline">
               SOLD@NolanGrout.com
             </a>
