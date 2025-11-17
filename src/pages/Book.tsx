@@ -51,9 +51,6 @@ export default function Book() {
             </p>
           </div>
 
-          {/* Micro Trust Badges */}
-          <MicroTrustBadges />
-
           {/* Full-Width Calendar Section */}
           <div className="mt-8 space-y-12">
             {/* Cal.com Embed - Main Conversion Mechanism */}
@@ -74,6 +71,9 @@ export default function Book() {
                 />
               </div>
             </div>
+
+            {/* Micro Trust Badges */}
+            <MicroTrustBadges />
 
             {/* Trust Signals Below Calendar */}
             <div className="grid sm:grid-cols-2 gap-8">
