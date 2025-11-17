@@ -12,8 +12,4 @@ export default defineConfig({
     },
   },
   appType: 'spa',
-  server: {
-    middlewareMode: false,
-    middlewares: [],
-  },
 })
