@@ -44,7 +44,7 @@ export default function Home() {
               Schedule a <span className="text-primary">30-Min Call</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              Let's discuss your automation challenges and explore solutions. No commitment, no pressure.
+              Let's discuss your <span className="text-foreground font-semibold">AI & Automation</span> challenges and explore solutions. No commitment, no pressure.
             </p>
           </div>
 
