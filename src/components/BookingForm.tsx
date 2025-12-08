@@ -13,9 +13,8 @@ export interface BookingFormData {
   reason: string
 }
 
-const CRM_WEBHOOK_URL = 'https://voice-noob-production.up.railway.app/api/v1/webhooks/leads/website'
+const CRM_WEBHOOK_URL = 'https://voice-noob-production.up.railway.app/webhooks/leads/website'
 const CRM_API_KEY = import.meta.env.VITE_CRM_API_KEY
-const AGENT_ID = import.meta.env.VITE_CRM_AGENT_ID
 
 export default function BookingForm({ onSubmit }: BookingFormProps) {
   const [firstName, setFirstName] = useState('')
@@ -74,7 +73,6 @@ export default function BookingForm({ onSubmit }: BookingFormProps) {
           phone_number: formData.phone,
           notes: formData.reason,
           source: 'website',
-          agent_id: AGENT_ID,
         }),
       })
 
