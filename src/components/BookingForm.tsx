@@ -13,6 +13,10 @@ export interface BookingFormData {
   reason: string
 }
 
+const CRM_WEBHOOK_URL = 'https://voice-noob-production.up.railway.app/api/v1/webhooks/leads/website'
+const CRM_API_KEY = import.meta.env.VITE_CRM_API_KEY
+const AGENT_ID = import.meta.env.VITE_CRM_AGENT_ID
+
 export default function BookingForm({ onSubmit }: BookingFormProps) {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -50,16 +54,39 @@ export default function BookingForm({ onSubmit }: BookingFormProps) {
 
     setIsSubmitting(true)
 
-    // Simulate brief processing
-    await new Promise((resolve) => setTimeout(resolve, 300))
-
-    onSubmit({
+    const formData = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       phone: phone.trim(),
       reason: reason.trim(),
-    })
+    }
 
+    // Send lead to CRM webhook
+    try {
+      const response = await fetch(`${CRM_WEBHOOK_URL}?api_key=${CRM_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          phone_number: formData.phone,
+          notes: formData.reason,
+          source: 'website',
+          agent_id: AGENT_ID,
+        }),
+      })
+
+      if (!response.ok) {
+        console.error('Failed to submit lead to CRM:', response.status, response.statusText)
+      }
+    } catch (error) {
+      // Log error but don't block form submission
+      console.error('Error submitting lead to CRM:', error)
+    }
+
+    onSubmit(formData)
     setIsSubmitting(false)
   }
 
