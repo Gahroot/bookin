@@ -62,26 +62,40 @@ export default function BookingForm({ onSubmit }: BookingFormProps) {
 
     // Send lead to CRM webhook
     try {
+      const payload = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        phone_number: formData.phone,
+        notes: formData.reason,
+        source: 'website',
+      }
+
+      console.log('[CRM] Sending lead to webhook:', {
+        url: `${CRM_WEBHOOK_URL}?api_key=${CRM_API_KEY ? '***' : 'MISSING'}`,
+        payload,
+      })
+
       const response = await fetch(`${CRM_WEBHOOK_URL}?api_key=${CRM_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          phone_number: formData.phone,
-          notes: formData.reason,
-          source: 'website',
-        }),
+        body: JSON.stringify(payload),
       })
 
-      if (!response.ok) {
-        console.error('Failed to submit lead to CRM:', response.status, response.statusText)
+      const responseData = await response.text()
+
+      if (response.ok) {
+        console.log('[CRM] Lead submitted successfully:', responseData)
+      } else {
+        console.error('[CRM] Failed to submit lead:', {
+          status: response.status,
+          statusText: response.statusText,
+          response: responseData,
+        })
       }
     } catch (error) {
-      // Log error but don't block form submission
-      console.error('Error submitting lead to CRM:', error)
+      console.error('[CRM] Network error submitting lead:', error)
     }
 
     onSubmit(formData)
