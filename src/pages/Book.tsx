@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import Header from '@/components/layout/Header'
@@ -6,11 +6,14 @@ import Footer from '@/components/layout/Footer'
 import MicroTrustBadges from '@/components/MicroTrustBadges'
 import TrustSidebar from '@/components/cro/TrustSidebar'
 import StickyMobileCTA from '@/components/cro/StickyMobileCTA'
+import BookingForm, { type BookingFormData } from '@/components/BookingForm'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { CheckCircle, Clock, Zap } from 'lucide-react'
 
 export default function Book() {
   const calendarRef = useRef<HTMLDivElement>(null)
+  const [showCalendar, setShowCalendar] = useState(false)
+  const [formData, setFormData] = useState<BookingFormData | null>(null)
 
   // Responsive height logic for Cal.com embed
   // Full-width calendar with no internal scrolling
@@ -20,7 +23,9 @@ export default function Book() {
   const embedHeight = isMobile ? 450 : isTablet ? 550 : 600
 
   useEffect(() => {
-    // Load Cal.com script when component mounts
+    // Only load Cal.com script when calendar should be shown
+    if (!showCalendar) return
+
     const script = document.createElement('script')
     script.src = 'https://cdn.cal.com/cal.js'
     script.async = true
@@ -33,7 +38,14 @@ export default function Book() {
         // Ignore if script already removed
       }
     }
-  }, [])
+  }, [showCalendar])
+
+  const handleFormSubmit = (data: BookingFormData) => {
+    setFormData(data)
+    setShowCalendar(true)
+    // Optionally log or send the data somewhere
+    console.log('Booking form submitted:', data)
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -53,24 +65,35 @@ export default function Book() {
 
           {/* Full-Width Calendar Section */}
           <div className="mt-8 space-y-12">
-            {/* Cal.com Embed - Main Conversion Mechanism */}
-            <div
-              ref={calendarRef}
-              id="cal-embed"
-              className="bg-card rounded-xl border border-border shadow-sm overflow-hidden"
-            >
-              <div className="cal-embed-wrapper aspect-video sm:aspect-auto">
-                <iframe
-                  src="https://cal.com/nolan-grout-nolan-grout-real-estate-y2trgn/30min"
-                  width="100%"
-                  height={embedHeight}
-                  frameBorder="0"
-                  title="Schedule a 30-min meeting with Nolan Grout"
-                  className="w-full"
-                  style={{ minHeight: `${embedHeight}px` }}
-                />
+            {/* Booking Form or Cal.com Embed */}
+            {!showCalendar ? (
+              <BookingForm onSubmit={handleFormSubmit} />
+            ) : (
+              <div
+                ref={calendarRef}
+                id="cal-embed"
+                className="bg-card rounded-xl border border-border shadow-sm overflow-hidden"
+              >
+                {formData && (
+                  <div className="px-6 py-4 border-b border-border bg-muted/30">
+                    <p className="text-sm text-muted-foreground">
+                      Booking for <span className="font-semibold text-foreground">{formData.firstName} {formData.lastName}</span>
+                    </p>
+                  </div>
+                )}
+                <div className="cal-embed-wrapper aspect-video sm:aspect-auto">
+                  <iframe
+                    src="https://cal.com/nolan-grout-nolan-grout-real-estate-y2trgn/30min"
+                    width="100%"
+                    height={embedHeight}
+                    frameBorder="0"
+                    title="Schedule a 30-min meeting with Nolan Grout"
+                    className="w-full"
+                    style={{ minHeight: `${embedHeight}px` }}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Micro Trust Badges */}
             <MicroTrustBadges />
