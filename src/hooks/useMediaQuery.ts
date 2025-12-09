@@ -30,9 +30,6 @@ export function useMediaQuery(query: string): boolean {
   useEffect(() => {
     if (!mediaQueryList) return
 
-    // Set initial value
-    setMatches(mediaQueryList.matches)
-
     // Use modern addEventListener API (better performance than deprecated addListener)
     mediaQueryList.addEventListener('change', handleChange)
 

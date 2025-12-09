@@ -11,7 +11,7 @@ export default function Header() {
             <span className="text-primary">Nolan</span> Grout
           </Link>
           <Button asChild>
-            <Link to="/book" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
               Book a Call
             </Link>

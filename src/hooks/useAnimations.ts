@@ -44,15 +44,22 @@ export function useEntranceAnimation(delay: number = 0) {
  * Hook for staggered list animations
  */
 export function useStaggerAnimation(itemCount: number, baseDelay: number = 100) {
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const reduced = usePrefersReducedMotion();
 
+  // Initialize with all items visible if reduced motion is preferred
+  const [visibleItems, setVisibleItems] = useState<Set<number>>(() =>
+    reduced ? new Set(Array.from({ length: itemCount }, (_, i) => i)) : new Set()
+  );
+
   useEffect(() => {
+    // If reduced motion, ensure all items are visible immediately
     if (reduced) {
       setVisibleItems(new Set(Array.from({ length: itemCount }, (_, i) => i)));
       return;
     }
 
+    // Reset visible items when dependencies change
+    setVisibleItems(new Set());
     const timers: ReturnType<typeof setTimeout>[] = [];
 
     for (let i = 0; i < itemCount; i++) {
@@ -127,20 +134,35 @@ export function useRipple(): [Ripple[], RippleHandlers] {
  * Hook for toggle animations
  */
 export function useToggleAnimation(isChecked: boolean, duration: AnimationDuration = 'micro') {
-  const [isAnimating, setIsAnimating] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const [animationKey, setAnimationKey] = useState(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced) {
+      return;
+    }
 
-    setIsAnimating(true);
-    const timer = setTimeout(() => {
-      setIsAnimating(false);
+    // Trigger new animation by incrementing key asynchronously
+    const startTimer = setTimeout(() => {
+      setAnimationKey((prev) => prev + 1);
+    }, 0);
+
+    // Schedule end of animation
+    timeoutRef.current = setTimeout(() => {
+      setAnimationKey((prev) => prev + 1);
     }, getSafeAnimationDuration(duration));
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(startTimer);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [isChecked, duration, reduced]);
 
+  // Derive animation state from key changes
+  const isAnimating = !reduced && animationKey % 2 === 1;
   return isAnimating;
 }
 
@@ -148,49 +170,67 @@ export function useToggleAnimation(isChecked: boolean, duration: AnimationDurati
  * Hook for page transitions
  */
 export function usePageTransition(trigger: unknown) {
-  const [isExiting, setIsExiting] = useState(false);
-  const [isEntering, setIsEntering] = useState(false);
   const reduced = usePrefersReducedMotion();
+  const [transitionPhase, setTransitionPhase] = useState<'idle' | 'exiting' | 'entering'>('idle');
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const enterTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced) {
+      return;
+    }
 
-    setIsExiting(true);
+    // Start with exiting phase asynchronously
+    const startTimer = setTimeout(() => {
+      setTransitionPhase('exiting');
+    }, 0);
 
-    const exitTimer = setTimeout(() => {
-      setIsExiting(false);
-      setIsEntering(true);
+    // Schedule entrance after exit completes
+    exitTimerRef.current = setTimeout(() => {
+      setTransitionPhase('entering');
     }, 400);
 
-    const enterTimer = setTimeout(() => {
-      setIsEntering(false);
+    // Schedule completion
+    enterTimerRef.current = setTimeout(() => {
+      setTransitionPhase('idle');
     }, 800);
 
     return () => {
-      clearTimeout(exitTimer);
-      clearTimeout(enterTimer);
+      clearTimeout(startTimer);
+      if (exitTimerRef.current) {
+        clearTimeout(exitTimerRef.current);
+      }
+      if (enterTimerRef.current) {
+        clearTimeout(enterTimerRef.current);
+      }
     };
   }, [trigger, reduced]);
 
-  return { isExiting, isEntering };
+  return {
+    isExiting: transitionPhase === 'exiting',
+    isEntering: transitionPhase === 'entering',
+  };
 }
 
 /**
  * Hook for intersection observer animations
  */
 export function useInViewAnimation(options?: IntersectionObserverInit) {
+  const reduced = usePrefersReducedMotion();
   const [isInView, setIsInView] = useState(false);
   const ref = useRef<HTMLElement>(null);
-  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (reduced) {
-      setIsInView(true);
-      return;
-    }
-
     const element = ref.current;
     if (!element) return;
+
+    // If reduced motion, mark as in view asynchronously
+    if (reduced) {
+      const timer = setTimeout(() => {
+        setIsInView(true);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -218,22 +258,44 @@ export function useInViewAnimation(options?: IntersectionObserverInit) {
 export function useLoadingAnimation(isLoading: boolean, minDuration: number = 300) {
   const [showLoading, setShowLoading] = useState(false);
   const startTimeRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     if (isLoading) {
+      // Record start time and schedule showing loading asynchronously
       startTimeRef.current = Date.now();
-      setShowLoading(true);
-    } else if (startTimeRef.current) {
-      const elapsed = Date.now() - startTimeRef.current;
-      const remaining = Math.max(0, minDuration - elapsed);
 
-      const timer = setTimeout(() => {
-        setShowLoading(false);
-        startTimeRef.current = null;
-      }, remaining);
+      timeoutRef.current = setTimeout(() => {
+        setShowLoading(true);
+      }, 0);
 
-      return () => clearTimeout(timer);
+      return () => {
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+      };
     }
+
+    // isLoading is false
+    if (startTimeRef.current === null) {
+      // Never started loading, nothing to do
+      return;
+    }
+
+    // Loading finished, ensure minimum duration is met
+    const elapsed = Date.now() - startTimeRef.current;
+    const remaining = Math.max(0, minDuration - elapsed);
+
+    timeoutRef.current = setTimeout(() => {
+      setShowLoading(false);
+      startTimeRef.current = null;
+    }, remaining);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [isLoading, minDuration]);
 
   return showLoading;

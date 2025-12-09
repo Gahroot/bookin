@@ -20,11 +20,11 @@ interface StickyMobileCTAProps {
   threshold?: number
 }
 
-const StickyMobileCTA = memo(({ 
-  targetElementId = 'cal-embed', 
-  threshold = 0.1 
+const StickyMobileCTA = memo(({
+  targetElementId = 'cal-embed',
+  threshold = 0.1
 }: StickyMobileCTAProps) => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [shouldShowCTA, setShouldShowCTA] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const isMobile = useMediaQuery('(max-width: 640px)')
   const observerRef = useRef<IntersectionObserver | null>(null)
@@ -37,11 +37,11 @@ const StickyMobileCTA = memo(({
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current)
       }
-      
+
       rafRef.current = requestAnimationFrame(() => {
-        element.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         })
       })
     }
@@ -50,7 +50,6 @@ const StickyMobileCTA = memo(({
   useEffect(() => {
     // Only initialize on mobile to save resources
     if (!isMobile) {
-      setIsVisible(false)
       return
     }
 
@@ -66,14 +65,16 @@ const StickyMobileCTA = memo(({
           entries.forEach((entry) => {
             // Show CTA when calendar is not visible
             const shouldShow = !entry.isIntersecting && entry.boundingClientRect.top < 0
-            
-            if (shouldShow !== isVisible) {
-              setIsAnimating(true)
-              setIsVisible(shouldShow)
-              
-              // Reset animation state after transition
-              setTimeout(() => setIsAnimating(false), 300)
-            }
+
+            setShouldShowCTA((prev) => {
+              if (shouldShow !== prev) {
+                setIsAnimating(true)
+                // Reset animation state after transition
+                setTimeout(() => setIsAnimating(false), 300)
+                return shouldShow
+              }
+              return prev
+            })
           })
         })
       },
@@ -94,10 +95,13 @@ const StickyMobileCTA = memo(({
         cancelAnimationFrame(rafRef.current)
       }
     }
-  }, [isMobile, targetElementId, threshold, isVisible])
+  }, [isMobile, targetElementId, threshold])
+
+  // Derive final visibility from mobile state and CTA state
+  const isVisible = isMobile && shouldShowCTA
 
   // Don't render on desktop or when not visible
-  if (!isMobile || !isVisible) return null
+  if (!isVisible) return null
 
   const transformStyle = isVisible ? 'translateY(0)' : 'translateY(100%)'
 

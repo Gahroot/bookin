@@ -58,13 +58,20 @@ export function measureCLS(callback: WebVitalCallback): void {
   if (!('PerformanceObserver' in window)) return
 
   let clsValue = 0
-  let clsEntries: PerformanceEntry[] = []
+  const clsEntries: PerformanceEntry[] = []
+
+  // Layout Shift entries have additional properties not in PerformanceEntry
+  interface LayoutShift extends PerformanceEntry {
+    hadRecentInput: boolean
+    value: number
+  }
 
   try {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!(entry as any).hadRecentInput) {
-          clsValue += (entry as any).value
+        const layoutShift = entry as LayoutShift
+        if (!layoutShift.hadRecentInput) {
+          clsValue += layoutShift.value
           clsEntries.push(entry)
         }
       }

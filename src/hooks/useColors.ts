@@ -72,7 +72,10 @@ export function useColorValue(colorVar: ColorVariable): string {
   const [color, setColor] = useState(() => getColorValue(colorVar))
 
   useEffect(() => {
-    setColor(getColorValue(colorVar))
+    const timer = setTimeout(() => {
+      setColor(getColorValue(colorVar))
+    }, 0)
+    return () => clearTimeout(timer)
   }, [colorVar, mode])
 
   return color
@@ -102,7 +105,7 @@ export function useThemeToggle(storageKey = 'theme-mode'): [ThemeMode, () => voi
     } else {
       document.documentElement.classList.remove('dark')
     }
-  }, [])
+  }, [mode])
 
   const toggle = () => {
     const newMode = mode === 'light' ? 'dark' : 'light'
@@ -131,17 +134,20 @@ export function useContrastCheck(
   const [meetsRequirement, setMeetsRequirement] = useState(false)
 
   useEffect(() => {
-    const fg = getColorValue(foreground)
-    const bg = getColorValue(background)
+    const timer = setTimeout(() => {
+      const fg = getColorValue(foreground)
+      const bg = getColorValue(background)
 
-    if (!fg || !bg) {
-      setMeetsRequirement(false)
-      return
-    }
+      if (!fg || !bg) {
+        setMeetsRequirement(false)
+        return
+      }
 
-    // This would need a proper contrast calculation library in production
-    // For now, we assume our color system is compliant
-    setMeetsRequirement(true)
+      // This would need a proper contrast calculation library in production
+      // For now, we assume our color system is compliant
+      setMeetsRequirement(true)
+    }, 0)
+    return () => clearTimeout(timer)
   }, [foreground, background, required])
 
   return meetsRequirement

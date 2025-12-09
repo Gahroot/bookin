@@ -4,7 +4,7 @@
  * List with staggered entrance animations for children.
  */
 
-import { Children, type ReactNode, cloneElement, isValidElement } from 'react';
+import { Children, type ReactNode, cloneElement, isValidElement, type ReactElement, type CSSProperties } from 'react';
 import { useStaggerAnimation } from '../hooks/useAnimations';
 import { ANIMATION_CLASSES } from '../lib/animations';
 
@@ -24,13 +24,13 @@ export default function StaggeredList({ children, baseDelay = 100, className = '
         const isVisible = visibleItems.has(index);
 
         if (isValidElement(child)) {
-          return cloneElement(child as any, {
+          return cloneElement(child as ReactElement, {
             key: child.key ?? index,
-            className: `${(child.props as any).className || ''} ${
+            className: `${(child.props as { className?: string }).className || ''} ${
               isVisible ? ANIMATION_CLASSES.slideUp : 'opacity-0'
             }`.trim(),
             style: {
-              ...(child.props as any).style,
+              ...(child.props as { style?: CSSProperties }).style,
               animationDelay: isVisible ? `${index * baseDelay}ms` : undefined,
             },
           });

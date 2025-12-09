@@ -29,9 +29,11 @@ const AnimatedCard = forwardRef<HTMLDivElement, AnimatedCardProps>(
     return (
       <div
         ref={(node) => {
-          if (enableEntrance) {
-            (inViewRef as any).current = node;
+          // Handle inViewRef from hook
+          if (enableEntrance && inViewRef) {
+            inViewRef.current = node;
           }
+          // Handle forwarded ref
           if (typeof forwardedRef === 'function') {
             forwardedRef(node);
           } else if (forwardedRef) {
