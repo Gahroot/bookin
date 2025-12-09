@@ -136,7 +136,7 @@ export function useRipple(): [Ripple[], RippleHandlers] {
 export function useToggleAnimation(isChecked: boolean, duration: AnimationDuration = 'micro') {
   const reduced = usePrefersReducedMotion();
   const [animationKey, setAnimationKey] = useState(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (reduced) {
@@ -172,8 +172,8 @@ export function useToggleAnimation(isChecked: boolean, duration: AnimationDurati
 export function usePageTransition(trigger: unknown) {
   const reduced = usePrefersReducedMotion();
   const [transitionPhase, setTransitionPhase] = useState<'idle' | 'exiting' | 'entering'>('idle');
-  const exitTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const enterTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const enterTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (reduced) {
@@ -258,7 +258,7 @@ export function useInViewAnimation(options?: IntersectionObserverInit) {
 export function useLoadingAnimation(isLoading: boolean, minDuration: number = 300) {
   const [showLoading, setShowLoading] = useState(false);
   const startTimeRef = useRef<number | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (isLoading) {
