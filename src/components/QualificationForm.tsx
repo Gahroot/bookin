@@ -178,8 +178,6 @@ export default function QualificationForm({ onComplete }: QualificationFormProps
   const [errors, setErrors] = useState<Partial<Record<keyof QualificationData, string>>>({})
   const [showError, setShowError] = useState(false)
 
-  const progress = ((currentStep + 1) / STEPS.length) * 100
-
   const validateCurrentStep = (): boolean => {
     const step = STEPS[currentStep]
     const newErrors: Partial<Record<keyof QualificationData, string>> = {}
@@ -513,42 +511,6 @@ export default function QualificationForm({ onComplete }: QualificationFormProps
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted-foreground">
-            Step {currentStep + 1} of {STEPS.length}
-          </span>
-          <span className="text-sm font-medium">{Math.round(progress)}%</span>
-        </div>
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <motion.div
-            className="h-full bg-primary"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-          />
-        </div>
-        {/* Step Indicators */}
-        <div className="flex justify-between mt-3">
-          {STEPS.map((step, index) => (
-            <div
-              key={step.id}
-              className={cn(
-                'flex items-center justify-center w-8 h-8 rounded-full text-xs font-medium transition-all',
-                index < currentStep
-                  ? 'bg-primary text-primary-foreground'
-                  : index === currentStep
-                    ? 'bg-primary text-primary-foreground ring-4 ring-primary/20'
-                    : 'bg-muted text-muted-foreground'
-              )}
-            >
-              {index < currentStep ? <CheckCircle className="w-4 h-4" /> : index + 1}
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Step Header */}
       <div className="text-center mb-8">
         <motion.div
