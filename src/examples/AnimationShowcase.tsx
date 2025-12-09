@@ -280,7 +280,7 @@ function ScrollTriggerDemo() {
   return (
     <div className="h-64 flex items-center justify-center bg-muted/50 rounded-lg">
       <div
-        ref={ref as React.RefObject<HTMLDivElement>}
+        ref={ref}
         className={`p-6 bg-card rounded-lg shadow-lg transition-all duration-500 ${
           isInView ? 'animate-slide-up' : 'opacity-0'
         }`}

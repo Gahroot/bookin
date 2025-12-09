@@ -215,10 +215,10 @@ export function usePageTransition(trigger: unknown) {
 /**
  * Hook for intersection observer animations
  */
-export function useInViewAnimation(options?: IntersectionObserverInit) {
+export function useInViewAnimation<T extends HTMLElement = HTMLDivElement>(options?: IntersectionObserverInit) {
   const reduced = usePrefersReducedMotion();
   const [isInView, setIsInView] = useState(false);
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const element = ref.current;

@@ -123,27 +123,27 @@ export default function Home() {
                   <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                     Turn 40+ hours of manual work into automated systems. Answer a few questions to see if we're a good fit.
                   </p>
-
-                  {/* Quick Stats */}
-                  <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-primary">$10M+</span>
-                      <span className="text-muted-foreground">leads generated</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-primary">90%</span>
-                      <span className="text-muted-foreground">manual work eliminated</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-primary">40+</span>
-                      <span className="text-muted-foreground">hours saved/month</span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Qualification Form */}
                 <div className="bg-card rounded-2xl border border-border shadow-sm p-6 sm:p-10">
                   <QualificationForm onComplete={handleQualificationComplete} />
+                </div>
+
+                {/* Quick Stats */}
+                <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-primary">$10M+</span>
+                    <span className="text-muted-foreground">leads generated</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-primary">90%</span>
+                    <span className="text-muted-foreground">manual work eliminated</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-primary">40+</span>
+                    <span className="text-muted-foreground">hours saved/month</span>
+                  </div>
                 </div>
 
                 {/* Trust signals */}
