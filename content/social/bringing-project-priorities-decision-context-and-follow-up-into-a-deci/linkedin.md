@@ -1,23 +1,21 @@
 ---
 source_article: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 status: draft
-hook: A project decision queue should be allowed to stay quiet.
+hook: I built a decision queue that is allowed to be quiet.[^E1]
 ---
 
-DAVE explicitly accepts a quiet queue.[^E1]
+DAVE starts with existing project evidence, without requiring setup forms or business metadata.[^E1]
 
-That is the detail I take most seriously in this project.
+It presents a ranked decision queue, gives access to project context and remembers what has been handled.[^E1]
 
-For an executive review, I judge the demand for attention by its justification. A crowded screen deserves scrutiny. So does an empty one.
+The development record includes a next-best-action card and project roadmaps with meeting gaps.[^E2] It also includes a delivery record and prioritiser.[^E3]
 
-Was there nothing requiring intervention, or was a relevant commitment overlooked? Did each proposed escalation earn its place?
+I subsequently added prepared next actions and a recommendation ledger.[^E4] Delivery planning and meeting connections remain optional additions.[^E1]
 
-My acceptance exercise is straightforward: bring a completed project episode whose decision history your organisation understands. Examine what deserved executive attention at that point and what belonged with the project owner.
+That is the documented accomplishment: a product with these capabilities and a record of the additions made to it.[^E1][^E2][^E3][^E4]
 
-Then ask the vendor to explain both judgments.
+The evidence supplied for this account contains no recorded executive response to a live recommendation or measured operating improvement.[^E1][^E2][^E3][^E4]
 
-The practical standard is justification for attention, followed by accountability after the decision. What warrants intervention? What does accepting, deferring or rejecting the recommendation mean?
+A quiet queue is part of the design, not an error condition.[^E1]
 
-Those are the terms on which I want this kind of system assessed.
-
-To discuss a recurring project decision in your organisation, book a call at nolangrout.com/book
+To discuss this approach for your organisation, book a call at nolangrout.com/book

@@ -1,15 +1,15 @@
 ---
 source_article: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 status: draft
-hook: Should a project decision queue ever be empty? DAVE explicitly allows it.[^E1]
+hook: I built DAVE so its decision queue is allowed to stay quiet.[^E1]
 ---
 
-A crowded review deserves scrutiny. An empty review does too.
+DAVE reads existing project evidence and presents a ranked queue with access to project context.[^E1]
 
-Ask what warrants executive intervention—and what belongs with the project owner.
+It remembers what has been handled.[^E1]
 
-For an acceptance exercise, bring a completed project episode your organisation understands. Examine the proposed treatment against that decision history.
+I added prepared next actions and a recommendation ledger.[^E4]
 
-Then establish what accepting, deferring or rejecting a recommendation means, and who owns the resulting work.
+Those are documented capabilities. The supplied record contains no measured operating improvement or recorded executive response to a live recommendation.[^E1][^E2][^E3][^E4]
 
-To discuss your project review process, book a call at nolangrout.com/book.
+To discuss this approach for your organisation, book a call at nolangrout.com/book.
