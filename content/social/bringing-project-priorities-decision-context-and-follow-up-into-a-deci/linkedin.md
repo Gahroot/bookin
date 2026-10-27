@@ -1,19 +1,23 @@
 ---
 source_article: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 status: draft
-hook: I built a ranked decision queue for my own projects.
+hook: A project decision queue should be allowed to stay quiet.
 ---
 
-DAVE reads existing project evidence and puts decisions into a ranked queue.[^E1]
+DAVE explicitly accepts a quiet queue.[^E1]
 
-The queue includes project context and retains what I have already handled. Those are documented parts of the personal system I built.[^E1]
+That is the detail I take most seriously in this project.
 
-The supporting planning features include project roadmaps and meeting gaps. I also added a delivery record.[^E2][^E3]
+For an executive review, I judge the demand for attention by its justification. A crowded screen deserves scrutiny. So does an empty one.
 
-For follow-up, the build includes prepared next actions and a record of recommendations.[^E4]
+Was there nothing requiring intervention, or was a relevant commitment overlooked? Did each proposed escalation earn its place?
 
-Another explicit design choice: the queue is allowed to be quiet. An empty queue is a valid state.[^E1]
+My acceptance exercise is straightforward: bring a completed project episode whose decision history your organisation understands. Examine what deserved executive attention at that point and what belonged with the project owner.
 
-That is the accomplishment I can describe from the evidence: a decision queue, supporting planning features and a record of handled work. The supplied material contains no measured operating improvement, so there is no documented performance gain to attach to this account.[^E1][^E2][^E3][^E4]
+Then ask the vendor to explain both judgments.
 
-To discuss project priorities, decision context and follow-up in your organisation, book a call at nolangrout.com/book
+The practical standard is justification for attention, followed by accountability after the decision. What warrants intervention? What does accepting, deferring or rejecting the recommendation mean?
+
+Those are the terms on which I want this kind of system assessed.
+
+To discuss a recurring project decision in your organisation, book a call at nolangrout.com/book
