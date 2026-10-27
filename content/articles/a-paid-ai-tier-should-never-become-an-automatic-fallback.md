@@ -5,7 +5,7 @@ type: field-note
 description: Paid AI model approval belongs in the operating policy. A documented change adds confirmation, clearer credit errors, and limits on automatic selection.
 date: 2026-10-27
 updated: 2026-10-27
-status: draft
+status: approved
 audience: COOs, founders, asset managers, and enterprise operators responsible for AI systems
 primary_keyword: paid AI model approval
 secondary_keywords:
@@ -79,6 +79,7 @@ evidence:
     public: true
     ref: Gahroot/ezcoder@a083cf12c452
     url: https://github.com/Gahroot/ezcoder/commit/a083cf12c4525807d6d2c8a499a28e2c55b39cde
+approved_by: auto-review (nolangrout engine)
 ---
 
 ## When does keeping work moving become permission to choose a paid tier?
