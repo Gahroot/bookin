@@ -1,8 +1,8 @@
 ---
-title: Where Partner Work Was Getting Stuck at Anchor Mill Group
+title: When a Partner’s Offer Expires Before They See It
 slug: where-partner-work-was-getting-stuck-at-anchor-mill-group
 type: case-study
-description: At Anchor Mill Group, I closed gaps in partner access, submission notifications and review rules that could leave assigned work unseen, unreviewed or stuck.
+description: A partner offer could expire unseen at Anchor Mill Group. I changed the handoffs from dispatch through review and completion, with explicit rules for each.
 date: 2026-10-27
 updated: 2026-10-27
 status: draft
@@ -10,71 +10,60 @@ project: amg-portal
 audience: COOs, fund executives and operators coordinating external providers
 primary_keyword: partner workflow management
 secondary_keywords:
-  - external provider coordination
-  - partner portal access
-  - submission review workflow
-  - assignment approval
-answer: At Anchor Mill Group, I added password-setting invitations and an account requirement for dispatch.[^E2][^E3] Bulk submissions now alert coordinators and begin review tracking.[^E4] Resubmissions preserve feedback and revision history, while completion rules distinguish rejected items from work still awaiting a decision.[^E1][^E5]
+  - external provider accountability
+  - assignment dispatch
+  - deliverable review
+  - assignment completion
+answer: At Anchor Mill Group, I changed partner dispatch, submission review and completion.[^E1][^E3][^E4][^E5] Dispatch now requires an account, grouped submissions alert coordinators, and final rejections no longer automatically block closure alongside approved work.[^E3][^E4][^E5] Assignments where everything was rejected remain with the coordinator.[^E5]
 hero_image: /images/articles/where-partner-work-was-getting-stuck-at-anchor-mill-group.webp
-hero_alt: Conceptual illustration of partner access, submission and coordinator review connected across an assignment
-faq:
-  - q: What happens if a partner has no portal account?
-    a: Dispatch is blocked and the assignment stays in draft, with a warning explaining the access problem.[^E3]
-  - q: Does submitting several files still alert the coordinator?
-    a: Yes. Each deliverable created through a bulk submission triggers coordinator notification and starts its review clock.[^E4]
-  - q: Can an assignment finish if some items were rejected?
-    a: Yes, provided every non-rejected item has approval and an approved item exists. Assignments with only rejected items remain with the coordinator for a decision.[^E5]
+hero_alt: Conceptual illustration of an unseen partner offer moving through dispatch, review and completion
+faq: []
 cta: book
 claims:
-  - text: Previously, an assignment could be dispatched to a partner without a portal account, starting an offer clock even though the notification was not sent; the offer could expire unseen.
+  - text: Nolan implemented partner dispatch, submission review and assignment completion changes at Anchor Mill Group.
+    kind: capability
+    evidence:
+      - E1
+      - E3
+      - E4
+      - E5
+  - text: At Anchor Mill Group, an offer could expire unseen because dispatch started the response clock for a partner without a portal account, while no notification was sent.
     kind: outcome
     evidence:
       - E3
-  - text: Provisioned users previously received an unseen random password and had no way to sign in.
-    kind: outcome
-    evidence:
-      - E2
-  - text: Bulk submissions could miss coordinator notification.
-    kind: outcome
-    evidence:
-      - E4
-  - text: Rejected deliverables could prevent otherwise approved work from completing its assignment.
-    kind: outcome
-    evidence:
-      - E5
-  - text: Welcome invitations now contain a single-use link through which provisioned partners can set their password.
-    kind: capability
-    evidence:
-      - E2
-  - text: Staff receive invitation delivery status, and an invitation is marked sent only when delivery is confirmed.
-    kind: capability
-    evidence:
-      - E2
-  - text: Dispatch is blocked when a partner lacks a portal account; the assignment remains in draft and staff see an actionable warning.
+  - text: "Nolan made a partner account a condition of dispatch at Anchor Mill Group: without one, dispatch is blocked, the assignment stays in draft and staff receive an actionable warning."
     kind: capability
     evidence:
       - E3
-  - text: Each deliverable created through a bulk submission now triggers coordinator notification and starts its review clock.
+  - text: At Anchor Mill Group, bulk submissions could miss coordinator notification.
+    kind: outcome
+    evidence:
+      - E4
+  - text: Nolan changed bulk submission at Anchor Mill Group so each submitted deliverable notifies the coordinator and starts its review clock.
     kind: capability
     evidence:
       - E4
-  - text: Coordinators can preview a submitted file beside assignment requirements, partner notes and review history.
+  - text: Nolan built a review surface at Anchor Mill Group that places the submitted file beside assignment requirements, partner notes and review history.
     kind: capability
     evidence:
       - E1
-  - text: Revision requests require itemized feedback, and partners answer each point in a resubmission note with the feedback visible beside their upload.
+  - text: At Anchor Mill Group, Nolan made revision requests require itemized feedback and resubmissions require a response to each point; resubmissions also show what changed, connect to the prior version and identify the request they answer.
     kind: capability
     evidence:
       - E1
-  - text: Resubmissions show what changed, link the prior version and identify the revision request they answer, with a chronological review timeline.
-    kind: capability
+  - text: At Anchor Mill Group, final rejected deliverables could prevent an otherwise approved assignment from completing.
+    kind: outcome
     evidence:
-      - E1
-  - text: An assignment completes when every non-rejected item is approved and at least one item is approved; the check also runs after a rejection.
+      - E5
+  - text: Nolan changed assignment completion at Anchor Mill Group to require approval of every non-rejected deliverable and at least one approved deliverable, with the check also running after a rejection.
     kind: capability
     evidence:
       - E5
-  - text: Assignments containing only rejected items remain for the coordinator to resolve.
+  - text: Assignments containing only rejected deliverables remain for the coordinator to resolve.
+    kind: capability
+    evidence:
+      - E5
+  - text: Rejecting the last outstanding deliverable can complete an assignment that meets the approval conditions and open the payment path for finance.
     kind: capability
     evidence:
       - E5
@@ -111,56 +100,54 @@ evidence:
     ref: amg-portal@da249b5c1538
 ---
 
-## Where was partner work getting stuck?
+## How could a partner’s offer expire unseen?
 
-At Anchor Mill Group, an assignment could be dispatched to a partner without a portal account. The offer clock started, but the notification was never sent. The offer could expire unseen.[^E3]
+At Anchor Mill Group, an offer could expire unseen because dispatch started the response clock for a partner without a portal account, while no notification was sent.[^E3]
 
-For an executive coordinating external providers, that raises a basic question: what does “dispatched” actually promise? Before treating silence as a partner’s failure to respond, the organisation should be able to establish whether the partner had a usable route into the work.
+That failure puts an executive in an uncomfortable position: what should silence mean? Before treating a provider as unresponsive, the business should establish that the request had somewhere to go. A response deadline carries an expectation of accountability. The prerequisite for that expectation belongs in the dispatch decision, before anyone starts interpreting the absence of a reply.
 
-Account creation had its own gap. Provisioned users received a random password nobody saw, leaving them without a way to sign in.[^E2] Creating the account and making it usable were separate concerns. I treated both as part of assigning responsibility.
+I made a partner account a condition of dispatch: without one, dispatch is blocked, the assignment stays in draft and staff receive an actionable warning.[^E3]
 
-Further along, bulk submissions could miss coordinator notification.[^E4] The executive question there is about receipt: what should count as handing work back to the organisation? A provider submitting material and a coordinator being alerted to review it are distinct obligations.
+I put the intervention where staff commit the work to an external provider. That is the decision worth challenging. A coordinator should have to resolve the missing prerequisite before passing responsibility across the boundary. For a COO, the acceptance question is about the meaning of the status: what must be true before the organisation is entitled to call an assignment dispatched?
 
-At the end of the process, rejected deliverables could prevent otherwise approved work from completing its assignment.[^E5] That exposed a different question: should a final rejection still count as an outstanding review?
+The offer’s expiry was the strongest reason to make this change. It exposed a response expectation that the business could not reasonably enforce. I chose to address that expectation at its starting point.
 
-These were the boundaries I focused on: access before dispatch, receipt after submission, and a clear decision about completion. I wanted each boundary to have an explicit business rule, with responsibility attached to it.
+## What should happen when a partner submits work?
 
-## What did I change before work could be dispatched?
+Bulk submissions could miss coordinator notification.[^E4] Here, the question of responsibility ran in the other direction: after a provider submitted work, who was expected to act next?
 
-I added welcome invitations containing a single-use link through which provisioned partners can set their password.[^E2] My decision was to treat the invitation as part of bringing a provider into the process, alongside the assignment itself.
+I changed bulk submission so each submitted deliverable notifies the coordinator and starts its review clock.[^E4] Submitting material together should carry the same review obligation as submitting it individually. The provider’s choice of submission method should have no bearing on whether the organisation acknowledges the next decision it owes.
 
-Staff also receive the invitation’s delivery status, and the system marks an invitation as sent only when delivery is confirmed.[^E2] That distinction matters when discussing readiness. A staff member should be precise about whether an invitation was delivered, whether an account exists and whether someone has actually signed in. Those are different milestones; the language used to describe them should stay precise too.
+Review also needs a clear basis for judgment. I built a review surface that places the submitted file beside assignment requirements, partner notes and review history.[^E1]
 
-I then made a portal account a condition of dispatch. When the partner lacks an account, dispatch is blocked, the assignment stays in draft and staff see an actionable warning.[^E3]
+Those materials belong around the approval decision because each answers a different question: what was requested, what was supplied, and what has already been discussed? I chose that arrangement around the coordinator’s responsibility to evaluate the work. The executive standard is whether someone can explain the decision against the original requirement, including when another reviewer needs to understand it later.
 
-I put that decision at the point where responsibility would otherwise pass to the provider. My principle was straightforward: before starting a response expectation, establish the prerequisite for receiving the request.
+I also made revision requests require itemized feedback and resubmissions require a response to each point; resubmissions show what changed, connect to the prior version and identify the request they answer.[^E1]
 
-That is also how I judge an operational warning. It should concern a decision the person is making now. It should explain the missing condition clearly enough for them to resolve it. A warning buried elsewhere in the organisation is a poor basis for holding someone accountable at dispatch.
+This was a decision about the standard of the exchange. A reviewer asking for another attempt should specify what needs attention. A provider returning that attempt should account for the request. Both sides have an obligation to make their part understandable. That is the level at which I judge a revision process: whether the next decision has a clear question to resolve.
 
-## What is different between submission and completion?
+## When should rejected work allow an assignment to finish?
 
-Each deliverable created through a bulk submission now triggers coordinator notification and starts its review clock.[^E4] I treated bulk submission as the same business handoff as an individual upload. The choice to submit several files together should not change who is responsible for reviewing them.
+Final rejected deliverables could prevent an otherwise approved assignment from completing.[^E5]
 
-For the review itself, coordinators can preview the submitted file beside the assignment requirements, partner notes and review history.[^E1] Those are the materials I chose to put around the approval decision: the request, the response and the record of the discussion.
+This required a business decision about the unit of completion. Is an assignment complete only when everything submitted has been accepted? Or can it finish after the organisation has decided the disposition of the work, including material it will not accept? Those are different operating policies. I chose the latter, with an approval requirement that sets a boundary around closure.
 
-Revision requests require itemized feedback. Partners answer each point in a resubmission note, with that feedback visible beside their upload.[^E1] I wanted a request for revision to state what needed an answer. “Please revise” is an instruction I would challenge in any approval process: what, specifically, is the recipient expected to address?
+I changed assignment completion to require approval of every non-rejected deliverable and at least one approved deliverable, with the check also running after a rejection.[^E5]
 
-Resubmissions also show what changed, link the prior version and identify the revision request they answer, with a chronological review timeline.[^E1] The organising principle is the exchange between reviewer and provider. A replacement file belongs in the context of the decision that prompted it.
+The tradeoff deserves explicit attention. A completed assignment should not be read as an endorsement of everything the provider submitted. Item acceptance and assignment closure answer different business questions. Reviewers still need to judge the material on its merits; the closure policy needs to say when that judgment is sufficient to finish the assignment.
 
-Finally, an assignment completes when every non-rejected item is approved and at least one item is approved. That check also runs after a rejection.[^E5] Assignments containing only rejected items remain for the coordinator to resolve.[^E5]
+Assignments containing only rejected deliverables remain for the coordinator to resolve.[^E5] That exception reserves a human decision for a materially different situation. Closing work after accepting part of it is a different proposition from closing work after accepting none. I kept that boundary in the completion policy because the organisation should decide what happens to an unsuccessful assignment.
 
-The distinction behind that rule is between an unresolved decision and a final disposition. I kept the completion condition explicit because “finished” needs a shared meaning across the people assigning, submitting and reviewing the work.
+Rejecting the last outstanding deliverable can therefore complete an assignment that meets the approval conditions and open the payment path for finance.[^E5]
 
-## What should you ask about your own provider workflow?
+That connection makes the definition of completion an executive concern. Review policy should be agreed with the people responsible for the next business decision. The meaning of a terminal status deserves scrutiny before it becomes the basis for action elsewhere in the organisation.
 
-Ask your team to explain the promises behind its status labels. Start with the words executives already use in meetings: assigned, submitted, under review and complete. For each, ask what must be true before the organisation uses that word.
+## What should you ask your organisation or vendor to demonstrate?
 
-For assignment, ask what evidence establishes that the recipient can receive and respond to the request. Who is responsible for checking readiness? At what point does the provider become accountable for a response? Keep those questions tied to the actual dispatch decision.
+Use acceptance questions tied to actual decisions. Ask for a demonstration using your own operating rules, including an exception that needs judgment.
 
-For submission, ask who accepts responsibility next. What constitutes receipt? What happens if that person is unavailable? Ask your vendor to demonstrate the handoff using the ways your providers actually submit work, including grouped submissions.
+- **What entitles us to hold the next person accountable?** Have the team identify the prerequisite for transferring responsibility and who must resolve it.
+- **What constitutes an answer to a review request?** Ask how a reviewer determines whether the provider has addressed the specific issue raised.
+- **What does completion authorise?** Have operations and finance explain the terminal status, including the circumstances that still require a person to decide.
 
-For revision, ask whether the reviewer’s request is specific enough to answer. Then ask what record the next reviewer should use to understand the exchange. The standard should be a defensible decision about the work, with enough context to explain that decision later.
-
-For completion, ask how the organisation treats approved, rejected and unresolved items. Have the people who assign work and the people who review it explain the rule independently. Compare their answers before asking a vendor to implement them.
-
-These are acceptance questions for an operating system. They belong in a COO’s review of the process, alongside the screens and reports. My starting point for that conversation is the handoff: what promise is being made, who becomes responsible, and what must be true before the work moves on?
+Those are the questions I bring to a provider workflow before discussing its screens.

@@ -1,15 +1,15 @@
 ---
 source_article: where-partner-work-was-getting-stuck-at-anchor-mill-group
 status: draft
-hook: A partner’s offer could expire before they ever saw it.
+hook: A partner’s response clock started before they had an account to receive the offer.
 ---
 
-At Anchor Mill Group, dispatch could start the response clock even when the partner had no portal account and received no notification.
+At Anchor Mill Group, that offer could expire unseen. I blocked dispatch when the partner lacked an account, keeping the assignment in draft with an actionable warning.
 
-I added password-setting invitations and blocked dispatch until a partner account existed.
+Bulk submissions now alert the coordinator and start the review clock for each deliverable.
 
-Bulk submissions now alert coordinators and start review tracking. Revision requests require itemized feedback, with responses and version history attached to the exchange.
+Revision requests require itemized feedback. Partners answer each point, with resubmissions connected to the previous version and the request they address.
 
-Completion now depends on approval of every non-rejected item, with an approved item required. Entirely rejected assignments stay with the coordinator.
+Completion requires approval of every non-rejected deliverable and at least one approved deliverable. Entirely rejected assignments remain with the coordinator.
 
-To discuss the handoffs in your provider workflow, book a call at nolangrout.com/book.
+To discuss your partner workflow, book a call at nolangrout.com/book.
