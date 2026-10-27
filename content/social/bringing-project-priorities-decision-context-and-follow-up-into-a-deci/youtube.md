@@ -1,15 +1,15 @@
 ---
 source_article: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 status: draft
-hook: I built DAVE so its decision queue is allowed to stay quiet.[^E1]
+hook: A project reaches the COO. What decision actually belongs there?
 ---
 
-DAVE reads existing project evidence and presents a ranked queue with access to project context.[^E1]
+Start with authority. What is the owner asking the executive to approve, and why is it outside the owner's remit?
 
-It remembers what has been handled.[^E1]
+DAVE allows its decision queue to stay quiet.[^E1] That makes the threshold for intervention worth examining.
 
-I added prepared next actions and a recommendation ledger.[^E4]
+Its ranked queue includes access to project context.[^E1] Ask what justifies the order and what consequence makes the request urgent.
 
-Those are documented capabilities. The supplied record contains no measured operating improvement or recorded executive response to a live recommendation.[^E1][^E2][^E3][^E4]
+It also remembers handled items.[^E1] Define who owns the next obligation after the executive responds.
 
-To discuss this approach for your organisation, book a call at nolangrout.com/book.
+Bring a real project decision to the conversation. Book a call at nolangrout.com/book

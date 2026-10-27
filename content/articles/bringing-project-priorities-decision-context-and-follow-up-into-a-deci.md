@@ -1,40 +1,28 @@
 ---
-title: I Built a Decision Queue That Can Stay Quiet
+title: Who Actually Needs the COO to Decide?
 slug: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 type: field-note
-description: I built DAVE around a decision queue that can stay quiet. Here is the design choice, the documented capability, and the operating proof still needed for COOs.
+description: Nolan Grout examines when project updates deserve executive attention, using DAVE to explore escalation, ownership and a buying standard for COOs and operators.
 date: 2026-10-27
 updated: 2026-10-27
 status: draft
 audience: COOs, fund executives, founders and operators overseeing multiple projects
 primary_keyword: executive decision queue
 secondary_keywords:
-  - project prioritisation
-  - executive attention
-  - decision follow-through
-answer: DAVE combines a ranked decision queue, project context and a record of handled items, while allowing the queue to stay quiet.[^E1] I also added prepared next actions and a recommendation ledger.[^E4] The supplied evidence documents those capabilities; it does not report a measured business improvement.[^E1][^E2][^E3][^E4]
+  - project escalation
+  - executive authority
+  - project accountability
+answer: DAVE permits a ranked decision queue to stay quiet and pairs it with project context and a record of handled items.[^E1] The business question is who needs executive authority. I judge escalation by the decision required, the owner's remit and the consequence of waiting.
 hero_image: /images/articles/bringing-project-priorities-decision-context-and-follow-up-into-a-deci.webp
-hero_alt: Conceptual illustration of an executive decision queue with space left deliberately empty
-faq:
-  - q: Does DAVE need to produce a recommendation every time?
-    a: No. Its documented design accepts a quiet queue as a valid state.[^E1]
-  - q: What evidence is available about the result?
-    a: The supplied record describes the product and documents development additions, including prepared next actions and a recommendation ledger.[^E1][^E4] It contains no measured operating improvement or recorded executive response to a live recommendation.[^E1][^E2][^E3][^E4]
+hero_alt: Conceptual illustration of a COO considering a project decision beside an uncluttered queue
+faq: []
 cta: book
 claims:
-  - text: I built DAVE with an explicit allowance for a quiet decision queue.
+  - text: DAVE explicitly allows its decision queue to be quiet.
     kind: capability
     evidence:
       - E1
-  - text: DAVE reads existing project evidence without requiring setup forms or business metadata.
-    kind: capability
-    evidence:
-      - E1
-  - text: DAVE presents a ranked decision queue.
-    kind: capability
-    evidence:
-      - E1
-  - text: DAVE provides access to project context.
+  - text: DAVE presents a ranked decision queue with access to project context.
     kind: capability
     evidence:
       - E1
@@ -42,23 +30,7 @@ claims:
     kind: capability
     evidence:
       - E1
-  - text: Delivery planning and meeting connections are optional additions to DAVE.
-    kind: capability
-    evidence:
-      - E1
-  - text: I added a next-best-action card and project roadmaps that include meeting gaps.
-    kind: capability
-    evidence:
-      - E2
-  - text: I added a delivery record and prioritiser.
-    kind: capability
-    evidence:
-      - E3
-  - text: I subsequently added prepared next actions and a recommendation ledger.
-    kind: capability
-    evidence:
-      - E4
-  - text: The supplied evidence documents product capabilities and development additions, but contains no recorded executive response to a live recommendation or measured operating improvement.
+  - text: The available record documents capabilities and development additions but reports no measured operating results.
     kind: outcome
     evidence:
       - E1
@@ -96,52 +68,52 @@ evidence:
     url: https://github.com/Gahroot/dave/commit/2a6b633572d4c8f29059d0d9315548f55fb216e0
 ---
 
-## When does a project update deserve your attention?
+## When does a project review become a request for authority?
 
-I built DAVE with an explicit allowance for a quiet decision queue.[^E1] That is the design choice I want an executive to examine first. Before discussing recommendations, summaries or follow-up, decide whether the system is allowed to finish a review without asking you to intervene.
+A project review can leave a COO with an awkward question: am I being informed, asked to decide, or expected to take over? Those are different management situations. A useful review should make the distinction explicit before an executive accepts responsibility for the next move.
 
-For a COO or fund executive, the purpose of reviewing projects is to exercise judgment: authorise a change, settle a conflict, challenge a commitment or leave responsibility where it belongs. My starting point was that boundary between knowing about work and being asked to act on it.
+Consider the difference between an owner reporting a difficulty and an owner requesting a change to an agreed commitment. The difficulty deserves attention within the project. The change may require authority beyond that owner's remit. I want the request to name that boundary. What decision belongs here, and why does it belong with this executive?
 
-I do not want an executive review to become a recital of everything that happened. An update can be informative without containing a request for authority. Treating those as equivalent makes the review's purpose unclear. Is the executive being briefed, being asked to decide, or being made responsible for work already assigned elsewhere?
+Without that distinction, the risk is a review in which every unresolved item becomes the senior person's problem. The executive has to establish whether there is a decision to make before considering the merits of it. Meanwhile, ownership is open to interpretation: did discussing the issue transfer responsibility, or did the original owner retain it?
 
-The business problem behind this project is that ambiguity. I wanted the product to take a position on what deserves consideration. The uncomfortable part of that ambition is accepting an absence of recommendations. A screen full of activity is easy to present. Silence asks the builder to be clear about the standard for escalation.
+That is the business problem I care about in an executive decision queue. Its purpose should be clear enough that the person opening it knows what kind of responsibility they are being asked to exercise.
 
-## What did I build around that boundary?
+## What makes an item deserve escalation?
 
-DAVE reads existing project evidence without requiring setup forms or business metadata.[^E1] I chose an evidence-first starting point. The alternative is to begin by asking an organisation to describe its business again before reviewing the work already recorded. My judgment was to start with that existing record.
+DAVE explicitly allows its decision queue to be quiet.[^E1] That is the implementation choice worth examining. It leaves room for a review that produces no request for intervention. The difficult judgment is deciding when that is appropriate.
 
-That choice carries a tradeoff: the record available to a system deserves scrutiny. A missing commitment cannot be treated as an unimportant commitment. I see this as a responsibility for evaluation, rather than permission to assume that everything consequential has been captured.
+My standard starts with authority. An item deserves escalation when the requested decision exceeds the owner's agreed remit, requires a tradeoff between responsibilities, or asks the executive to accept a consequence that belongs at their level. These are the criteria I bring to evaluating the product; they are not documented rules of its implementation.
 
-DAVE presents a ranked decision queue.[^E1] Ordering is a consequential editorial choice. Putting a request at the top expresses a judgment about what deserves consideration first. I want that judgment assessed against the obligation behind the request, rather than the apparent importance of the project producing it.
+A project being important is insufficient grounds on its own. I want the escalation to explain what the owner cannot legitimately decide. Otherwise, the executive is being asked to interpret urgency without a clear request attached.
 
-DAVE provides access to project context.[^E1] For me, the standard for useful background is the material needed to judge the proposed intervention. A long history is not automatically a good explanation. The reviewer needs a clear connection between the underlying situation and the decision being requested.
+The opposite mistake also deserves scrutiny. An absence of requests should invite a question about coverage: was the relevant work examined, and was an issue left with someone authorised to resolve it? I treat those as questions for review, rather than drawing reassurance from the appearance of the screen.
 
-DAVE remembers what has been handled.[^E1] That introduces an equally important management boundary: dealing with a recommendation and completing the resulting work have different meanings. An organisation needs to define its own standard for completion before treating a disposition as proof of delivery.
+The tradeoff is between unnecessary intervention and an obligation that goes unaddressed. Neither a busy queue nor an empty one settles that tradeoff. The standard has to come from the organisation's responsibilities and commitments.
 
-Delivery planning and meeting connections are optional additions to DAVE.[^E1] I kept that expansion a separate choice. My rule for adding another source is to name the decision it should inform. Access to more material is insufficient justification by itself.
+## What information belongs beside the request?
 
-## What does the development record actually show?
+DAVE presents a ranked decision queue with access to project context.[^E1] For an executive, the important question is what justifies the proposed order. I want to understand the consequence of waiting, the commitment at stake and the authority being requested.
 
-The concrete implementation story is a sequence of additions. I added a next-best-action card and project roadmaps that include meeting gaps.[^E2] This put a proposed response alongside a view of the project ahead. My concern at that stage was the substance of the request: what, specifically, is being put before the reviewer?
+A dramatic description should carry no special weight. A routine-looking issue may involve a commitment the owner cannot change. An alarming update may still fall squarely within an existing owner's responsibility. The review should address that distinction in the language of the business.
 
-I also added a delivery record and prioritiser.[^E3] Those additions reflect another part of the same design problem. A recommendation needs to be considered in relation to the work it concerns and the competing demands around it. I judge the quality of a proposed action by that relationship, rather than by how decisive its wording sounds.
+I also want enough background to challenge the request. What has already been agreed? What remains uncertain? Which part of the proposed response requires approval? An executive should be able to question the recommendation without having to reconstruct the entire project conversation.
 
-I subsequently added prepared next actions and a recommendation ledger.[^E4] This is where my implementation emphasis moved beyond presenting a request. I wanted the proposed response and the record of recommendations to be explicit parts of the product. That is a concrete development decision; it is not evidence that someone accepted a recommendation or carried it through.
+That is my standard for context: material relevant to the judgment in front of the reviewer. A comprehensive history may be useful elsewhere. Here, the test is whether the executive can explain why they are intervening, what they are authorising and which responsibility remains with the owner afterward.
 
-The supplied evidence documents product capabilities and development additions, but contains no recorded executive response to a live recommendation or measured operating improvement.[^E1][^E2][^E3][^E4] There is no supported client episode to narrate here. Attaching an invented escalation, owner or successful intervention would turn a documented build into an unsupported case study.
+## What is different in the documented product?
 
-The accomplishment is therefore specific: the product described here has been built, and its development record identifies the additions above. Whether it improves an organisation's operating decisions remains an evaluation to conduct.
+DAVE remembers what has been handled.[^E1] That capability raises a management question about the meaning of a response. An executive may approve a request, decline it, ask for more information or return it to its owner. The organisation should define what each response requires next.
 
-## What should you require before relying on this approach?
+I keep that definition separate from proof of completion. Approval is an exercise of authority; delivery is an obligation someone must fulfil. A useful review of the product should examine how the business interprets that distinction before relying on the record as an account of progress.
 
-My next standard is an operating test with a known decision history. The organisation should choose the episode and establish the expected treatment before reviewing the system's response. That keeps the assessment anchored in business judgment.
+The available record documents capabilities and development additions but reports no measured operating results.[^E1][^E2][^E3][^E4] The unresolved question is how the product's treatment of actual work compares with the organisation's judgment about intervention.
 
-I would include ordinary work that properly remained with its owner. The expected result should be written down in advance: no executive intervention, with a reason grounded in the authority and commitments already in place. This is a proposed acceptance test, not a reported DAVE result.
+## What should you ask before buying an executive decision system?
 
-Keep the closing checklist short:
+Ask the vendor to examine a real project episode with the people responsible for it. Establish who held the authority, what decision was required and what consequence justified escalation. Then judge the proposed treatment against those facts.
 
-- **Grounding:** Does the proposed intervention follow from the available record, and is any material uncertainty visible?
-- **Authority:** Does the request belong with this executive, or can the existing owner resolve it within their remit?
-- **Disposition:** After the executive responds, what responsibility exists, who holds it, and what constitutes completion?
+Include work that properly stayed with its owner. That is a necessary part of assessing the boundary. A demonstration built entirely around urgent exceptions leaves an important management question unanswered: when should the executive leave responsibility where it already sits?
 
-Those are the terms on which I want this work judged. The buying decision should turn on whether the organisation agrees with the system's treatment of real work. A polished recommendation is an invitation to examine the judgment behind it. It is not the operating result.
+My buying criterion is simple: can we agree on why this request belongs with this person, at this moment? Follow that with a clear account of who owns the next obligation after the executive responds.
+
+That is the conversation I want with a COO or fund executive. Start with a decision from your own organisation. Name the authority it required. Then ask whether the system's treatment respects the way you intend the business to be run.

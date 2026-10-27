@@ -1,21 +1,21 @@
 ---
 source_article: bringing-project-priorities-decision-context-and-follow-up-into-a-deci
 status: draft
-hook: I built a decision queue that is allowed to be quiet.[^E1]
+hook: When a project reaches the COO, what exactly is being asked?
 ---
 
-DAVE starts with existing project evidence, without requiring setup forms or business metadata.[^E1]
+An update, a request for approval and an unresolved task deserve different treatment.
 
-It presents a ranked decision queue, gives access to project context and remembers what has been handled.[^E1]
+My standard for escalation starts with authority: what decision exceeds the owner's remit, and why does it belong with this executive now?
 
-The development record includes a next-best-action card and project roadmaps with meeting gaps.[^E2] It also includes a delivery record and prioritiser.[^E3]
+DAVE permits its decision queue to remain quiet.[^E1] That choice puts the threshold for intervention at the centre of the discussion.
 
-I subsequently added prepared next actions and a recommendation ledger.[^E4] Delivery planning and meeting connections remain optional additions.[^E1]
+It also brings together ranked requests and project context, and retains a record of handled items.[^E1]
 
-That is the documented accomplishment: a product with these capabilities and a record of the additions made to it.[^E1][^E2][^E3][^E4]
+The buying conversation should start with a real project episode. Establish who held the authority, what commitment was at stake and what justified bringing the matter upward.
 
-The evidence supplied for this account contains no recorded executive response to a live recommendation or measured operating improvement.[^E1][^E2][^E3][^E4]
+Include an issue that properly remained with its owner. Then ask who carries the next obligation after an executive responds.
 
-A quiet queue is part of the design, not an error condition.[^E1]
+Those are the judgments I want to examine with operators evaluating an executive decision system.
 
-To discuss this approach for your organisation, book a call at nolangrout.com/book
+To discuss a decision from your organisation, book a call at nolangrout.com/book
