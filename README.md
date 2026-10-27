@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# nolangrout.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal authority site for Nolan Grout: AI business systems and AI agents for enterprises.
+Next.js 16 App Router, fully statically generated, deployed on Vercel from `master`.
 
-Currently, two official plugins are available:
+## Quick start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+nvm use            # Node 24
+npm ci
+npm run dev        # http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Task                     | Command                                             |
+| ------------------------ | --------------------------------------------------- |
+| Dev server               | `npm run dev`                                       |
+| Production build / serve | `npm run build` / `npm start`                       |
+| Validate content         | `npm run content:check`                             |
+| Lint / typecheck         | `npm run lint` / `npm run typecheck`                |
+| Tests                    | `npm test`                                          |
+| Format                   | `npm run format` / `npm run format:check`           |
+| Lighthouse (mobile)      | `npx @lhci/cli autorun` (uses `.lighthouserc.json`) |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Layout
+
 ```
+content/            Markdown + YAML source of truth (projects, articles, social). See CONTRACT in the goal docs.
+scripts/            content-check.mjs validator (CI + engine)
+engine/             Railway service (separate package)
+src/app/            Routes: /, /work, /work/[slug], /writing, /writing/[slug], /demos/portfolio-risk,
+                    /about, /book, /privacy, 404, /api/lead, /api/event, /og/*, sitemap, robots,
+                    llms.txt, llms-full.txt, feed.xml
+src/components/     UI (server components by default; client: Analytics, ThemeToggle, TagFilter, book/*, demo/*)
+src/lib/content/    Build-time loader: yaml frontmatter + remark/rehype; only `status: approved` articles render
+src/lib/analytics/  Cookieless events (sendBeacon) and first/last-touch attribution in localStorage `ng_attr`
+src/lib/lead/       Lead validation + CRM payload
+src/lib/demo/       Deterministic synthetic portfolio + risk ranking
+src/test/           Vitest setup and content fixtures
+```
+
+## Environment (server-only, set in Vercel)
+
+| Var                  | Purpose                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `CRM_API_KEY`        | CRM webhook key. Never exposed to the client.                                                         |
+| `CRM_WEBHOOK_URL`    | Optional; defaults to the voice-noob website-leads webhook.                                           |
+| `ENGINE_URL`         | Engine base URL. Enables the `/api/event` rewrite and lead forward; unset = `/api/event` returns 204. |
+| `SITE_INGEST_SECRET` | Sent as `x-site-secret` when forwarding leads to the engine.                                          |
+
+## Design
+
+Glass system ported from triten-os (`src/app/globals.css`): `light-dark()` tokens, ambient glow
+behind the page, glass for floating chrome (header, CTAs, answer box), solid `surface-card` for
+content. Light/dark follows the system; the header toggle saves a choice in localStorage `ng_theme`.
+Respects reduced motion, reduced transparency and forced colours.

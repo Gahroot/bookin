@@ -28,3 +28,10 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.lighthouseci
+.lighthouse
+screenshots

@@ -1,0 +1,15 @@
+{
+  "sources": [
+    { "id": "triten-os", "kind": "github", "repo": "Gahroot/triten-os", "project": "triten-os", "client": "Triten", "public": false },
+    { "id": "easefolio", "kind": "github", "repo": "Gahroot/easefolio", "project": "black-mountain-fund", "client": "Black Mountain Fund", "public": false },
+    { "id": "black-mountain-fund", "kind": "github", "repo": "Black-Mountain-Investment-Group/black-mountain-fund", "project": "black-mountain-fund", "client": "Black Mountain Fund", "public": false, "tokenEnv": "GITHUB_TOKEN_BMIG" },
+    { "id": "amg-portal", "kind": "github", "repo": "Gahroot/amg-portal", "project": "amg-portal", "client": "Anchor Mill Group", "public": false },
+    { "id": "mom317", "kind": "github", "repo": "Gahroot/mom317", "project": "back2sleepnow", "client": "Back2SleepNow", "public": true },
+    { "id": "prestyj-website", "kind": "github", "repo": "Gahroot/Prestyj-website", "project": "prestyj", "client": "Prestyj", "public": true },
+    { "id": "ezcoder", "kind": "github", "repo": "Gahroot/ezcoder", "project": "ez-coder", "client": "EZ Coder", "public": true },
+    { "id": "dave", "kind": "github", "repo": "Gahroot/dave", "project": "dave", "client": "Personal project", "public": true },
+    { "id": "worklog", "kind": "worklog", "repo": "Gahroot/nolan-worklog", "dir": "reports", "public": false,
+      "projectMap": { "triten-os": "triten-os", "easefolio": "black-mountain-fund", "black-mountain-fund": "black-mountain-fund", "amg-portal": "amg-portal", "mom317": "back2sleepnow", "Prestyj-website": "prestyj", "prestyj": "prestyj", "ezcoder": "ez-coder", "dave": "dave" },
+      "clients": { "triten-os": "Triten", "black-mountain-fund": "Black Mountain Fund", "amg-portal": "Anchor Mill Group", "back2sleepnow": "Back2SleepNow", "prestyj": "Prestyj", "ez-coder": "EZ Coder", "dave": "Personal project" } }
+  ]
+}

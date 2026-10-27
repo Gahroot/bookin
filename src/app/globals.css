@@ -1,0 +1,393 @@
+@import 'tailwindcss';
+
+/* Tokens ported from the triten-os "glass and light" system: a cool canvas (light) or deep navy
+   (dark) under an ambient glow, solid content surfaces, and see-through chrome. Each colour is a
+   light-dark() pair resolved by the root color-scheme; data-theme pins one. */
+
+@theme inline {
+  --font-sans: var(--font-instrument), 'Avenir Next', system-ui, sans-serif;
+  --font-mono: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-action-ink: var(--action-ink);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-control-line: var(--control-line);
+  --color-focus: var(--focus);
+  --color-success: var(--status-success);
+  --color-attention: var(--attention);
+  --color-danger: var(--danger);
+  --radius-control: var(--radius-control);
+  --radius-panel: var(--radius-panel);
+  --radius-region: var(--radius-region);
+  --radius-card: var(--radius-card);
+}
+
+:root {
+  color-scheme: light dark;
+  --brand-blue: #2d6c95;
+  --brand-blue-deep: #25597c;
+  --brand-ink: #25353d;
+  --canvas: light-dark(#f3f6f9, #0b1117);
+  --surface: light-dark(#ffffff, #121b22);
+  --surface-muted: light-dark(#e9eef2, #1a252e);
+  --ink: light-dark(var(--brand-ink), #e6edf1);
+  --ink-muted: light-dark(#56636c, #9badb8);
+  --line: light-dark(rgb(29 43 51 / 0.11), rgb(255 255 255 / 0.09));
+  --line-strong: light-dark(rgb(29 43 51 / 0.3), rgb(255 255 255 / 0.24));
+  --control-line: light-dark(#7d878e, #6b7a85);
+  --action: light-dark(var(--brand-blue), #7cb8e4);
+  --action-hover: light-dark(var(--brand-blue-deep), #9ccbee);
+  --action-ink: light-dark(#ffffff, #06141d);
+  --focus: light-dark(#0b62d6, #66adff);
+  --attention: light-dark(#a55d00, #f0a54a);
+  --danger: light-dark(#b42318, #f2877b);
+  --status-success: light-dark(#1f6b4f, #4cc38a);
+  --radius-control: 0.625rem;
+  --radius-panel: 0.875rem;
+  --radius-region: 1.25rem;
+  --radius-card: 1.5rem;
+  --glass: light-dark(rgb(255 255 255 / 0.58), rgb(20 30 38 / 0.56));
+  --glass-strong: light-dark(rgb(255 255 255 / 0.88), rgb(18 27 34 / 0.9));
+  --glass-control: light-dark(rgb(255 255 255 / 0.62), rgb(255 255 255 / 0.06));
+  --glass-hover: light-dark(rgb(29 43 51 / 0.06), rgb(255 255 255 / 0.07));
+  --glass-selected: light-dark(rgb(255 255 255 / 0.92), rgb(255 255 255 / 0.1));
+  --glass-blur: blur(22px) saturate(160%);
+  --glass-rim:
+    inset 0 1px 0 light-dark(rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.09)),
+    inset 0 0 0 1px light-dark(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.05)),
+    0 0 0 1px light-dark(rgb(16 32 44 / 0.07), rgb(0 0 0 / 0.4)),
+    0 12px 32px -16px light-dark(rgb(16 32 44 / 0.22), rgb(0 0 0 / 0.65));
+  --glass-rim-small:
+    inset 0 1px 0 light-dark(rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.1)),
+    0 0 0 1px light-dark(rgb(16 32 44 / 0.08), rgb(255 255 255 / 0.07)),
+    0 2px 6px -2px light-dark(rgb(16 32 44 / 0.16), rgb(0 0 0 / 0.5));
+  --card-shadow:
+    0 0 0 1px light-dark(rgb(16 32 44 / 0.07), rgb(255 255 255 / 0.07)),
+    0 1px 2px light-dark(rgb(16 32 44 / 0.04), rgb(0 0 0 / 0.3)),
+    0 10px 28px -18px light-dark(rgb(16 32 44 / 0.24), rgb(0 0 0 / 0.6));
+  --glow-a: light-dark(rgb(45 108 149 / 0.2), rgb(54 128 186 / 0.34));
+  --glow-b: light-dark(rgb(92 170 196 / 0.16), rgb(45 108 149 / 0.24));
+  --glow-c: light-dark(rgb(249 198 18 / 0.07), rgb(249 198 18 / 0.05));
+  --rail: min(100% - 2.5rem, 72rem);
+  --duration-fast: 100ms;
+  --duration-standard: 170ms;
+  --ease-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+html {
+  min-width: 320px;
+  background: var(--canvas);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    color var(--duration-fast) var(--ease-productive),
+    background-color var(--duration-standard) var(--ease-productive),
+    border-color var(--duration-standard) var(--ease-productive),
+    box-shadow var(--duration-standard) var(--ease-productive),
+    transform var(--duration-standard) var(--ease-productive),
+    opacity var(--duration-fast) var(--ease-productive);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--action-ink);
+  background: var(--action);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+  letter-spacing: -0.025em;
+}
+p {
+  text-wrap: pretty;
+}
+
+.rail {
+  width: var(--rail);
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.65rem 0.9rem;
+  border-radius: var(--radius-control);
+  color: var(--action-ink);
+  background: var(--action);
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+@utility glass {
+  background-color: var(--glass);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-rim);
+}
+@utility glass-strong {
+  background-color: var(--glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-rim);
+}
+@utility glass-control {
+  background-color: var(--glass-control);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-rim-small);
+}
+@utility surface-card {
+  background-color: var(--surface);
+  box-shadow: var(--card-shadow);
+}
+
+/* The ambient glow: brand blue from the top right, a cooler wash bottom left, a whisper of gold. */
+.atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+.atmosphere::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(62% 52% at 92% -8%, var(--glow-a), transparent 72%),
+    radial-gradient(50% 48% at -6% 106%, var(--glow-b), transparent 74%),
+    radial-gradient(34% 30% at 100% 100%, var(--glow-c), transparent 80%);
+  content: '';
+  pointer-events: none;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.15rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn-primary {
+  color: var(--action-ink);
+  background: var(--action);
+  box-shadow: 0 8px 22px -12px var(--action);
+}
+.btn-primary:hover {
+  background: var(--action-hover);
+}
+.btn-quiet {
+  color: var(--ink);
+  background-color: var(--glass-control);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-rim-small);
+}
+.btn-quiet:hover {
+  background-color: var(--glass-selected);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.eyebrow {
+  color: var(--action);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+.card-link:hover {
+  transform: translateY(-2px);
+}
+
+/* Theme toggle artwork */
+:root[data-theme='light'] .theme-dark-only,
+:root[data-theme='dark'] .theme-light-only {
+  display: none;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .theme-dark-only {
+    display: none;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-light-only {
+    display: none;
+  }
+}
+
+/* Long-form article body */
+.prose {
+  font-size: 1.075rem;
+  line-height: 1.75;
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h2 {
+  margin-top: 2.2em;
+  font-size: 1.5rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+.prose h3 {
+  margin-top: 1.8em;
+  font-size: 1.2rem;
+  font-weight: 640;
+}
+.prose a {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose blockquote {
+  padding-left: 1em;
+  border-left: 3px solid var(--action);
+  color: var(--ink-muted);
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+.prose pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: var(--radius-panel);
+  background: var(--surface-muted);
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose th,
+.prose td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-panel);
+}
+.ev-ref a {
+  margin-left: 0.15em;
+  padding: 0 0.3em;
+  border-radius: 0.35em;
+  background: var(--glass-hover);
+  font-size: 0.72em;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-link:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass: var(--surface);
+    --glass-strong: var(--surface);
+    --glass-control: var(--surface);
+    --glass-blur: none;
+  }
+  .atmosphere::before {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  :where(.glass, .glass-strong, .glass-control, .surface-card, .btn):not(:focus-visible) {
+    outline: 1px solid CanvasText;
+    outline-offset: -1px;
+  }
+  .atmosphere::before {
+    display: none;
+  }
+}

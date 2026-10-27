@@ -1,6 +1,11 @@
 node_modules
+.next
+out
 dist
-build
 *.lock
 .env
 .env.local
+package-lock.json
+engine
+content
+scripts

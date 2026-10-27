@@ -1,0 +1,20 @@
+{
+  "name": "nolangrout-engine",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "pg": "^8.13.1",
+    "sharp": "0.35.5",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "pg-mem": "^3.0.5"
+  }
+}
