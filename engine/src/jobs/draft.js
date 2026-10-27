@@ -9,7 +9,12 @@ import { evidenceByIds } from '../evidence.js';
 import { evidenceEntries, writeArticle, reviseArticle, buildFiles, localCheck } from '../article.js';
 import { completeJson } from '../llm.js';
 import { generateHero } from '../image.js';
-import { existingContent } from '../existing.js';
+import { existingContent, coveredBy, readRepoFile } from '../existing.js';
+import { jaccard } from '../content.js';
+import { MIN_DRAFT_SCORE } from './discover.js';
+
+export const EXEMPLAR = 'content/articles/portfolio-risk-review-in-minutes-with-chatgpt.md';
+const readExemplar = ({ env }) => readRepoFile(env.WRITER_EXEMPLAR || EXEMPLAR, { env });
 import { autoPublish, gateOne } from './gate.js';
 
 export const LOCAL_ROUNDS = 2;
@@ -24,8 +29,8 @@ export async function writeFilesTo(dir, files) {
 }
 
 /** Writes + locally self-revises. Returns { ok, raw, built, issues }. */
-export async function produce({ acc, entries, rows, project, today, slug, raw: start, feedback = [], db, env, log, completeImpl, rounds = LOCAL_ROUNDS }) {
-  let raw = start || await writeArticle({ acc, entries, db, env, log, completeImpl });
+export async function produce({ acc, entries, rows, project, today, slug, raw: start, feedback = [], exemplar = null, db, env, log, completeImpl, rounds = LOCAL_ROUNDS }) {
+  let raw = start || await writeArticle({ acc, entries, db, env, log, exemplar, completeImpl });
   let issues = feedback;
   for (let round = 0; ; round++) {
     if (issues.length) {
@@ -42,7 +47,7 @@ export async function produce({ acc, entries, rows, project, today, slug, raw: s
 }
 
 const defaultDeps = () => ({ withCheckout: GH.withCheckout, contentCheck: GH.contentCheck, commitAndPush: GH.commitAndPush, gh: GH.gh,
-  completeJson, generateHero, existingContent, gate: gateOne });
+  completeJson, generateHero, existingContent, readExemplar, gate: gateOne });
 
 export async function run({ db, env = process.env, log = console, deps: d = {} }) {
   if (!GH.githubConfigured(env)) return { skipped: 'not configured: GITHUB_TOKEN (needed to open the article PR)' };
@@ -55,13 +60,30 @@ export async function run({ db, env = process.env, log = console, deps: d = {} }
   const projectSlugs = new Set(content.projects.map((p) => p.slug));
   let acc;
   if (!art) {
-    acc = (await db.query("SELECT * FROM accomplishments WHERE status = 'open' ORDER BY score DESC, id LIMIT 1")).rows[0];
-    if (!acc) return { skipped: 'no open accomplishments (discover has nothing new)' };
-    const ids = typeof acc.evidence_ids === 'string' ? JSON.parse(acc.evidence_ids) : acc.evidence_ids;
-    const rows = await evidenceByIds(db, ids);
-    if (!rows.length) { await db.query("UPDATE accomplishments SET status = 'dropped', status_reason = 'evidence missing', updated_at = now() WHERE id = $1", [acc.id]); return { skipped: 'accomplishment evidence missing' }; }
+    // Only executive-relevant accomplishments (score >= 7) are drafted; anything an existing article already covers
+    // (any status, drafts included) is marked covered and skipped.
+    const covered = [];
+    let ids, rows;
+    for (;;) {
+      const evLen = (a) => (typeof a.evidence_ids === 'string' ? JSON.parse(a.evidence_ids) : a.evidence_ids || []).length;
+      acc = (await db.query(`SELECT * FROM accomplishments WHERE status = 'open' AND exec_score >= ${MIN_DRAFT_SCORE} ORDER BY exec_score DESC, id`)).rows
+        .sort((a, b) => b.exec_score - a.exec_score || evLen(b) - evLen(a) || a.id - b.id)[0];
+      if (!acc) {
+        const best = (await db.query("SELECT MAX(exec_score) AS m FROM accomplishments WHERE status = 'open'")).rows[0];
+        return { skipped: `no open accomplishment scores >= ${MIN_DRAFT_SCORE} for executive relevance (best open: ${best && best.m != null ? best.m : 'none'})`, ...(covered.length ? { covered } : {}) };
+      }
+      ids = typeof acc.evidence_ids === 'string' ? JSON.parse(acc.evidence_ids) : acc.evidence_ids;
+      rows = await evidenceByIds(db, ids);
+      if (!rows.length) { await db.query("UPDATE accomplishments SET status = 'dropped', status_reason = 'evidence missing', updated_at = now() WHERE id = $1", [acc.id]); continue; }
+      const cov = coveredBy(acc, rows.map((r) => r.ref), content.articles, { jaccard });
+      if (!cov) break;
+      await db.query("UPDATE accomplishments SET status = 'covered', status_reason = $2, updated_at = now() WHERE id = $1", [acc.id, `already covered by content/articles/${cov.slug}.md (${cov.why})`]);
+      covered.push({ id: acc.id, by: cov.slug });
+    }
     const entries = evidenceEntries(rows);
-    const res = await produce({ acc, entries, rows, project: projectSlugs.has(acc.project) ? acc.project : null, today, db, env, log, completeImpl: deps.completeJson });
+    let exemplar = null;
+    try { exemplar = await deps.readExemplar({ env }); } catch (e) { log.error('[draft] exemplar', e.message); }
+    const res = await produce({ acc, entries, rows, exemplar, project: projectSlugs.has(acc.project) ? acc.project : null, today, db, env, log, completeImpl: deps.completeJson });
     if (!res.ok) {
       await db.query("UPDATE accomplishments SET status = 'dropped', status_reason = $2, updated_at = now() WHERE id = $1", [acc.id, `local lint failed: ${res.issues.join('; ').slice(0, 900)}`]);
       log.log(`[draft] dropped accomplishment ${acc.id}: local lint failed`);

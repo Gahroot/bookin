@@ -20,7 +20,8 @@ async function setup(fx) {
   await insertEvidence(db, data.evidence.map((e) => ({ id: e.ref, source_id: 's', kind: e.kind, text: `${e.title}. Evidence for the claims.`, ref: e.ref, public: e.public, url: e.url })));
   return { db, claims: data.claims };
 }
-function deps(fx, { verdict = 'supported', calls }) {
+const scores = (n) => JSON.stringify(Object.fromEntries(['executive_relevance', 'distinctiveness', 'clarity', 'repetition'].map((d) => [d, { score: n, reason: `r${n}` }])));
+function deps(fx, { verdict = 'supported', editor = 9, calls }) {
   return {
     withCheckout: (fn) => fn(fx.dir),
     contentCheck: realContentCheck,
@@ -28,7 +29,7 @@ function deps(fx, { verdict = 'supported', calls }) {
     headSha: async () => 'sha2',
     upsertIssue: async (i) => { calls.push(['issue', i.label]); },
     sleep: async () => {}, now: () => 0,
-    complete: async (s, p) => JSON.stringify({ verdicts: JSON.parse(p.split('Claims with their evidence:\n')[1].split('\n\nAll listed')[0]).map((it) => ({ index: it.index, verdict, reason: 'r' })), unlisted: [], confidential: [] }),
+    complete: async (s, p) => /EDITOR/.test(s) ? (calls.push('editor'), scores(editor)) : JSON.stringify({ verdicts: JSON.parse(p.split('Claims with their evidence:\n')[1].split('\n\nAll listed')[0]).map((it) => ({ index: it.index, verdict, reason: 'r' })), unlisted: [], confidential: [] }),
     gh: async (method, route, body) => {
       calls.push([method, route.replace('/repos/Gahroot/bookin', '')]);
       if (route.endsWith('/files?per_page=100')) return [{ filename: REL, status: 'added' }];
@@ -79,5 +80,36 @@ test('gate: content-check script missing -> fails closed (held, no merge)', asyn
     assert.equal(r.outcome, 'held');
     assert.match(r.why, /content-check/);
     assert.ok(!calls.some((c) => c[0] === 'PUT' || c[0] === 'push'));
+  } finally { await fx.cleanup(); }
+});
+
+test('gate: editor below the bar -> self-revise rounds count, then PR closed, accomplishment rejected_quality, no merge', async () => {
+  const fx = await fixtureRepo();
+  try {
+    const { db } = await setup(fx);
+    await db.query(`INSERT INTO accomplishments (fingerprint, title, evidence_ids, status, article_slug, exec_score) VALUES ('f','t','[]','drafted',$1,8)`, [SLUG]);
+    await db.query(`INSERT INTO articles (slug, status) VALUES ($1, 'draft')`, [SLUG]);
+    const calls = [];
+    const r = await processPr(db, pr, { env, deps: deps(fx, { editor: 6, calls }), log: quiet });
+    assert.equal(r.outcome, 'rejected');
+    assert.ok(calls.some((c) => c[0] === 'PATCH' && c[1] === '/pulls/9'), 'PR closed');
+    assert.ok(!calls.some((c) => c[0] === 'PUT' || c[0] === 'push'));
+    const comment = calls.find((c) => c[0] === 'POST' && c[1] === '/issues/9/comments');
+    assert.ok(comment);
+    assert.equal((await db.query('SELECT status FROM accomplishments')).rows[0].status, 'rejected_quality');
+    assert.equal((await db.query('SELECT status FROM articles')).rows[0].status, 'rejected_quality');
+    const g = (await db.query("SELECT outcome, editor FROM gate_results")).rows[0];
+    assert.equal(g.outcome, 'rejected');
+    assert.equal(g.editor[SLUG].average, 6);
+    assert.equal(await processPr(db, pr, { env, deps: deps(fx, { calls: [] }), log: quiet }), null);
+  } finally { await fx.cleanup(); }
+});
+
+test('gate: editor average must reach 8 even when every score is 7', async () => {
+  const fx = await fixtureRepo();
+  try {
+    const { db } = await setup(fx);
+    const r = await processPr(db, pr, { env, deps: deps(fx, { editor: 7, calls: [] }), log: quiet });
+    assert.equal(r.outcome, 'rejected');
   } finally { await fx.cleanup(); }
 });

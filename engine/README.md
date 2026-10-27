@@ -23,6 +23,14 @@ It does two jobs:
 
 Every run is written to `job_runs`. A failed run is retried 3 times with backoff and then opens or updates an `engine-alert` issue. Missed slots are caught up on boot (up to 8 days back), and a lock stops runs overlapping. A job whose prerequisites are missing is recorded as `skipped` with the reason. When Codex is unavailable the job is recorded as `deferred` and retried hourly, with no alert.
 
+## Quality bar
+
+- **Discover** scores each accomplishment 1-10 for executive relevance (rubric in `src/jobs/discover.js`: 9-10 costly operating problem solved with evidenced outcome across several items/days; 7-8 clear business problem/outcome an executive recognises; 4-6 narrow/engineer-only; 1-3 tool-internal configuration, toggles, refactors, minor features). Code caps single-evidence clusters at 6 and takes 1 off single-day clusters without a worklog outcome. Score + rationale are stored (`exec_score`, `score_rationale`). **Below 7 is never drafted.**
+- **Dedupe**: an accomplishment is `covered` when half its evidence refs are already cited by any `content/articles` file (any status, drafts included) or its title matches one; it is never redrafted.
+- **Writer**: problem -> what changed -> outcome -> what it means for you; one seed article (`WRITER_EXEMPLAR`, default `content/articles/portfolio-risk-review-in-minutes-with-chatgpt.md`) is passed as a style exemplar. Local checks reject claims stated twice, answer/FAQ sentences copied from the body, repeated sentences, hedging chains and footnote definitions (the site renders footnotes from evidence titles).
+- **Editor gate** (fresh Codex call, separate from the fact-check): executive relevance, distinctiveness, clarity, repetition, 1-10 each with reasons, posted on the PR. Pass only if every score >= 7 and the average >= 8. A failure self-revises (shares the 3-round limit); still failing -> the PR is **closed**, the branch deleted, and the accomplishment marked `rejected_quality`. Nothing merges.
+- `/api/admin/status` shows `counts.accomplishments` (draftable, best_open_score, covered, rejected_quality), `counts.topAccomplishments`, `counts.lastEditor` and `config.quality`.
+
 ## Codex-only AI
 
 All text runs through `codex exec` on the owner's ChatGPT subscription (`CODEX_MODEL=gpt-6.1-sol`, `CODEX_REASONING_EFFORT=high`, `LLM_PROVIDER_ORDER=codex`). There is no paid fallback. Images use the same subscription through the Codex gpt-image-2 endpoint (`src/image.js`). Login lives in `$CODEX_HOME/auth.json` (`/data/codex`). The engine only reads `auth_mode` and `last_refresh` from it and never prints or copies it. Usage limit → 24 h back-off; weekly cap `CODEX_MAX_CALLS_PER_WEEK` (default 80); per-call timeout `CODEX_TIMEOUT_MS` (default 25 min). The fact-checker is a separate fresh Codex session with its own skeptical prompt, but the same model family as the writer.

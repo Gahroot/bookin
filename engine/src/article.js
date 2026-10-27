@@ -23,24 +23,61 @@ export function evidenceEntries(rows) {
 }
 
 export const WRITER_SYSTEM = `${BRAND}
-You write one distinctive piece for nolangrout.com about a real accomplishment, backed only by the numbered evidence provided (E1, E2...). Each evidence item shows whether it is public; private details stay private (describe capability, not internals).
-Structure: H1 is the title (do not include it in body). Body in Markdown, 700-1200 words, H2/H3 headings phrased as the questions an executive would ask. Flow: the business problem -> what changed -> the outcome -> what it means for the reader's organisation. Concrete, specific, plain English. No tutorials, no code, no generic AI commentary, no buzzword filler, no em-dash chains.
-Cite evidence inline with [^E1] markers right after the sentence they support. Every outcome, metric, time saved or capability statement in the body, answer and FAQ must also appear in "claims" with the evidence ids it rests on. Any number in the body must appear verbatim in a claim text. If evidence does not support a number, do not use a number.
+You write one distinctive piece for nolangrout.com about a real accomplishment, backed only by the numbered evidence provided (E1, E2...). Each evidence item shows whether it is public; private details stay private (describe the business capability, not internals).
+Readers are COOs, fund executives and operators. Write about the business problem, not the tool. If a detail only matters to engineers or to users of one product (settings, model names, billing modes, toggles), leave it out or translate it into what it means for a business.
+Story arc, with H2/H3 headings phrased as the questions an executive would ask:
+1. The problem: what was costly, slow, risky or broken, and for whom.
+2. What changed: the decision and the system, in plain words.
+3. The outcome: what is different now, with evidence markers.
+4. What it means for you: what the reader should ask of their own organisation or vendors.
+Voice: concrete, plain, confident first person ("I built", "I decided", "we now"). State things directly. No hedging chains ("I would", "I prefer", "my position is", "it does not establish"); at most one "I would" in the whole piece. No tutorials, no code, no generic AI commentary, no buzzwords.
+Repetition: state each claim ONCE in the body. The answer box and the FAQ may summarise in fresh words but must not copy any body sentence or claim text verbatim, and the body must not restate the same fact in a second section.
+Body: Markdown, 800-1200 words, no H1 (the title is the H1). Cite evidence inline with [^E1] markers right after the sentence they support. Do NOT write footnote definitions ("[^E1]: ...") — the site renders each footnote from the evidence title.
+Every outcome, metric, time saved or capability statement in the body, answer and FAQ must appear in "claims" with the evidence ids it rests on. Any number in the body must appear verbatim in a claim text. Never invent numbers.
 Also write a LinkedIn post (hook + 120-220 words, line breaks, ends with an invitation to book a call at nolangrout.com/book) and a YouTube short script (hook + 3-5 beats + CTA). Both may only restate the article's claims.
 Return JSON: {"title","type":"case-study|article|field-note","description":"150-160 characters","audience","primary_keyword","secondary_keywords":[...],"answer":"40-60 word direct answer","faq":[{"q","a"}],"hero_alt","cta":"book","claims":[{"text","kind":"outcome|metric|capability|time-saved","evidence":["E1"]}],"body","linkedin":{"hook","body"},"youtube":{"hook","body"}}`;
+
+/** Few-shot: one published seed article as the style and quality bar (not a topic to copy). */
+export const exemplarBlock = (exemplar) => exemplar ? `\n\nSTYLE EXEMPLAR (the quality bar: match its executive framing, structure, voice and economy; do NOT reuse its topic, facts or sentences):\n"""\n${String(exemplar).slice(0, 14000)}\n"""` : '';
 
 export function evidencePrompt(entries) {
   return entries.map(({ eid, row }) => `${eid} [${row.public ? 'public' : 'PRIVATE'}; ${row.kind}; ${dateStr(row.date) || ''}; project ${row.project || '-'}]: ${String(row.text).slice(0, 1200)}`).join('\n');
 }
 
-export async function writeArticle({ acc, entries, db, env, log, completeImpl = completeJson }) {
-  const prompt = `Accomplishment to write about (project ${acc.project}, client ${acc.client || 'n/a'}):\nTitle idea: ${acc.title}\nProblem: ${acc.problem}\nOutcome: ${acc.outcome}\n\nEvidence:\n${evidencePrompt(entries)}`;
+export async function writeArticle({ acc, entries, db, env, log, exemplar = null, completeImpl = completeJson }) {
+  const prompt = `Accomplishment to write about (project ${acc.project}, client ${acc.client || 'n/a'}):\nTitle idea: ${acc.title}\nProblem: ${acc.problem}\nOutcome: ${acc.outcome}\nWhy it matters: ${acc.score_rationale || ''}\n\nEvidence:\n${evidencePrompt(entries)}${exemplarBlock(exemplar)}`;
   return completeImpl(WRITER_SYSTEM, prompt, { db, env, job: 'draft', log });
 }
 
 export async function reviseArticle({ raw, entries, feedback, db, env, log, job = 'draft', completeImpl = completeJson }) {
-  const prompt = `Your previous draft failed automated checks. Fix every problem below and return the COMPLETE JSON again in the same shape. Remove or soften any statement the evidence does not directly support; never add new facts.\n\nProblems:\n${feedback.map((f) => `- ${f}`).join('\n')}\n\nEvidence:\n${evidencePrompt(entries)}\n\nPrevious draft JSON:\n${JSON.stringify(raw)}`;
+  const prompt = `Your previous draft failed automated checks. Fix every problem below and return the COMPLETE JSON again in the same shape. Remove or soften any statement the evidence does not directly support; never add new facts. Editor feedback about relevance, distinctiveness, clarity or repetition means rewriting the framing and structure, not just swapping words.\n\nProblems:\n${feedback.map((f) => `- ${f}`).join('\n')}\n\nEvidence:\n${evidencePrompt(entries)}\n\nPrevious draft JSON:\n${JSON.stringify(raw)}`;
   return completeImpl(WRITER_SYSTEM, prompt, { db, env, job, log });
+}
+
+/** The site renders footnotes from evidence titles; drop any "[^E1]: ..." definitions the writer added. */
+export const stripFootnoteDefs = (body) => String(body || '').replace(/^\[\^[^\]]+\]:.*(\n(?: {2,}|\t).*)*\n?/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+
+const sentences = (t) => String(t || '').replace(/\[\^[^\]]+\]/g, '').split(/(?<=[.!?])\s+|\n+/).map((x) => x.replace(/^[#>*\-\s]+/, '').trim().toLowerCase()).filter((x) => x.split(/\s+/).length >= 6);
+
+/** Repetition + hedging checks (the gate's editor judges the rest). */
+export function styleIssues(data, body) {
+  const issues = [];
+  const b = String(body).replace(/\[\^[^\]]+\]/g, '').toLowerCase();
+  for (const c of data.claims || []) {
+    const t = String(c.text || '').trim().toLowerCase().replace(/[.!?]$/, '');
+    if (t.length < 25) continue;
+    const n = b.split(t).length - 1;
+    if (n > 1) issues.push(`claim stated ${n} times in the body (state it once): "${c.text.slice(0, 80)}"`);
+  }
+  const bodySet = new Set(sentences(body));
+  const copied = [...sentences(data.answer), ...(data.faq || []).flatMap((f) => sentences(f.a))].filter((x) => bodySet.has(x));
+  if (copied.length) issues.push(`answer/FAQ copies body sentences verbatim (summarise in fresh words): "${copied[0].slice(0, 80)}"`);
+  const seen = new Set();
+  for (const x of sentences(body)) { if (seen.has(x)) { issues.push(`body repeats a sentence: "${x.slice(0, 80)}"`); break; } seen.add(x); }
+  const hedges = (String(body).match(/\b(I would|I'd|I prefer|my position is|my preference is|does not establish)\b/gi) || []).length;
+  if (hedges > 2) issues.push(`hedging: ${hedges} "I would / I prefer / my position" phrases (write directly; at most one)`);
+  if (/^\[\^[^\]]+\]:/m.test(body)) issues.push('footnote definitions in body (the site renders them from evidence titles)');
+  return issues;
 }
 
 /** Writer JSON -> repo files. Returns { slug, files, data }. */
@@ -61,7 +98,7 @@ export function buildFiles(raw, { slug: fixedSlug, entries, project, today, hero
   };
   const social = (k, s) => serializeDoc({ source_article: slug, status: 'draft', hook: String((s && s.hook) || '').trim() }, (s && s.body) || '');
   const files = {
-    [`content/articles/${slug}.md`]: serializeDoc(data, raw.body),
+    [`content/articles/${slug}.md`]: serializeDoc(data, stripFootnoteDefs(raw.body)),
     [`content/social/${slug}/linkedin.md`]: social('linkedin', raw.linkedin),
     [`content/social/${slug}/youtube.md`]: social('youtube', raw.youtube)
   };
@@ -86,6 +123,7 @@ export function localCheck(files, evidenceRows, { allow = [] } = {}) {
     for (const c of data.claims || []) if (!(c.evidence || []).length) issues.push(`${file}: claim without evidence: "${c.text.slice(0, 80)}"`);
     if (!markerIds(body).length) issues.push(`${file}: body has no [^E#] evidence markers`);
     if (words(body) < 300) issues.push(`${file}: body too short`);
+    for (const i of styleIssues(data, body)) issues.push(`${file}: ${i}`);
     for (const n of uncoveredNumbers(data, `${body}\n${data.answer || ''}\n${(data.faq || []).map((f) => f.a).join('\n')}`)) issues.push(`${file}: number "${n}" not covered by any claim text`);
     // Social copy must stay within the article's claims (numbers especially).
     for (const [sf, st] of Object.entries(files)) {

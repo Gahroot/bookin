@@ -18,6 +18,20 @@ export async function readRepoFile(rel, { env = process.env, fetchImpl = globalT
   return get(`/repos/${repoName(env)}/contents/${rel}?ref=${encodeURIComponent(ref || BASE_BRANCH(env))}`, env, fetchImpl, true);
 }
 
+/**
+ * Is this accomplishment already covered by an existing article (ANY status, drafts included)?
+ * Covered = half or more of its evidence refs are cited by one article, or its title closely matches one.
+ */
+export function coveredBy(acc, refs, articles, { overlap = 0.5, titleSim = 0.5, jaccard }) {
+  for (const a of articles) {
+    const set = new Set(a.refs || []);
+    const shared = refs.filter((r) => set.has(r)).length;
+    if (refs.length && shared / refs.length >= overlap) return { slug: a.slug, why: `${shared}/${refs.length} evidence items already cited` };
+    for (const k of [a.title, a.primary_keyword].filter(Boolean)) if (jaccard(acc.title, k) >= titleSim) return { slug: a.slug, why: `title matches "${k}"` };
+  }
+  return null;
+}
+
 export async function existingContent({ env = process.env, fetchImpl = globalThis.fetch } = {}) {
   const out = { articles: [], projects: [] };
   for (const dir of ['articles', 'projects']) {
@@ -28,7 +42,7 @@ export async function existingContent({ env = process.env, fetchImpl = globalThi
       const slug = f.name.replace(/\.md$/, '');
       try {
         const { data } = parseDoc(await get(`/repos/${repoName(env)}/contents/content/${dir}/${f.name}?ref=${BASE_BRANCH(env)}`, env, fetchImpl, true));
-        out[dir].push({ slug, title: data.title || slug, primary_keyword: data.primary_keyword || '', project: data.project || data.slug || null, summary: data.summary || data.description || '' });
+        out[dir].push({ slug, title: data.title || slug, status: data.status || null, primary_keyword: data.primary_keyword || '', project: data.project || data.slug || null, summary: data.summary || data.description || '', refs: (Array.isArray(data.evidence) ? data.evidence : []).map((e) => e && String(e.ref)).filter(Boolean) });
       } catch { out[dir].push({ slug, title: slug }); }
     }
   }

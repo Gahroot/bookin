@@ -10,7 +10,11 @@ import { fixtureRepo, realContentCheck } from './fixture.js';
 
 const quiet = { log() {}, error() {} };
 const env = { GITHUB_TOKEN: 't', GITHUB_REPO: 'Gahroot/bookin', AUTO_PUBLISH: 'true' };
-const para = 'Executives at Triten needed portfolio answers without waiting on a weekly report, and the team needed one governed source instead of several spreadsheets that disagreed.';
+const WORDS = ['asset', 'lease', 'debt', 'capital', 'tenant', 'market', 'budget', 'forecast', 'covenant', 'vacancy', 'renewal', 'insurance', 'valuation', 'reserve', 'occupancy', 'investor', 'lender', 'audit', 'zoning', 'closing'];
+let k = 0;
+const sent = () => { const w = WORDS[k % WORDS.length], v = WORDS[(k * 7 + 3) % WORDS.length], u = WORDS[Math.floor(k / WORDS.length) % WORDS.length]; k++; return `The ${w} team needed ${v} answers about ${u} questions without waiting on a weekly report.`; };
+const paraOf = (n) => Array.from({ length: n }, sent).join(' ');
+const para = paraOf(1);
 const good = {
   title: 'Governed portfolio answers for Triten executives', type: 'case-study',
   description: 'How Triten executives moved from waiting on weekly spreadsheet reports to asking governed portfolio questions directly, with answers traced to source data.',
@@ -18,9 +22,9 @@ const good = {
   answer: 'Triten executives now ask portfolio questions in ChatGPT and get answers drawn from one governed data platform instead of waiting for a weekly spreadsheet report. The change came from connecting the platform to ChatGPT through a controlled interface that only exposes approved, traceable portfolio data to the people allowed to see it.',
   faq: [{ q: 'Does this replace reports?', a: 'It replaces waiting for them.' }], hero_alt: 'Abstract navy glass', cta: 'book',
   claims: [{ text: 'Executives query governed portfolio data from ChatGPT.', kind: 'capability', evidence: ['E1', 'E2'] }],
-  body: `## What was the problem?\n\n${Array(6).fill(para).join(' ')}\n\n## What changed?\n\nExecutives query governed portfolio data from ChatGPT.[^E1][^E2] ${Array(6).fill(para).join(' ')}\n\n## What does it mean for you?\n\n${Array(4).fill(para).join(' ')}`,
-  linkedin: { hook: 'Weekly reports were the bottleneck.', body: Array(3).fill(para).join('\n\n') },
-  youtube: { hook: 'One question, one governed answer.', body: Array(3).fill(para).join('\n\n') }
+  body: `## What was the problem?\n\n${paraOf(10)}\n\n## What changed?\n\nExecutives query governed portfolio data from ChatGPT.[^E1][^E2] ${paraOf(10)}\n\n## What does it mean for you?\n\n${paraOf(8)}`,
+  linkedin: { hook: 'Weekly reports were the bottleneck.', body: [paraOf(2), paraOf(2), paraOf(2)].join('\n\n') },
+  youtube: { hook: 'One question, one governed answer.', body: [paraOf(2), paraOf(2), paraOf(2)].join('\n\n') }
 };
 
 async function seed() {
@@ -29,13 +33,14 @@ async function seed() {
     { id: 'wl-2026-10-27-triten-os-1', source_id: 'worklog', kind: 'worklog', project: 'triten-os', client: 'Triten', text: 'Executives query governed portfolio data from ChatGPT via MCP.', ref: 'wl-2026-10-27-triten-os-1', date: '2026-10-27' },
     { id: 'gh:Gahroot/triten-os:commit:abc', source_id: 'triten-os', kind: 'github-commit', project: 'triten-os', client: 'Triten', text: 'Add MCP server exposing governed portfolio views', ref: 'triten-os@abc123def456', date: '2026-10-26' }
   ]);
-  await db.query(`INSERT INTO accomplishments (fingerprint, project, client, title, problem, outcome, evidence_ids, score) VALUES ('fp','triten-os','Triten','Portfolio Q&A','slow reports','ChatGPT answers',$1,90)`,
+  await db.query(`INSERT INTO accomplishments (fingerprint, project, client, title, problem, outcome, evidence_ids, score, exec_score) VALUES ('fp','triten-os','Triten','Portfolio Q&A','slow reports','ChatGPT answers',$1,90,8)`,
     [JSON.stringify(['wl-2026-10-27-triten-os-1', 'gh:Gahroot/triten-os:commit:abc'])]);
   return db;
 }
 function deps(fx, raw, calls) {
   return {
-    completeJson: async () => { calls.push('codex'); return raw; },
+    completeJson: async (sys, prompt) => { calls.push('codex'); calls.prompts = [...(calls.prompts || []), prompt]; return raw; },
+    readExemplar: async () => 'EXEMPLAR ARTICLE TEXT',
     generateHero: async () => Buffer.from('RIFFwebp'),
     existingContent: async () => ({ articles: [], projects: [{ slug: 'triten-os' }] }),
     withCheckout: async (fn) => { calls.push('checkout'); return fn(fx.dir); },

@@ -70,7 +70,14 @@ export const MIGRATIONS = [
     PRIMARY KEY (day, provider, page, query)
   )`,
   `CREATE TABLE IF NOT EXISTS portfolio_outcomes (project TEXT NOT NULL, accomplishment_id INTEGER NOT NULL, pr_number INTEGER, created_at TIMESTAMPTZ NOT NULL DEFAULT now(), PRIMARY KEY (project, accomplishment_id))`,
-  `CREATE TABLE IF NOT EXISTS claim_audits (id SERIAL PRIMARY KEY, slug TEXT NOT NULL, ok BOOLEAN NOT NULL, detail TEXT, checked_at TIMESTAMPTZ NOT NULL DEFAULT now())`
+  `CREATE TABLE IF NOT EXISTS claim_audits (id SERIAL PRIMARY KEY, slug TEXT NOT NULL, ok BOOLEAN NOT NULL, detail TEXT, checked_at TIMESTAMPTZ NOT NULL DEFAULT now())`,
+  // Quality bar v2: executive-relevance score 1-10 + rationale; editor scores per gate run.
+  `ALTER TABLE accomplishments ADD COLUMN IF NOT EXISTS exec_score REAL`,
+  `ALTER TABLE accomplishments ADD COLUMN IF NOT EXISTS score_rationale TEXT`,
+  `ALTER TABLE gate_results ADD COLUMN IF NOT EXISTS editor JSONB`,
+  // One-time: re-cluster all evidence under the new rubric (old open accomplishments had no exec_score).
+  `DELETE FROM accomplishments WHERE status = 'open' AND exec_score IS NULL`,
+  `UPDATE evidence SET discovered_at = NULL`
 ];
 
 export async function migrate(db) {

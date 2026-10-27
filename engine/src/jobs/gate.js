@@ -31,6 +31,40 @@ Reply with JSON only: {"verdicts":[{"index":0,"verdict":"supported|overstated|un
 Editorial rules for context:
 ${BRAND}`;
 
+export const EDITOR_SYSTEM = `You are the EDITOR of nolangrout.com, independent of the writer and of the fact-checker. Readers are COOs, fund executives and operators deciding whether to hire Nolan to build AI-powered business systems. Judge only editorial quality (facts are checked elsewhere).
+Score each 1-10 with a one-sentence reason:
+- executive_relevance: is this a meaningful business problem and outcome an executive would care about? Tool-internal configuration, billing or model toggles, settings and minor features score <= 4.
+- distinctiveness: does it say something specific that only this builder's experience could, rather than generic AI commentary or a product changelog?
+- clarity: plain, confident and concrete; a clear arc (problem -> what changed -> outcome -> what it means for you); no hedging chains, jargon or tutorial content.
+- repetition: 10 = every point made once; low if claims are restated across the answer, FAQ and body sections or sentences are recycled.
+Be demanding: 7 is "good enough to publish under Nolan's name", 9-10 is rare.
+Reply with JSON only: {"executive_relevance":{"score":0,"reason":""},"distinctiveness":{"score":0,"reason":""},"clarity":{"score":0,"reason":""},"repetition":{"score":0,"reason":""},"advice":["specific changes that would raise the scores"]}`;
+export const EDITOR_DIMS = ['executive_relevance', 'distinctiveness', 'clarity', 'repetition'];
+export const EDITOR_MIN = 7;
+export const EDITOR_AVG = 8;
+
+/** Fresh Codex call (separate from the fact-check). Pass = every dimension >= 7 and average >= 8. */
+export async function editorReview(fullText, { env, db, log, completeImpl = complete }) {
+  const out = extractJson(await completeImpl(EDITOR_SYSTEM, `Article to review:\n"""\n${String(fullText).slice(0, 24000)}\n"""`, { db, env, job: 'gate', log }));
+  const scores = {};
+  for (const d of EDITOR_DIMS) {
+    const v = out && out[d];
+    const n = Number(v && typeof v === 'object' ? v.score : v);
+    scores[d] = { score: Number.isFinite(n) ? Math.max(0, Math.min(10, n)) : 0, reason: String((v && v.reason) || 'no score returned').slice(0, 300) };
+  }
+  const avg = Math.round((EDITOR_DIMS.reduce((a, d) => a + scores[d].score, 0) / EDITOR_DIMS.length) * 10) / 10;
+  const ok = EDITOR_DIMS.every((d) => scores[d].score >= EDITOR_MIN) && avg >= EDITOR_AVG;
+  return { ok, scores, average: avg, advice: (Array.isArray(out && out.advice) ? out.advice : []).map(String).slice(0, 8) };
+}
+
+export function editorTable(editor) {
+  const slugs = Object.keys(editor || {});
+  if (!slugs.length) return '';
+  return ['', '### Editor scores', `Pass: every dimension >= ${EDITOR_MIN} and average >= ${EDITOR_AVG}.`,
+    ...slugs.flatMap((slug) => { const e = editor[slug]; return ['', `**${slug}**: average ${e.average} ${e.ok ? '✅' : '❌'}`, '| Dimension | Score | Reason |', '|---|---|---|',
+      ...EDITOR_DIMS.map((d) => `| ${d.replace('_', ' ')} | ${e.scores[d].score} | ${cell(e.scores[d].reason)} |`), ...(e.advice.length ? ['', ...e.advice.map((a) => `- ${cell(a)}`)] : [])]; })].join('\n');
+}
+
 /** claims: [{text, evidence:[eid]}]; evidence: frontmatter entries; rows: DB evidence by ref. */
 export async function factCheck({ claims, evidence, rows, fullText }, { env, db, log, completeImpl = complete }) {
   const byRef = new Map(rows.map((r) => [r.ref, r]));
@@ -69,7 +103,8 @@ export function gateReport(g) {
     '', '### Fact-check verdicts',
     g.verdicts.length ? ['| # | Claim | Evidence | Verdict | Reason |', '|---|---|---|---|---|', ...g.verdicts.map((v, i) => `| ${i + 1} | ${cell(v.claim)} | ${cell(v.evidence)} | ${v.verdict === 'supported' ? '✅' : '❌'} ${v.verdict} | ${cell(v.reason)} |`)].join('\n') : '_No claims checked._',
     ...(g.unlisted.length ? ['', '**Statements not covered by a claim:**', ...g.unlisted.map((s) => `- ${cell(s)}`)] : []),
-    ...(g.confidential.length ? ['', '**Possible confidential details:**', ...g.confidential.map((s) => `- ${cell(s)}`)] : [])
+    ...(g.confidential.length ? ['', '**Possible confidential details:**', ...g.confidential.map((s) => `- ${cell(s)}`)] : []),
+    editorTable(g.editor)
   ].join('\n');
 }
 
@@ -84,6 +119,7 @@ async function prFiles(pr, env, deps) {
 /** Runs checks 1-3 in the checkout. Leaves files approved on disk (caller pushes only on pass). */
 export async function runChecks(dir, rels, { env, deps, db, log }) {
   const checks = [], verdicts = [], unlisted = [], confidential = [];
+  const editor = {};
   const add = (name, ok, detail) => checks.push({ name, ok, detail });
   const files = {};
   for (const rel of rels) files[rel] = await readFile(path.join(dir, rel), 'utf8');
@@ -125,12 +161,22 @@ export async function runChecks(dir, rels, { env, deps, db, log }) {
     confidential.push(...fc.confidential);
     const bad = fc.verdicts.filter((v) => v.verdict !== 'supported').length;
     add(`fact-check (${slug})`, fc.ok, fc.ok ? `${fc.verdicts.length}/${fc.verdicts.length} claims supported` : `${bad} of ${fc.verdicts.length} claims not supported; ${fc.unlisted.length} uncovered statement(s); ${fc.confidential.length} confidential flag(s)`);
+    if (rel.startsWith('content/articles/')) {
+      try {
+        const ed = await editorReview(fullText, { env, db, log, completeImpl: deps.complete });
+        editor[slug] = ed;
+        add(`editor (${slug})`, ed.ok, `${EDITOR_DIMS.map((k) => `${k.replace('_', ' ')} ${ed.scores[k].score}`).join(', ')}; average ${ed.average}`);
+      } catch (e) {
+        if (e && e.defer) throw e;
+        add(`editor (${slug})`, false, `editor error: ${String(e.message).slice(0, 200)}`);
+      }
+    }
   }
   const today = todayNY();
   for (const rel of rels.filter((r) => r.startsWith('content/articles/'))) await writeFile(path.join(dir, rel), setApproved(files[rel], today));
   const cc = await deps.contentCheck(dir);
   add('content-check', cc.ok, cc.detail);
-  return { pass: rels.length > 0 && checks.every((c) => c.ok), checks, verdicts, unlisted, confidential, rows, files };
+  return { pass: rels.length > 0 && checks.every((c) => c.ok), checks, verdicts, unlisted, confidential, editor, rows, files };
 }
 
 export async function waitForChecks(sha, { env, deps }) {
@@ -149,9 +195,9 @@ export async function waitForChecks(sha, { env, deps }) {
   }
 }
 
-async function record(db, pr, { slugs = [], sha, outcome, checks = null, verdicts = null, detail = '' }) {
-  await db.query('INSERT INTO gate_results (pr_number, slugs, head_sha, outcome, checks, verdicts, detail) VALUES ($1,$2,$3,$4,$5,$6,$7)',
-    [pr.number, slugs.join(','), sha || null, outcome, checks ? JSON.stringify(checks) : null, verdicts ? JSON.stringify(verdicts) : null, String(detail).slice(0, 4000)]);
+async function record(db, pr, { slugs = [], sha, outcome, checks = null, verdicts = null, editor = null, detail = '' }) {
+  await db.query('INSERT INTO gate_results (pr_number, slugs, head_sha, outcome, checks, verdicts, detail, editor) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+    [pr.number, slugs.join(','), sha || null, outcome, checks ? JSON.stringify(checks) : null, verdicts ? JSON.stringify(verdicts) : null, String(detail).slice(0, 4000), editor && Object.keys(editor).length ? JSON.stringify(editor) : null]);
 }
 
 async function hold(db, pr, { env, deps, slugs, sha, why, report = '', checks, verdicts }) {
@@ -165,6 +211,20 @@ async function hold(db, pr, { env, deps, slugs, sha, why, report = '', checks, v
   await record(db, pr, { slugs, sha, outcome: 'held', checks, verdicts, detail: why });
   for (const s of slugs) await db.query("UPDATE articles SET status = 'held', updated_at = now() WHERE slug = $1 AND status <> 'published'", [s]);
   return { pr: pr.number, outcome: 'held', why };
+}
+
+/** Editor failed after the revision budget: close the PR (nothing merges) and retire the accomplishment. */
+async function reject(db, pr, { env, deps, slugs, sha, why, report, checks, verdicts, editor }) {
+  const repo = GH.repoName(env);
+  await deps.gh('POST', `/repos/${repo}/issues/${pr.number}/comments`, { body: `**Rejected by the editor gate — closing without merging.** ${why}\n\n${report}\n\nThe accomplishment is marked \`rejected_quality\` and will not be redrafted.` }, env);
+  await deps.gh('PATCH', `/repos/${repo}/pulls/${pr.number}`, { state: 'closed' }, env);
+  try { await deps.gh('DELETE', `/repos/${repo}/git/refs/heads/${pr.head.ref}`, null, env); } catch {}
+  await record(db, pr, { slugs, sha, outcome: 'rejected', checks, verdicts, editor, detail: why });
+  for (const s of slugs) {
+    await db.query("UPDATE articles SET status = 'rejected_quality', status_reason = $2, updated_at = now() WHERE slug = $1", [s, String(why).slice(0, 1000)]);
+    await db.query("UPDATE accomplishments SET status = 'rejected_quality', status_reason = $2, updated_at = now() WHERE article_slug = $1", [s, String(why).slice(0, 1000)]);
+  }
+  return { pr: pr.number, outcome: 'rejected', why, editor };
 }
 
 async function finish(db, pr, { env, deps, sha, slugs }) {
@@ -186,11 +246,12 @@ async function finish(db, pr, { env, deps, sha, slugs }) {
   return { pr: pr.number, outcome: 'merged' };
 }
 
-const CONTENT_CHECKS = /^(confidentiality lint|fact-check \(|content-check)/;
+const CONTENT_CHECKS = /^(confidentiality lint|fact-check \(|editor \(|content-check)/;
 export function revisable(g) {
   const failing = g.checks.filter((c) => !c.ok);
   if (!failing.length || failing.some((c) => !CONTENT_CHECKS.test(c.name))) return false;
   if (failing.some((c) => c.name === 'content-check' && /not present|npm ci failed/.test(c.detail))) return false; // infra, not content
+  if (failing.some((c) => /^editor error:/.test(c.detail))) return false;
   return !g.unlisted.some((u) => /^fact-check error:/.test(u));
 }
 
@@ -211,6 +272,7 @@ async function reviseInCheckout(dir, rels, g, { env, deps, db, log, round, branc
     const feedback = [
       ...g.checks.filter((c) => !c.ok).map((c) => `${c.name}: ${c.detail}`),
       ...g.verdicts.filter((v) => v.slug === slug && v.verdict !== 'supported').map((v) => `claim "${v.claim}" is ${v.verdict}: ${v.reason}`),
+      ...(g.editor[slug] && !g.editor[slug].ok ? [...EDITOR_DIMS.filter((k) => g.editor[slug].scores[k].score < 8).map((k) => `editor: ${k} scored ${g.editor[slug].scores[k].score}/10: ${g.editor[slug].scores[k].reason}`), ...g.editor[slug].advice.map((a) => `editor advice: ${a}`)] : []),
       ...g.unlisted.map((u) => `statement not covered by a claim: ${u}`), ...g.confidential.map((u) => `possible confidential detail: ${u}`)
     ];
     const next = await reviseArticle({ raw, entries, feedback, db, env, log, job: 'gate', completeImpl: (s, p, o) => deps.complete(s + '\nReply with JSON only.', p, o).then(extractJson) });
@@ -228,7 +290,7 @@ export async function processPr(db, pr, { env = process.env, deps: d = {}, log =
   const deps = { ...defaultDeps(), ...d };
   const repo = GH.repoName(env);
   const last = (await db.query('SELECT * FROM gate_results WHERE pr_number = $1 ORDER BY id DESC LIMIT 1', [pr.number])).rows[0];
-  if (last && last.outcome === 'merged') return null;
+  if (last && (last.outcome === 'merged' || last.outcome === 'rejected')) return null;
   if (last && last.outcome === 'approved' && last.head_sha === pr.head.sha) return finish(db, pr, { env, deps, sha: last.head_sha, slugs: String(last.slugs || '').split(',').filter(Boolean) });
   if (last && last.outcome === 'held' && last.head_sha === pr.head.sha) return null; // waits for a new commit
   if (!autoPublish(env)) return null;
@@ -256,17 +318,21 @@ export async function processPr(db, pr, { env = process.env, deps: d = {}, log =
   const report = gateReport(res);
   if (res.revised) {
     const failing = res.checks.filter((x) => !x.ok).map((x) => x.name).join(', ');
-    await record(db, pr, { slugs, sha: res.sha, outcome: 'revised', checks: res.checks, verdicts: res.verdicts, detail: `round ${rounds + 1}: ${failing}` });
+    await record(db, pr, { slugs, sha: res.sha, outcome: 'revised', checks: res.checks, verdicts: res.verdicts, editor: res.editor, detail: `round ${rounds + 1}: ${failing}` });
     await deps.gh('POST', `/repos/${repo}/issues/${pr.number}/comments`, { body: `**Auto-revising (round ${rounds + 1}/${maxRevisions(env)}).** Failing: ${failing}. The revision passed the local confidentiality lint before being pushed; re-checking now.\n\n<details><summary>What the gate found</summary>\n\n${report}\n</details>` }, env);
     const fresh = await deps.gh('GET', `/repos/${repo}/pulls/${pr.number}`, null, env);
     return processPr(db, fresh || { ...pr, head: { ...pr.head, sha: res.sha } }, { env, deps: d, log });
+  }
+  if (!res.pass && res.checks.some((c) => /^editor \(/.test(c.name) && !c.ok && !/^editor error:/.test(c.detail))) {
+    return reject(db, pr, { env, deps, slugs, sha: pr.head.sha, report, checks: res.checks, verdicts: res.verdicts, editor: res.editor,
+      why: `Editor scores below the bar (every dimension >= ${EDITOR_MIN}, average >= ${EDITOR_AVG})${rounds ? ` after ${rounds} revision round(s)` : ''}. Also failing: ${res.checks.filter((x) => !x.ok && !/^editor \(/.test(x.name)).map((x) => x.name).join(', ') || 'nothing else'}.` });
   }
   if (!res.pass) {
     return hold(db, pr, { env, deps, slugs, sha: pr.head.sha, report, checks: res.checks, verdicts: res.verdicts,
       why: `Failing: ${res.checks.filter((x) => !x.ok).map((x) => x.detail).join(' | ').slice(0, 600)} -- ${res.checks.filter((x) => !x.ok).map((x) => x.name).join(', ') || 'no content files in PR'}.${rounds ? ` Still failing after ${rounds} revision round(s).` : ''}${res.reviseError ? ` Auto-revision: ${res.reviseError}` : ''}` });
   }
   await deps.gh('POST', `/repos/${repo}/issues/${pr.number}/comments`, { body: `Approved by engine (automated gate passed): \`status: approved\`, \`approved_by: ${AUTO_APPROVER}\`. Merging once CI is green.\n\n${report}` }, env);
-  await record(db, pr, { slugs, sha: res.sha, outcome: 'approved', checks: res.checks, verdicts: res.verdicts, detail: 'all gate checks passed' });
+  await record(db, pr, { slugs, sha: res.sha, outcome: 'approved', checks: res.checks, verdicts: res.verdicts, editor: res.editor, detail: 'all gate checks passed' });
   return finish(db, pr, { env, deps, sha: res.sha, slugs });
 }
 

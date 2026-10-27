@@ -105,7 +105,11 @@ async function counts(db) {
   const one = async (sql) => { try { return (await db.query(sql)).rows[0]; } catch (e) { return { error: e.message }; } };
   return {
     evidence: await one('SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE discovered_at IS NULL)::int AS undiscovered FROM evidence'),
-    accomplishments: await one("SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE status = 'open')::int AS open FROM accomplishments"),
+    accomplishments: await one(`SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE status = 'open')::int AS open,
+      COUNT(*) FILTER (WHERE status = 'open' AND exec_score >= 7)::int AS draftable, MAX(exec_score) FILTER (WHERE status = 'open') AS best_open_score,
+      COUNT(*) FILTER (WHERE status = 'covered')::int AS covered, COUNT(*) FILTER (WHERE status = 'rejected_quality')::int AS rejected_quality FROM accomplishments`),
+    topAccomplishments: await (async () => { try { return (await db.query("SELECT id, title, project, exec_score, score_rationale, status FROM accomplishments WHERE exec_score IS NOT NULL ORDER BY exec_score DESC, id LIMIT 5")).rows; } catch (e) { return { error: e.message }; } })(),
+    lastEditor: await (async () => { try { return (await db.query('SELECT pr_number, outcome, editor, created_at FROM gate_results WHERE editor IS NOT NULL ORDER BY id DESC LIMIT 1')).rows[0] || null; } catch (e) { return { error: e.message }; } })(),
     articles: await one("SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE status = 'published')::int AS published FROM articles"),
     leads: await one('SELECT COUNT(*)::int AS total, COUNT(*) FILTER (WHERE qualified)::int AS qualified FROM leads')
   };
@@ -140,7 +144,8 @@ export function createHandler({ db, scheduler = null, adminToken = process.env.A
           let codex; try { codex = await codexStatus(db, env); } catch (e) { codex = { error: e.message }; }
           return send(200, { ...base, codex, counts: await counts(db), config: {
             autoPublish: String(env.AUTO_PUBLISH ?? 'true') !== 'false', githubToken: Boolean(env.GITHUB_TOKEN), repo: env.GITHUB_REPO || 'Gahroot/bookin',
-            gsc: Boolean(env.GSC_SERVICE_ACCOUNT_JSON), bing: Boolean(env.BING_API_KEY), codexModel: env.CODEX_MODEL || null } });
+            gsc: Boolean(env.GSC_SERVICE_ACCOUNT_JSON), bing: Boolean(env.BING_API_KEY), codexModel: env.CODEX_MODEL || null,
+            quality: { minDraftScore: 7, editorMinPerDimension: 7, editorMinAverage: 8, maxRevisions: Number(env.GATE_MAX_REVISIONS ?? 3) } } });
         }
         const m = path.match(/^\/api\/admin\/run\/([a-z_]+)$/);
         if (m && (req.method === 'GET' || req.method === 'POST')) {
