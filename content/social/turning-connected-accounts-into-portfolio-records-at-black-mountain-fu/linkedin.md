@@ -1,19 +1,19 @@
 ---
 source_article: turning-connected-accounts-into-portfolio-records-at-black-mountain-fu
 status: draft
-hook: An account connection can succeed while the portfolio import fails.
+hook: An account awaiting verification was being presented as empty.
 ---
 
-At Black Mountain Fund, the replacement application had account connections that accepted credentials without producing transactions. Recurring synchronization could also report a clean result while importing nothing.[^E2]
+In portfolio synchronization work, an account requiring additional verification could complete as though it had no records.[^E4]
 
-I connected account synchronization and ledger imports to persistent background processing. Automated imports now use the existing validation and duplicate checks.[^E1][^E2]
+I changed that response to an explicit failure. I also corrected trade retrieval that could stop after its initial batch, and added checks against missing information, unsupported data and stalled collection.[^E4]
 
-I changed the failure rules, too. A broken connection does not stop the other connections, but a run where every connection fails reaches the failure alert path.[^E2]
+Behind collection, I connected recurring synchronization to persistent processing with retries. A failed connection does not stop the others; a run where every connection fails reaches the alert path.[^E1][^E2]
 
-Trade synchronization received corrections for interrupted record collection and blocked accounts that could be mistaken for empty ones.[^E4]
+Automated records go through the existing import process, including validation, preview, duplicate detection and committing the import in full.[^E2]
 
-Operators also get specific connection explanations, corrective actions and an indication when portfolio records are stale.[^E3]
+The operator view shows the last successful connection, its current state and a corrective action. Portfolio views flag stale records.[^E3]
 
-These are implementation changes in the replacement application. The integration record explicitly says that merging the work is not approval for production cutover.[^E5]
+The integration record separates merging this work from approval for production cutover.[^E5]
 
 Book a call at nolangrout.com/book

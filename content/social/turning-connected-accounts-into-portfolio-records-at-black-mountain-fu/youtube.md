@@ -1,15 +1,15 @@
 ---
 source_article: turning-connected-accounts-into-portfolio-records-at-black-mountain-fu
 status: draft
-hook: Connected does not mean imported.
+hook: This portfolio account needed verification. The system treated it as empty.
 ---
 
-At Black Mountain Fund, account credentials could be accepted while transactions never reached the portfolio.[^E2]
+I changed the blocked-account response to an explicit failure and corrected trade retrieval that could stop before collection finished.[^E4]
 
-I connected recurring synchronization to persistent processing and sent automated records through the existing import checks.[^E1][^E2]
+I connected recurring synchronization to persistent processing with retries. Individual connection failures no longer stop the others.[^E1][^E2]
 
-I corrected incomplete trade retrieval and blocked accounts that could appear empty.[^E4]
+Automated records use the existing validation, preview, duplicate checks and full-import commit process.[^E2]
 
-Operators get explanations, corrective actions and visible staleness.[^E3] These are replacement-application changes; merging was not production cutover approval.[^E5]
+Connection panels show the last success, current state and corrective action, while portfolio views flag stale records.[^E3]
 
-Book a call at nolangrout.com/book.
+Book a call at nolangrout.com/book
