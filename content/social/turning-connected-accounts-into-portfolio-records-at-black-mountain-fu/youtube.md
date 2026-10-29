@@ -1,15 +1,15 @@
 ---
 source_article: turning-connected-accounts-into-portfolio-records-at-black-mountain-fu
 status: draft
-hook: This portfolio account needed verification. The system treated it as empty.
+hook: What if “empty” means account verification is still required?
 ---
 
-I changed the blocked-account response to an explicit failure and corrected trade retrieval that could stop before collection finished.[^E4]
+I corrected that failure mode in portfolio collection for Black Mountain Fund: a verification requirement now stops collection with an explicit failure.[^E4]
 
-I connected recurring synchronization to persistent processing with retries. Individual connection failures no longer stop the others.[^E1][^E2]
+I also repaired authorization on later trade requests, where retrieval could previously stop after the opening batch.[^E4]
 
-Automated records use the existing validation, preview, duplicate checks and full-import commit process.[^E2]
+Missing required information, unsupported trades and stalled retrieval now prevent completion.[^E4]
 
-Connection panels show the last success, current state and corrective action, while portfolio views flag stale records.[^E3]
+The integration record keeps a separate release boundary: merging the work does not authorize production cutover.[^E5]
 
 Book a call at nolangrout.com/book
