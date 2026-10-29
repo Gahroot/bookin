@@ -1,72 +1,69 @@
 ---
-title: When a Portfolio Account Could Be Mistaken for Empty
+title: Connected Was Too Early to Call the Job Finished
 slug: turning-connected-accounts-into-portfolio-records-at-black-mountain-fu
 type: field-note
-description: At Black Mountain Fund, I corrected account collection that could report verification as an empty result, while keeping production approval a separate decision.
+description: Connected accounts reported success without producing portfolio records. I tied collection to complete retrieval, existing import checks and clear faults.
 date: 2026-10-29
 updated: 2026-10-29
 status: draft
 audience: Fund executives, COOs and portfolio operators
-primary_keyword: portfolio account synchronization
+primary_keyword: portfolio data reliability
 secondary_keywords:
-  - portfolio data reliability
-  - connected account collection
-  - portfolio review
-  - connection failures
-answer: I corrected portfolio collection at Black Mountain Fund so a verification barrier cannot pass as an empty account, and repaired retrieval that could stop after its opening batch.[^E4] The implemented changes also expose connection status and stale portfolio figures.[^E3] Merging the work remains separate from production cutover approval.[^E5]
+  - connected account synchronization
+  - portfolio import controls
+  - connection monitoring
+answer: Connected accounts had produced no transactions despite recurring synchronization reporting success.[^E2] I connected collection to durable processing, preserved existing import controls, and added safeguards against incomplete retrieval.[^E1][^E2][^E4] Provider checks used recorded responses; merging the work remained separate from production approval.[^E4][^E5]
 hero_image: /images/articles/turning-connected-accounts-into-portfolio-records-at-black-mountain-fu.webp
-hero_alt: Conceptual portfolio review showing the distinction between an empty account and an unresolved verification request
-faq:
-  - q: What changed when an account required additional verification?
-    a: The verification requirement now produces a collection failure, preventing that response from being accepted as evidence of no account activity.[^E4]
-  - q: Why check beyond the initial connection?
-    a: Authorization could break when retrieval continued beyond its opening batch. I fixed those subsequent requests and added completion checks for missing information, unsupported trade data and stalled progress.[^E4]
-  - q: Did merging the work authorize a production cutover?
-    a: The integration record expressly reserves production cutover approval as a separate decision from merging the changes.[^E5]
+hero_alt: Conceptual illustration of account activity passing through review before entering a portfolio record
+faq: []
 cta: book
 claims:
-  - text: For Black Mountain Fund, I changed collection handling that could accept an account requiring additional verification as empty so it fails explicitly instead.
-    kind: capability
-    evidence:
-      - E4
-  - text: Trade retrieval could stop after its initial batch because authorization failed on subsequent requests; I corrected authorization for continued retrieval.
-    kind: capability
-    evidence:
-      - E4
-  - text: I added checks that prevent collection from completing when required information is missing, trade data is unsupported or retrieval stops progressing.
-    kind: capability
-    evidence:
-      - E4
-  - text: Before correction, accepted credentials produced no connected-account transactions, while recurring synchronization reported success without importing account activity.
+  - text: The portfolio system accepted credentials but produced no connected-account transactions, while recurring synchronization reported success without importing activity.
     kind: outcome
     evidence:
       - E2
-  - text: I connected recurring account synchronization to persistent background processing with retries and an alert path when every connection in a run fails.
+  - text: Recurring background jobs were not running in production, and queued work disappeared on restart.
+    kind: outcome
+    evidence:
+      - E1
+  - text: Broken connections displayed a generic failure; problems were sometimes discovered days later, after decisions had used portfolio figures that appeared live.
+    kind: outcome
+    evidence:
+      - E3
+  - text: Automated account activity now passes through the existing import process, including validation, preview, duplicate detection and committing an import in full.
+    kind: capability
+    evidence:
+      - E2
+  - text: I corrected authorization for subsequent requests where trade retrieval could previously stop after its initial batch.
+    kind: capability
+    evidence:
+      - E4
+  - text: An additional-verification response now causes collection to fail explicitly instead of completing as an empty account.
+    kind: capability
+    evidence:
+      - E4
+  - text: Collection cannot complete when required information is missing, trade data is unsupported, account trade identifiers cannot be recognized, or retrieval stops progressing.
+    kind: capability
+    evidence:
+      - E4
+  - text: I connected recurring account collection to persistent background processing with retries.
     kind: capability
     evidence:
       - E1
       - E2
-  - text: A failing connection no longer aborts processing of the other connections.
+  - text: A failing connection no longer aborts the others, while a run in which every connection fails is rejected and reaches the failure-alert path.
     kind: capability
     evidence:
       - E2
-  - text: Automated records use the existing import process, including validation, preview, duplicate detection and committing an import in full.
-    kind: capability
-    evidence:
-      - E2
-  - text: Broken connections previously displayed a generic failure message; the evidence describes discovery sometimes occurring days later and after decisions used apparently live portfolio figures.
-    kind: outcome
-    evidence:
-      - E3
-  - text: Connection feedback now shows the last actual success, current state and a direct corrective action, while portfolio views indicate stale figures.
+  - text: Connection views now show the last actual success, current state and a corrective action, while portfolio views indicate stale figures.
     kind: capability
     evidence:
       - E3
-  - text: Connection explanations distinguish expired sign-in, credential problems, missing permission and temporary limits, with corresponding actions to renew access, replace a credential, grant permission or wait.
+  - text: Connection explanations distinguish expired sign-in, credential problems, missing permission and temporary limits, with corresponding actions to renew access, replace credentials, grant permission or wait.
     kind: capability
     evidence:
       - E3
-  - text: The provider changes were checked using recorded responses without live network access.
+  - text: The provider safeguards were checked against recorded responses without live network access.
     kind: outcome
     evidence:
       - E4
@@ -107,48 +104,46 @@ evidence:
     ref: easefolio#pr-13
 ---
 
-## Why could “empty” be the wrong answer?
+## Why were connected accounts producing no portfolio records?
 
-In my work for Black Mountain Fund, I corrected a collection path that could treat an account requiring additional verification as empty; it now fails explicitly instead.[^E4] For portfolio review, the consequence is a question of meaning: does the result describe the account, or has an access requirement prevented an answer?
+I found a portfolio system that accepted credentials but produced no connected-account transactions, while recurring synchronization reported success without importing activity.[^E2] For an executive responsible for portfolio reporting, the important question was what that success actually represented. A connection was an intermediate step. The business needed an accepted record of account activity.
 
-Imagine reviewing an account with that verification requirement. An absence of activity is something to interpret. A request to restore access is something to resolve. The distinction determines which conversation to have next: a discussion about account activity, or a handoff to someone authorized to complete verification.
+The execution problem extended beyond account access: recurring background jobs were not running in production, and queued work disappeared on restart.[^E1] I treated that as part of the same delivery obligation. Scheduling a task and obtaining account access belonged inside the work; neither was an adequate definition of completion.
 
-I started with that review experience. The requirement was straightforward: the application must distinguish an answer about the account from an outstanding request for access. Ask your vendor to demonstrate that distinction using an account that requires attention. A screen showing no activity should prompt a question about how the system reached that conclusion.
+The operator experience made the gap harder to interpret. Broken connections displayed a generic failure; problems were sometimes discovered days later, after decisions had used portfolio figures that appeared live.[^E3] That put the burden of recognizing a problem on the person reading the portfolio. My concern was the point at which an apparently ordinary review became an investigation into whether the underlying information deserved confidence.
 
-## What happened when access worked but collection stopped?
+I decided that successful collection had to mean complete, validated activity accepted through the existing import controls. That was the acceptance standard for the work. It placed the business record at the center of the decision and gave me a concrete way to judge the surrounding connection, collection and error handling.
 
-The same work exposed another completion problem: trade retrieval could stop after the initial batch because authorization failed when requesting the next batch. I corrected authorization for those subsequent requests.[^E4]
+## What did I change between account access and an accepted record?
 
-Follow the account review a little further. An initial response is evidence that access worked at that point. The buyer's question then moves to coverage: what establishes that collection reached its intended end? Asking only whether a connection works leaves that question unanswered.
+I kept the existing import process as the destination. Automated account activity now passes through that process, including validation, preview, duplicate detection and committing an import in full.[^E2] I did not want the method of arrival to decide which rules applied to a record. The relevant business question was whether the activity met the portfolio's acceptance requirements.
 
-I also added checks that reject completion when required information is missing, trade data falls outside the supported contract, or collection stops progressing.[^E4] This was a deliberate decision about the meaning of a successful result. I wanted completion to carry a specific obligation, including how the system handles an interruption after a promising start.
+That decision also defined where to scrutinize collection. Before considering the import, I needed to examine what the external account had actually returned. I corrected authorization for subsequent requests where trade retrieval could previously stop after its initial batch.[^E4] This was a concrete completion defect: the opening response was too early a point to judge the entire retrieval.
 
-For your own review, ask to see an interrupted collection alongside a completed collection. Have the vendor explain the evidence behind each status.
+Access requirements needed their own treatment. An additional-verification response now causes collection to fail explicitly instead of completing as an empty account.[^E4] I treated the meaning of that response as an acceptance decision. A statement about account activity must have a basis in account activity; an outstanding request for access belongs with the person responsible for resolving access.
 
-## How did account activity become portfolio records?
+I also made collection completion conditional on the returned information. Collection cannot complete when required information is missing, trade data is unsupported, account trade identifiers cannot be recognized, or retrieval stops progressing.[^E4] I chose a strict boundary here. Uncertainty about whether the collection was complete was a reason to stop acceptance and require attention.
 
-There was a wider gap behind the account connection. The build record describes credentials being accepted while connected accounts produced no transactions, while recurring synchronization reported success without importing account activity.[^E2] That made the destination of the activity as important as its retrieval.
+The operational changes supported that same standard. I connected recurring account collection to persistent background processing with retries.[^E1][^E2] I retained the existing platform and concentrated on the missing execution responsibility. The work needed somewhere durable to continue, with an explicit treatment of unsuccessful attempts.
 
-I connected recurring synchronization to persistent background processing with retries and an alert path when every connection in a run fails. An individual failing connection no longer aborts the others. Automated records go through the existing import process, including validation, preview, duplicate detection and committing an import in full.[^E1][^E2]
+I also separated an individual connection problem from a failure across the connected accounts. A failing connection no longer aborts the others, while a run in which every connection fails is rejected and reaches the failure-alert path.[^E2] Those are different operational situations. I wanted the system's treatment of each to reflect the scope of the problem, with acceptance tied to what actually happened.
 
-For the executive reviewing this part of the work, follow the account beyond the connection screen. Ask where retrieved activity becomes an accepted portfolio record and what review governs that transition. Keep that discussion tied to the import rules already governing the business. Have the person responsible for those records assess the proposed import.
+## What is different for the person reviewing the portfolio?
 
-## What does the reviewer see when attention is needed?
+Connection views now show the last actual success, current state and a corrective action, while portfolio views indicate stale figures.[^E3] I put that information in the review experience because the person interpreting a figure also needs context about its condition. A separate technical investigation should not be the starting point for deciding whether to question a displayed result.
 
-Previously, a broken connection surfaced a generic failure message. The evidence describes problems being discovered only after someone noticed that portfolio figures had stopped changing, sometimes days later and after a decision had already used apparently live figures.[^E3]
+Connection explanations distinguish expired sign-in, credential problems, missing permission and temporary limits, with corresponding actions to renew access, replace credentials, grant permission or wait.[^E3] My judgment was to make the next action specific enough to assign. The useful handoff is a defined request to someone with the relevant authority.
 
-For the account under review, that is the moment to ask a different operational question: what information does the person responsible need before assigning the next action? “Look into the connection” leaves the recipient to work out both the problem and the authority needed to address it.
+The outcome boundary is precise: the provider safeguards were checked against recorded responses without live network access, and the integration record explicitly separates merging the work from approval for production cutover.[^E4][^E5] That is the evidence behind this account of the accomplishment. Measured business impact requires its own evidence; I attach no claim about operating savings or faster decisions to these implementation checks.
 
-I added connection feedback showing the last actual success, current state and a direct corrective action, plus staleness indicators in portfolio views.[^E3] The explanations distinguish expired sign-in, credential problems, missing permission and temporary limits, with corresponding actions to renew access, replace a credential, grant permission or wait.[^E3]
+## What should you require from your own portfolio system?
 
-Ask to see that feedback in the working view your team will use. Then name the person authorized to take each action. The useful review is practical: can the intended recipient understand the request, and do they have authority to carry it out?
+The lesson I take into an executive review is to define completion at the point where the business accepts the information. Make that definition part of the operating agreement with the team or vendor responsible. The discussion should include the person accountable for the portfolio records and the person authorized to resolve account access.
 
-## What does this establish before a production decision?
+Keep the closing review focused on these questions:
 
-The provider checks used recorded responses without live network access.[^E4] That matters when interpreting the evidence: review those checks as verification of the implemented responses, and reserve the deployment decision for its own review.
+- **Completeness:** What evidence must exist before account activity qualifies for acceptance, and what uncertainty requires someone to intervene?
+- **Freshness:** What age of information is acceptable for the decision being made, and who owns an exception to that standard?
+- **Resolution:** Who has the authority to restore access, and what specific request should reach that person?
 
-The integration record explicitly states that merging the work is not approval for production cutover.[^E5] Claims about faster review or lower operating cost would require separate evidence.
-
-For your organisation, bring the person responsible for portfolio review into that release discussion. Put an account through the situations described here and ask them to judge the information presented at each decision. Keep implementation verification, operator acceptance and authorization to launch explicit.
-
-The question I want an executive to ask is concrete: **What will my team be shown at the moment this account needs a decision?** A useful vendor discussion starts with that account and the person responsible for reviewing it.
+I want those answers in the acceptance criteria before anyone signs off on the work. They make the executive decision concrete: what information the organization is prepared to rely on, under what conditions, and who takes responsibility when those conditions are unmet.
