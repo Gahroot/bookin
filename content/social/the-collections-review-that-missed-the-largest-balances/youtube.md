@@ -1,15 +1,15 @@
 ---
 source_article: the-collections-review-that-missed-the-largest-balances
 status: draft
-hook: At Triten, tenants with the largest balances were missing from aging results.[^E4]
+hook: Tenants with the largest balances were missing from an aging review.[^E4]
 ---
 
-Historical collections questions could also return a later balance or an incorrect zero.[^E1][^E2]
+Each aging band was backed by the tenant’s entire open-charge history. Too much supporting evidence caused the whole tenant to disappear.[^E4]
 
-I added month-end ledger answers and corrected when historical balances and property associations take effect.[^E1][^E2][^E3]
+I tied each band to its own charges, allowing accounts excluded by their combined histories to appear.[^E4]
 
-I changed aging evidence to follow each age band’s charges, allowing tenants excluded because of their combined histories to appear.[^E4]
+I also corrected historical balance dates and property associations.[^E1][^E2][^E3]
 
-Reconciliation matched the current-tenant charges and former-tenant balances checked. Some former-tenant age-band allocations still differed, and an individual age band can still exceed the evidence limit and exclude a tenant.[^E4][^E5]
+The aging comparison matched the current-tenant charges and former-tenant balances checked. Some former-tenant aging allocations differed, and an oversized individual band can still cause exclusion.[^E4][^E5]
 
 Book a call at nolangrout.com/book.
