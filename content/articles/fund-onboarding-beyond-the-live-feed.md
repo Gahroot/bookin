@@ -1,87 +1,69 @@
 ---
-title: Fund Onboarding Beyond the Live Feed
+title: When a Connected Fund Still Lacks the History It Needs
 slug: fund-onboarding-beyond-the-live-feed
 type: field-note
-description: "How I addressed fund onboarding gaps at Black Mountain Fund: missing account history, controlled record corrections and calculation prerequisites at creation."
+description: A connected fund can still lack usable history. How I addressed missing records, correction authority and calculation readiness during fund system onboarding.
 date: 2026-11-05
 updated: 2026-11-05
 status: draft
-audience: Fund executives, COOs and operators evaluating replacement business systems
+audience: Fund executives, COOs and operators evaluating fund onboarding and replacement systems
 primary_keyword: fund onboarding
 secondary_keywords:
-  - historical transaction backfill
+  - historical fund records
   - fund system migration
   - transaction correction controls
-  - fund calculation readiness
-answer: I addressed Black Mountain Fund's onboarding gaps through clearer account-connection steps, reviewed historical imports and bounded transaction corrections.[^E1][^E2][^E3] New-workspace setup also includes the configuration and opening valuation needed for calculations.[^E4] The reported outcome covers application changes, with customer onboarding completion outside its scope.
+  - historical backfill
+answer: Fund onboarding needs a way to handle history that live connections cannot supply.[^E2] I added backfill through document upload, validation and review.[^E2] Managers can correct selected transaction details in a batch; quantities, values and fees still require inspection of each record.[^E3]
 hero_image: /images/articles/fund-onboarding-beyond-the-live-feed.webp
-hero_alt: Conceptual illustration of fund records moving through account connection, historical review and controlled corrections into a configured workspace
-faq:
-  - q: Why weren't live account connections enough?
-    a: For this long-running fund, provider feeds did not cover the full historical requirement. I added a document-based review route for bringing in the missing history.[^E2]
-  - q: Can bulk corrections change transaction amounts?
-    a: No. Group corrections cover selected descriptive and assignment details. Quantities, values and fees require inspection record by record.[^E3]
-  - q: What happens when an import contains rejected rows?
-    a: For real estate transaction files, acceptable records can be imported while rejected entries receive specific explanations and guidance for correction.[^E3]
-  - q: What changed when a workspace is created?
-    a: Creation now establishes the default settings and initial cash valuation that the calculation engine needs, together with the fund and its opening deposit.[^E4]
-  - q: Does this establish that customer onboarding was completed?
-    a: This account claims changes to the application, without asserting a completed customer onboarding. The integration record also reserves production cutover approval as a separate decision.[^E5]
+hero_alt: Conceptual illustration of historical fund records passing through review and controlled correction
+faq: []
 cta: book
 claims:
-  - text: Live account connections could not supply all the history needed to onboard a long-running fund at Black Mountain Fund.
+  - text: Live account feeds have historical limits, so connecting accounts alone cannot establish complete history for a long-running fund.
     kind: capability
     evidence:
       - E2
-  - text: The replacement application's onboarding created a workspace without guiding the user through account connection, and investors arrived at an empty dashboard.
-    kind: outcome
-    evidence:
-      - E1
-  - text: New workspaces lacked the starting configuration and opening valuation required by the calculation engine, causing calculations to fail.
-    kind: outcome
-    evidence:
-      - E4
-  - text: Account connection became an explicit onboarding step for bank, brokerage and crypto accounts, with a skip option that continues to review and keeps connection tasks on the dashboard checklist.
+  - text: Managers onboarding years of records lacked a way to correct many transactions together, and rejected import rows gave them no actionable explanation.
     kind: capability
     evidence:
-      - E1
-  - text: Investors now see a checklist drawn from the same shared progress record used by the onboarding process.
-    kind: capability
-    evidence:
-      - E1
-  - text: The empty investor dashboard was replaced with next actions, explanations of why they matter and direct links to take them.
-    kind: capability
-    evidence:
-      - E1
-  - text: Historical backfill was added through the existing document intake process, using its upload, extraction, validation and accept-or-reject review stages.
+      - E3
+  - text: I assigned no assumed calendar coverage to unknown providers or feeds capped by record count, because a record count cannot safely establish a period of history.
     kind: capability
     evidence:
       - E2
-  - text: Historical coverage is assessed according to what each provider can supply; unknown providers and connections limited by record count receive no assumed calendar coverage.
+  - text: A holding sold down completely can disappear from the records returned by a connector.
     kind: capability
     evidence:
       - E2
-  - text: "Bulk editing supports selected transaction details: notes, source, account or asset assignment, and settlement date."
+  - text: I added historical backfill through the existing document intake process, using its upload, extraction, validation and accept-or-reject review stages.
+    kind: capability
+    evidence:
+      - E2
+  - text: I added bulk transaction corrections for notes, source, account or asset assignment, and settlement date.
     kind: capability
     evidence:
       - E3
-  - text: Transaction quantities, values and fees remain on an individual-record review path, where each number is visible.
+  - text: Quantities, values and fees remain subject to individual-record review, where each number is visible.
     kind: capability
     evidence:
       - E3
-  - text: Bulk corrections check permission for every selected record and apply the batch together or reject it; each changed record receives an audit entry identifying the full affected selection.
+  - text: Every selected transaction is checked for the manager's authority, the batch applies together or fails, and each changed record receives an audit entry identifying the full affected selection.
     kind: capability
     evidence:
       - E3
-  - text: For real estate transaction imports, valid rows can proceed while rejected rows are reported with their row, column, rejection reason and corrective guidance.
+  - text: Real estate file imports now apply valid rows while reporting every rejected row, its column, the reason for rejection and guidance for correction; operators can correct the listed rows and upload again.
     kind: capability
     evidence:
       - E3
-  - text: Workspace creation now supplies the default configuration and opening cash valuation alongside the fund and initial deposit, providing calculation prerequisites.
+  - text: I made account connection an explicit onboarding step, with deferred connections retained as tasks on the dashboard checklist.
+    kind: capability
+    evidence:
+      - E1
+  - text: Workspace creation now supplies default configuration and an opening cash valuation with the fund and initial deposit, providing calculation prerequisites that were previously missing.
     kind: capability
     evidence:
       - E4
-  - text: The onboarding and backfill work was included in a broader integration whose record explicitly separates merging from production cutover approval.
+  - text: The broader integration included onboarding and historical backfill, and its record explicitly separated merging from production cutover approval.
     kind: outcome
     evidence:
       - E5
@@ -118,60 +100,52 @@ evidence:
     ref: easefolio#pr-13
 ---
 
-## Why was a live connection insufficient for onboarding?
+## Why could a connected fund still lack what it needed?
 
-I judge a replacement system by what it takes to bring an existing operation into it. For a fund executive, opening an account is only the start of that question. Acceptance should cover the records being carried forward, the exceptions awaiting decisions and the prerequisites for using those records.
+For a fund executive, onboarding is a decision about whether an existing operation is ready to rely on a new system. I start with the records the business needs to carry forward. A successful connection is only part of that discussion.
 
-At Black Mountain Fund, live account connections could not supply all the history needed to onboard a long-running fund.[^E2] The replacement application's onboarding also created a workspace without guiding the user through account connection, and investors arrived at an empty dashboard.[^E1] Separately, new workspaces lacked the starting configuration and opening valuation required by the calculation engine, causing calculations to fail.[^E4]
+Live account feeds have historical limits, so connecting accounts alone cannot establish complete history for a long-running fund.[^E2] Managers onboarding years of records also lacked a way to correct many transactions together, and rejected import rows gave them no actionable explanation.[^E3]
 
-I treated those as parts of the same business problem: what must be true before an existing fund can begin operating in its replacement system? That question set the scope of the work.
+I treated those gaps as an operating problem: how does a manager bring in missing history, inspect what needs attention and make an appropriate correction? That became the organising question for the work. I wanted an explicit route through an exception, with a clear boundary around the authority exercised along the way.
 
-## What did I change about the onboarding journey?
+## What history did I decide the system could trust?
 
-I made connecting bank, brokerage and crypto accounts an explicit onboarding step, with a skip option that continues to review and keeps connection tasks on the dashboard checklist.[^E1]
+The consequential decision was how to treat uncertainty. I chose to require evidence of historical coverage before treating a connection as sufficient for that purpose.
 
-Investors now see a checklist drawn from the same shared progress record used by the onboarding process.[^E1] I also replaced the empty investor dashboard with next actions, explanations of why they matter and direct links to take them.[^E1]
+I assigned no assumed calendar coverage to unknown providers or feeds capped by record count, because a record count cannot safely establish a period of history.[^E2]
 
-My decision was to make the next action part of the experience itself. An executive reviewing onboarding should ask what happens after each decision, including a decision to defer something. A screen being available somewhere in the application is a weak acceptance criterion. The useful question is whether the intended user is actually led to it at the appropriate point.
-
-## How does the fund bring in history a connection cannot supply?
+Consider a holding that no longer appears in the connected account. A holding sold down completely can disappear from the records returned by a connector.[^E2] Its absence raises a different question from whether today's connection is working: where is the evidence of the earlier activity? That is the question I wanted the onboarding process to confront.
 
 I added historical backfill through the existing document intake process, using its upload, extraction, validation and accept-or-reject review stages.[^E2]
 
-The system assesses historical coverage according to what each provider can supply; unknown providers and connections limited by record count receive no assumed calendar coverage.[^E2]
+My judgment was to accept the inconvenience of asking for a statement when coverage was uncertain. I wanted an operator to make a visible decision about the historical record. The alternative assumption—that whatever arrived must be sufficient—was not an acceptable basis for calling the history complete.
 
-That was a deliberate standard for deciding what to trust. I wanted the acceptance discussion to start with the fund's required history. It should not start with whatever happens to be available from a connection.
+## How could managers correct records without unrestricted bulk authority?
 
-For the operator responsible for sign-off, the important questions are which periods must be represented and what evidence will establish that they are present. Ask those questions before agreeing that a migration is complete. The definition of completeness belongs with the business requirement.
+I added bulk transaction corrections for notes, source, account or asset assignment, and settlement date.[^E3] Quantities, values and fees remain subject to individual-record review, where each number is visible.[^E3]
 
-## How much can a manager change in a bulk correction?
+I did not treat every correction as an equivalent decision. Assigning a group of records to an account is organisational work. Changing the amount recorded for an event changes what the record says happened. That distinction determined where I drew the boundary.
 
-I added bulk editing for selected transaction details: notes, source, account or asset assignment, and settlement date.[^E3] Quantities, values and fees remain on an individual-record review path, where each number is visible.[^E3]
+The tradeoff was deliberate: I accepted individual review for the fields that describe the economics of a transaction. Convenience alone was not a sufficient reason to give a manager broader authority. For an executive, the useful question is which decisions deserve inspection before they become part of the fund's record.
 
-A bulk correction checks permission for every selected record and applies the batch together or rejects it; each changed record receives an audit entry identifying the full affected selection.[^E3]
+Every selected transaction is checked for the manager's authority, the batch applies together or fails, and each changed record receives an audit entry identifying the full affected selection.[^E3]
 
-For real estate transaction imports, valid rows can proceed while rejected rows are reported with their row, column, rejection reason and corrective guidance.[^E3]
+For a concrete import exception, take a real estate file containing both usable and rejected rows. Real estate file imports now apply valid rows while reporting every rejected row, its column, the reason for rejection and guidance for correction; operators can correct the listed rows and upload again.[^E3]
 
-I treated correction authority as a business decision. The acceptance discussion should cover how much a manager can change in a single action, what deserves individual inspection and what a later reviewer should be able to establish.
+That is the kind of demonstration I want in an operational review. Present an exception and ask the person responsible for the records to explain their next decision. Assess whether the explanation is specific enough to act on, and whether the proposed correction falls within that person's authority. A clean sample file leaves those questions untested.
 
-Ask a vendor to demonstrate an exception as well as a clean import. Give the review equal weight: who is expected to act on a rejection, and what information should that person receive before making a correction? Those are operating questions, even when the work sits inside a software project.
+## What did the delivered application support?
 
-## What changed at the calculation starting line?
+I made account connection an explicit onboarding step, with deferred connections retained as tasks on the dashboard checklist.[^E1] Workspace creation now supplies default configuration and an opening cash valuation with the fund and initial deposit, providing calculation prerequisites that were previously missing.[^E4]
 
-I updated workspace creation to supply the default configuration and opening cash valuation alongside the fund and initial deposit.[^E4]
+The broader integration included onboarding and historical backfill, and its record explicitly separated merging from production cutover approval.[^E5]
 
-My acceptance question was specific: does creation establish the starting conditions the calculation engine expects? For a fund operator, that belongs in the definition of a usable workspace. It should be settled before the handoff is accepted.
+I judge this work at that stated boundary. For an executive assessing a delivery, the acceptance event should be explicit: what decision is being requested, and what evidence is available to make it? Keep that question attached to the actual handoff.
 
-The onboarding and backfill work was included in a broader integration whose record explicitly states that merging is separate from production cutover approval.[^E5] A completed customer onboarding is outside the outcome I claim here.
+## What should you ask before accepting your own system?
 
-That boundary matters when assessing delivery. Ask for the exact acceptance event behind a progress report. Application changes, operational acceptance and launch approval should each have a clear owner and a clear meaning.
+Bring the discussion back to the operation you already run. Ask your team or vendor to demonstrate the difficult case using records representative of your business, then answer these acceptance questions:
 
-## What should you ask of your own organisation or vendor?
-
-Start with the fund you already operate. Ask the team proposing a replacement to explain what evidence you will review before accepting it.
-
-Which historical periods are required? Who has authority to accept an unresolved exception? What should happen when an operator defers a task? Which decisions belong to the person preparing the records, and which belong to the person approving them?
-
-Then agree what sign-off means. Define the evidence, the reviewer and the decision being made. Keep the standard concrete enough that an operator can challenge it without needing to understand the software's construction.
-
-My recommendation is to make those acceptance questions part of the buying conversation. Ask for a demonstration using the kinds of incomplete records and unresolved decisions your team expects to encounter. Judge the proposal against the responsibilities your operators will carry after the handoff.
+- **Which historical periods can you demonstrate are covered, and what happens where coverage is unknown?** Ask for the basis of the coverage decision. Set the required period before reviewing what a connection happens to return.
+- **Which corrections can an operator make together, and which require individual inspection?** Name the fields, the authority required and the evidence a later reviewer should expect. Treat that boundary as a management decision.
+- **What remains for the business to approve before the system becomes operational?** Ask for a precise acceptance event and an accountable owner. Make the demonstration address the unresolved records and decisions your team will actually inherit.

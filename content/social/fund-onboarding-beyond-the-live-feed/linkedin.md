@@ -1,21 +1,17 @@
 ---
 source_article: fund-onboarding-beyond-the-live-feed
 status: draft
-hook: A connected account is not a complete fund history.
+hook: Which corrections should a fund manager be allowed to make in bulk?
 ---
 
-Black Mountain Fund's replacement application faced a concrete gap: live connections could not supply all the records needed for a long-running fund.[^E2]
+Managers onboarding years of fund history lacked a way to correct many transaction records together. Rejected import rows also offered no actionable explanation.[^E3]
 
-I made account connection an explicit onboarding step, including a way to defer it and continue through review.[^E1]
+I added batch corrections for selected details: notes, source, account or asset assignment, and settlement date.[^E3]
 
-I added historical backfill through the existing document review process.[^E2]
+Quantities, values and fees stayed under individual review, with each number visible to the person making the correction.[^E3]
 
-I also added bulk corrections for selected transaction details. Quantities, values and fees still require individual-record review, and each bulk change leaves an audit record showing the affected selection.[^E3]
+The controls also cover the selection itself. Permission is checked separately for every transaction. The batch succeeds together or fails, and every changed record gets an audit entry identifying the complete affected group.[^E3]
 
-For real estate transaction imports, accepted rows can proceed while rejected rows come back with specific corrective guidance.[^E3]
+That is the boundary I describe in the article: which changes belong in a group action, which deserve individual inspection, and what a later reviewer should be able to establish.
 
-New-workspace creation now supplies the starting configuration and opening valuation required by the calculation engine.[^E4]
-
-These changes entered a broader integration whose record keeps merging separate from production cutover approval.[^E5] This account makes no claim of a completed customer onboarding.
-
-To discuss your fund's onboarding requirements, book a call at nolangrout.com/book
+To discuss correction authority in your fund's systems, book a call at nolangrout.com/book

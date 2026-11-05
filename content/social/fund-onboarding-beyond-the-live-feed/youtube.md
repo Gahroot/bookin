@@ -1,15 +1,13 @@
 ---
 source_article: fund-onboarding-beyond-the-live-feed
 status: draft
-hook: Can your account feeds supply your fund's full history?
+hook: How much fund history does a connected account actually prove?
 ---
 
-The problem: At Black Mountain Fund, live connections could not provide all the historical records needed for onboarding.[^E2]
+The gap: Live feeds have historical limits. Connecting accounts alone cannot establish complete history for a long-running fund.[^E2]
 
-The change: I added guided account connection and a reviewed document route for historical backfill.[^E1][^E2]
+The decision: I gave unknown providers and record-limited feeds no assumed calendar coverage.[^E2]
 
-The controls: Managers can correct selected transaction details in bulk. Quantities, values and fees stay under individual-record review.[^E3]
+The route: I added historical backfill through the existing document intake process, including validation and accept-or-reject review.[^E2]
 
-The starting point: I changed workspace creation to include the configuration and opening valuation required for calculations.[^E4]
-
-To discuss your fund's onboarding requirements, book a call at nolangrout.com/book
+To discuss historical coverage in your fund's onboarding, book a call at nolangrout.com/book
