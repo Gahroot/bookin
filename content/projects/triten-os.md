@@ -5,7 +5,7 @@ client: Triten
 client_url: https://tritenre.com
 status: live
 started: 2026-07-30
-updated: 2026-11-01
+updated: 2026-11-08
 summary: Triten's executives ask ChatGPT or Claude plain questions about their portfolio and get ranked, cited answers drawn from governed Yardi, Monday.com and SharePoint data, without anyone assembling a report first.
 problem: Portfolio facts lived in three systems that disagreed with each other. Answering a cross-portfolio question meant someone opening Yardi, Monday.com boards and SharePoint documents, reconciling them by hand and working out who was responsible for what.
 role: Designed and built the platform end to end, from source ingestion and the governed fact ledger to the API, the web app and the read-only MCP server that lets AI assistants query it.
