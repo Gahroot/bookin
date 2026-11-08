@@ -5,7 +5,7 @@ client: Prestyj
 client_url: https://prestyj.com
 status: live
 started: 2026-01-19
-updated: 2026-11-01
+updated: 2026-11-08
 summary: Prestyj presents AI agents for real estate funds, brokerages and owner-operators, with a live agent visitors can try and a growth engine that keeps its content current.
 problem: Buyers of AI agents in real estate want proof, not promises. The site has to show real capability and stay fresh without a marketing team.
 role: Built the site, its live brokerage agent, intake flows and an automated growth engine for content.
