@@ -1,15 +1,15 @@
 ---
 source_article: a-verified-alternative-to-stale-portfolio-reporting
 status: draft
-hook: What can you deliver when the portfolio reporting feed is stale?
+hook: Portfolio records were live. The reporting delivery was still incomplete.
 ---
 
-The request described an outdated feed that could not be fixed and asked whether we could fill the gaps.[^E1]
+At Triten, the request was to fill gaps in reporting described as outdated and unable to be fixed.[^E1]
 
-I expanded direct collection from a pilot property to every property configured for the covered operating areas.[^E2]
+I expanded direct collection across configured properties. For a property's chart of accounts, the system supported a direct, read-only request with cited account information.[^E2]
 
-The production check returned cited operating snapshots through a reader account across every connected area.[^E3]
+The production test returned cited snapshots through a reader account across every connected operating area. I also staged a reversible transition alongside the existing reporting feed.[^E3][^E4]
 
-I staged a reversible reporting transition, but nightly updates for commercial leases, payables, residents and tenants still had unexplained failures. The delivery milestone remained incomplete.[^E3][^E4][^E5]
+Nightly collection for commercial leases, payables, residents and tenants was still failing, with the cause unknown. The recorded delivery remained incomplete.[^E5]
 
-To discuss your portfolio reporting, book a call at nolangrout.com/book.
+To discuss your portfolio reporting, book a call at nolangrout.com/book
