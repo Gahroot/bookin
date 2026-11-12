@@ -1,22 +1,19 @@
 ---
 source_article: loan-terms-and-maturities-even-when-collateral-links-are-incomplete
 status: draft
-hook: What should a missing collateral link stop you from seeing?
+hook: "A missing collateral link should prompt a specific question: does this answer actually depend on it?"
 ---
 
-At Triten, an incomplete collateral link could prevent a loan investigation from returning terms already recorded for that loan.
+In a loan assistant I worked on, an absent collateral relationship could block access to terms already recorded for the loan.[^E2]
 
-I changed the loan investigation to return the recorded lender, balance, maturity, rate, covenants and guarantor even when the loan’s collateral is unlinked.
+I changed that dependency so the assistant could retrieve the recorded terms despite the missing link.[^E2]
 
-The assistant now obtains complete loan lists from the loan register. Loan lists now support exact date windows and show days remaining until maturity. The lists also support grouping. Maturity status labels and counts by status are now included in loan lists.
+The decision was about the scope of the question. Reading a loan record and establishing its collateral relationship deserve separate treatment. An answer about recorded terms should not be treated as confirmation that the surrounding data is complete.
 
-For a fund executive, the questions to bring to a demonstration are straightforward:
+The evidence documents the retrieval correction. It contains no measured time saving or financing decision, so I am not attaching either to this work.
 
-Which records belong in this review?
-Where do the terms come from?
-What does the review period actually cover?
-How should missing relationships be handled?
+For fund executives evaluating a system, this is a useful acceptance question: can it return the recorded debt terms while separately flagging the missing collateral link?
 
-Use an incomplete-record case in that conversation. Ask the vendor to explain which answers need a collateral connection and why.
+Test that second requirement explicitly. A retrieval fix alone is not evidence of a warning feature.
 
 Book a call at nolangrout.com/book

@@ -1,15 +1,15 @@
 ---
 source_article: loan-terms-and-maturities-even-when-collateral-links-are-incomplete
 status: draft
-hook: Why should a missing collateral link block a question about loan terms?
+hook: Should a missing collateral link block a question about recorded loan terms?
 ---
 
-The problem: At Triten, an incomplete collateral link could prevent a loan investigation from returning terms already recorded for that loan.
+Beat: Before the change, missing collateral links could obstruct retrieval of recorded loan terms.[^E2]
 
-The change: I changed the loan investigation to return the recorded lender, balance, maturity, rate, covenants and guarantor even when the loan’s collateral is unlinked.
+Beat: I changed the retrieval so those terms remained available without the collateral connection.[^E2]
 
-The maturity review: The assistant now obtains complete loan lists from the loan register. Loan lists now support exact date windows and show days remaining until maturity.
+Beat: The distinction matters: reading the loan record and confirming collateral completeness are separate requirements.
 
-The presentation: The lists also support grouping. Maturity status labels and counts by status are now included in loan lists.
+Beat: My acceptance question for an executive is whether the system can return the terms while separately flagging the missing link. Test both parts; the evidence here documents the retrieval correction.
 
-CTA: Bring an incomplete-record case to your next vendor demonstration. Book a call with me to discuss your debt-review questions.
+CTA: Book a call at nolangrout.com/book
