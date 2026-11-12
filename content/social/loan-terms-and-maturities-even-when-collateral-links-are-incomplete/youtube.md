@@ -1,15 +1,15 @@
 ---
 source_article: loan-terms-and-maturities-even-when-collateral-links-are-incomplete
 status: draft
-hook: A loan had recorded terms. A missing collateral link was getting in the way.
+hook: Should an incomplete collateral connection block access to a loan’s recorded terms?
 ---
 
-Beat: In the loan assistant I worked on for Triten, an absent collateral link could prevent a loan investigation from returning recorded debt terms.[^E2]
+Beat: That dependency appeared in a loan assistant I worked on.[^E2]
 
-Beat: I made the loan register the stated source for debt-term answers.[^E1]
+Beat: I made the loan register the stated source for debt-term answers and corrected retrieval when collateral was unlinked.[^E1][^E2]
 
-Beat: After the correction, the assistant could return the loan’s recorded lender, balance, maturity, rate, covenants and guarantor even when its collateral was not linked.[^E2]
+Beat: Related changes supported maturity windows and counts by maturity status.[^E4][^E5]
 
-Beat: Ask your vendor to demonstrate that incomplete-record case. Test disclosure of the missing connection as a separate requirement.
+Beat: For acceptance, follow a maturity-review question through to an individual loan. Include an incomplete relationship and specify which information should remain answerable.
 
 CTA: Book a call at nolangrout.com/book

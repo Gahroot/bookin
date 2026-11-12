@@ -1,21 +1,21 @@
 ---
 source_article: loan-terms-and-maturities-even-when-collateral-links-are-incomplete
 status: draft
-hook: A missing collateral link was blocking a question about recorded loan terms.
+hook: A missing collateral connection was getting in the way of recorded loan terms.[^E2]
 ---
 
-In the loan assistant I worked on for Triten, an absent collateral link could prevent a loan investigation from returning recorded debt terms.[^E2]
+I corrected a loan assistant so it could retrieve those terms despite that incomplete relationship.[^E2]
 
-The executive’s question concerned the obligation. The obstacle concerned its connection to collateral.
+The diagnostic distinction was the source of the answer. I made the loan register the stated source for debt-term responses.[^E1]
 
-I made the loan register the stated source for debt-term answers.[^E1]
+Related corrections supported complete loan lists, defined maturity windows and counts by maturity status.[^E3][^E4][^E5]
 
-After the correction, the assistant could return the loan’s recorded lender, balance, maturity, rate, covenants and guarantor even when its collateral was not linked.[^E2]
+For a fund executive evaluating this workflow, connect the portfolio question to an individual obligation. Agree on the review period, choose a record with an incomplete relationship, and specify what the answer should contain.
 
-That is the delivered change. The supplied evidence documents this retrieval correction without reporting a measured review-time saving or a resulting financing decision.[^E1][^E2][^E3][^E4][^E5]
+Then ask the vendor to explain any point where the assistant stops. Which requested fact actually requires more information?
 
-For your next vendor demonstration, choose a record with an incomplete relationship. Ask for information already recorded on it. Require the vendor to explain why that missing connection should—or should not—block the answer.
+The record documents the correction, with no measured business impact or resulting financing decision reported.[^E1][^E2][^E3][^E4][^E5]
 
-Test any warning about the missing relationship separately.
+Accept the demonstrated behavior on its own terms. Assess business impact through actual reviews and decisions.
 
 Book a call at nolangrout.com/book
