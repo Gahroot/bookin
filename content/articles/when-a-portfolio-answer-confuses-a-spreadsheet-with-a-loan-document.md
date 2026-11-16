@@ -1,25 +1,25 @@
 ---
-title: When a Portfolio Assistant Refused the Wrong Reporting Period
+title: A Portfolio Assistant Rejected Evidence From the Wrong Reporting Period
 slug: when-a-portfolio-answer-confuses-a-spreadsheet-with-a-loan-document
 type: case-study
-description: I changed how a portfolio assistant handled source evidence. A production check then refused to present a later reporting period as the earlier one requested.
+description: A portfolio assistant treated spreadsheet content as loan-document text. I changed its source context; a production check rejected the wrong reporting period.
 date: 2026-11-16
 updated: 2026-11-16
 status: draft
 project: triten-os
-audience: Fund executives, asset managers, COOs, founders and operators
+audience: Fund executives, asset managers, COOs and operators
 primary_keyword: portfolio AI assistant
 secondary_keywords:
   - portfolio reporting
-  - AI for real estate funds
+  - document attribution
   - reporting period accuracy
-  - document evidence
-answer: I changed the document context supplied to a portfolio assistant and the way its source references appeared to readers.[^E2] In a production check, it identified a spreadsheet and declined to present a later-period file as evidence from the earlier period requested.[^E3]
+  - AI for real estate funds
+answer: I changed a portfolio assistant’s source context after it treated spreadsheet material like loan-document text.[^E1][^E2] In a production check, it identified the spreadsheet and declined to use a Q3 file as Q1 evidence.[^E3] Another checked answer identified a promissory note’s PDF source and linked to it.[^E3]
 hero_image: /images/articles/when-a-portfolio-answer-confuses-a-spreadsheet-with-a-loan-document.webp
-hero_alt: A portfolio review showing a requested reporting period beside a spreadsheet from a different period
+hero_alt: Illustration comparing a spreadsheet, a loan document and their reporting-period labels during a portfolio review
 faq:
-  - q: Did the check establish that the requested reporting period was available?
-    a: The recorded observation was a refusal to misattribute the retrieved spreadsheet to the requested period.[^E3] Whether the requested evidence was available is a separate question; this result does not answer it.
+  - q: Did the document-handling changes reach production?
+    a: Yes. The changes were deployed to the production system.[^E4]
 cta: book
 claims:
   - text: The portfolio assistant sometimes treated spreadsheet material as though it were a passage from a loan document.
@@ -34,19 +34,15 @@ claims:
     kind: outcome
     evidence:
       - E4
-  - text: Spreadsheet figures identify their source sheet using the available sheet name or sheet label.
+  - text: Follow-up work added source-sheet attribution to spreadsheet figures, using the available sheet name or sheet label.
     kind: capability
     evidence:
       - E5
-  - text: The assistant checks document-library links against retrieved source links, corrects rewritten destinations when a single matching returned file exists, and otherwise removes the hyperlink.
-    kind: capability
-    evidence:
-      - E5
-  - text: In a production check, the assistant identified spreadsheet evidence by its file type and declined to misattribute a later-period file to the earlier reporting period requested.
+  - text: In a production check, the assistant identified a spreadsheet by its file type and declined to present a Q3 file as Q1 evidence.
     kind: outcome
     evidence:
       - E3
-  - text: In another production check, an answer about a promissory note identified its source as a PDF and linked to that document.
+  - text: In a separate production check, an answer about a promissory note identified its source as a PDF and linked to that document.
     kind: outcome
     evidence:
       - E3
@@ -83,58 +79,54 @@ evidence:
     ref: triten-os@ae99bbe82327
 ---
 
-## What happens when a spreadsheet sounds like a loan document?
+## What was wrong with the portfolio answer?
 
-A portfolio assistant sometimes treated material retrieved from a spreadsheet as though it were a passage from a loan document.[^E1]
+The portfolio assistant sometimes treated spreadsheet material as though it were a passage from a loan document.[^E1] The error concerned the authority attached to the information: how a reader was being invited to interpret it.
 
-For a fund executive, the business risk is a change in meaning. A reported value and a written obligation deserve different scrutiny. Before relying on an answer, the reader needs to establish whether it describes what a document requires or what a table reports. The wording should leave that distinction intact.
+Consider an executive deciding whether an answer establishes a loan obligation. Before accepting that conclusion, the executive should inspect the contractual language. A spreadsheet entry calls for a different inquiry: who reported it, what it represents and whether it belongs to the question under review. Those are different grounds for signing off on an answer.
 
-Consider the decision facing someone reviewing an answer about an obligation. Is there contractual language to inspect, or an operating figure to interpret? Those are different grounds for a conclusion. Presenting the latter with the authority of the former risks giving the reader a reason to act that the source never supplied.
+The potential consequence is a decision made on the wrong basis. An executive could accept a reported figure as evidence of a contractual requirement, then approve a response or escalate an issue without examining the governing text. That is the decision risk in this case, not an observed portfolio event.
 
-That was the problem I took on. The brief was about preserving the meaning of evidence between retrieval and the executive reading the answer. It was not enough to ask whether a response sounded reasonable. The source had to support the particular assertion being made.
+I treated the distinction as an acceptance requirement. A response about an obligation should be judged against the document that establishes the obligation. A response about reported activity should be judged against the relevant reporting evidence. The reader should not have to reconstruct that distinction after accepting the conclusion.
 
-The same concern applies to the question itself. A request tied to a reporting period contains a constraint, not a suggestion. A relevant-looking document still needs to qualify as evidence for that request. That distinction became central to assessing the work.
-
-## What did I change in the system?
+## What did I change, and why?
 
 I changed the document context supplied to the assistant and the presentation of its references, including document type and spreadsheet sheet context.[^E2]
 
-The decision was to treat those details as part of the business evidence. An executive should not have to infer the character of a source from confident prose. The answer needs to respect the material behind it, whether the task concerns an obligation, a reported figure or a comparison.
+My key judgment was that the character of a source belonged inside the answer process. I did not want source classification left to an executive’s interpretation of polished prose. The business question should determine the standard of evidence: contractual language for a contractual assertion, reporting material for a reporting assertion.
 
-I deployed the document-handling changes to production.[^E4] Follow-up work added source-sheet attribution to spreadsheet figures.[^E5] It also added checks of document-library links against retrieved source links, correcting rewritten destinations when a single matching returned file exists and otherwise removing the hyperlink.[^E5]
+Reporting period needed equally explicit treatment in acceptance. For a period-specific question, relevance alone is too loose a standard. Before interpreting a figure, the response should establish whether the material belongs to the period requested. Otherwise, the executive must resolve a hidden substitution before assessing the answer itself.
 
-These changes addressed the question of what the reader is being asked to trust. For the business review, the relevant issue was the relationship between an assertion and the material offered in support of it. An attractive reference is beside the point if its destination lacks that relationship.
+I deployed the document-handling changes to production.[^E4] Follow-up work added source-sheet attribution to spreadsheet figures, using the available sheet name or sheet label.[^E5]
 
-## What actually happened in the production checks?
+I included sheet context because an executive reviewing a figure needs a precise place to inspect. The acceptance question is practical: what should the reviewer open, and which part should they examine? A reference should support that review without requiring the reader to guess which table the answer means.
 
-The strongest observed result was a refusal. In a production check, the assistant identified spreadsheet evidence by its file type and declined to misattribute a later-period file to the earlier reporting period requested.[^E3]
+## What did the production checks actually show?
 
-That matters because a reporting-period request defines the scope of a business question. Replacing that scope without the reader's agreement changes the question under review. The appropriate acceptance decision here was about whether the retrieved material qualified, before any interpretation of its contents.
+In a production check, the assistant identified a spreadsheet by its file type and declined to present a Q3 file as Q1 evidence.[^E3]
 
-The conclusion from this check is specific: the observed response respected that boundary. Whether the requested period was available remained a separate question. So did whether any figures required reconciliation. Neither issue should be treated as settled merely because the response handled attribution correctly.
+This supplied a concrete counterpart to the original failure. The initial observation concerned spreadsheet material being treated as loan-document text. The production check tested a related boundary: whether the response would assign retrieved material to a reporting period it did not represent. These were separate observations, not a replay of an identical question.
 
-For an executive, this separates a useful finding about the answer from a finding about the portfolio. The test concerned the assistant's treatment of evidence. A portfolio conclusion still needs support addressing the actual business question. Keeping those judgments separate is part of reviewing the result honestly.
+For an executive, the acceptance decision at that point is whether there is an answer fit to use. A response that exposes an evidence mismatch calls for follow-up before approval. The next business step should depend on obtaining the appropriate support, rather than treating a plausible-looking response as completion of the review.
 
-Another production check concerned a promissory note. The answer identified its source as a PDF and linked to that document.[^E3]
+In a separate production check, an answer about a promissory note identified its source as a PDF and linked to that document.[^E3]
 
-That observation addressed the original concern from a different direction: the description of a document in the answer. I assessed it as a concrete response to inspect, with a source and an attribution, rather than as a general assurance about future performance.
+I assessed the checks together because they addressed different parts of the judgment. The note question concerned the description and reference attached to a document. The spreadsheet question concerned the attribution the response was willing to make. Both belonged in acceptance because the original concern involved the meaning assigned to retrieved material.
 
-There is no measured reduction in review time to report here. The accomplishment rests on the deployed changes and the observed responses. For this case, that is the appropriate basis for judging what changed; a claim about faster decisions or less manual work needs its own evidence.
+Keep the conclusion at the scope of those recorded responses. Use them as evidence when assessing this change; require separate support for claims about portfolio decisions, financial results or review speed.
 
-## What should you ask before accepting a portfolio assistant?
+## What should you require before accepting your own system?
 
-Bring the acceptance discussion back to the decisions your organisation expects to make. This case suggests concrete questions for the person signing off on the system, whether that is a fund executive, a COO or an operating lead.
+Keep the acceptance discussion close to a decision someone in the business must approve. Choose the reviewer before the demonstration, and give that person responsibility for judging whether the evidence justifies the proposed conclusion. A fluent answer should still face the scrutiny you would apply to a written recommendation from a colleague.
 
-### Can I tell what gives this answer its authority?
+### Does the source justify the action I am being asked to approve?
 
-Ask to inspect an answer involving a written obligation alongside an answer based on reported data. Read each as the executive who must approve the next step. What is being asserted, and what evidence is offered for that assertion?
+Ask your vendor to present an answer about a loan obligation with its supporting material open beside it. Have the responsible business reviewer identify the exact assertion that matters to the decision and locate its support. Then ask whether the proposed action follows from that support.
 
-Keep the discussion focused on business meaning. A reference alone is not the acceptance criterion. Decide whether the source supports the interpretation the answer invites. Assign responsibility for that judgment to someone who understands the underlying decision, rather than leaving it entirely to the person demonstrating the software.
+Keep this check focused on the consequential statement. An answer may contain background that everyone agrees with while the sentence driving approval remains unsupported. Set the acceptance standard around that sentence. If the reviewer cannot establish its basis, leave approval pending and specify what evidence is required next.
 
-### What happens when the evidence does not fit the requested period?
+### Does the response preserve the period in my question?
 
-Include a question where the available material and the requested period differ. Agree in advance on how the response should handle that mismatch. The demonstration should make clear whether the assistant preserves the request or silently changes its scope.
+Include a question where the available reporting material belongs to a different period. Agree beforehand that the response must make any mismatch explicit. Judge the demonstration against that requirement, and assign an owner to obtain the requested material if the business question remains open.
 
-Then separate acceptance of the response from completion of the business task. A refusal may satisfy the former while leaving the latter open. Establish who follows up on the unresolved request and what evidence they need before proceeding.
-
-That is the conversation to bring into a portfolio assistant project: the business question, the evidence required to answer it, and the point at which the system must leave a decision unresolved.
+Record the disposition in ordinary operating language: ready for review, awaiting evidence or requiring correction. That gives the executive a clear acceptance decision and gives the delivery team a concrete next step. Ask for demonstrated behavior on the questions your organisation intends to act on.

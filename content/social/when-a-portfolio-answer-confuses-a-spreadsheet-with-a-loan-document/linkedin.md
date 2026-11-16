@@ -1,19 +1,17 @@
 ---
 source_article: when-a-portfolio-answer-confuses-a-spreadsheet-with-a-loan-document
 status: draft
-hook: A portfolio assistant refused the wrong reporting period. That was the result worth examining.
+hook: A portfolio assistant was treating spreadsheet material like a passage from a loan document.[^E1]
 ---
 
-The original problem was concrete: the assistant sometimes treated spreadsheet material as though it were a passage from a loan document.[^E1]
+I changed the document context supplied to the assistant and the way its references appeared to readers. That included identifying the document type and supplying spreadsheet sheet context alongside the material being used.[^E2]
 
-I changed the document context it received and the presentation of its references, including document type and spreadsheet sheet context.[^E2] Those changes went into production.[^E4]
+The document-handling changes were deployed to production.[^E4]
 
-In a production check, it identified a spreadsheet and declined to attribute a later-period file to the earlier period requested.[^E3]
+In a production check, the assistant identified the retrieved material as a spreadsheet. It declined to present a Q3 file as evidence for the Q1 period requested in the question.[^E3]
 
-Another check showed an answer identifying a promissory note as a PDF and linking to it.[^E3]
+A separate production check covered a promissory note. That answer identified the source document as a PDF and included a link to it.[^E3]
 
-Follow-up work added sheet attribution for spreadsheet figures.[^E5] It also added checks against retrieved document links, correcting rewritten destinations when a single matching returned file exists and removing the hyperlink otherwise.[^E5]
-
-The observed reporting-period refusal is the central result of this case.[^E3]
+Follow-up work added attribution for figures drawn from spreadsheets: the source sheet is named using the available sheet name or sheet label.[^E5]
 
 Book a call at nolangrout.com/book
