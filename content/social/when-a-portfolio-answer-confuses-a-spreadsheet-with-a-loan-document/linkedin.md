@@ -1,17 +1,19 @@
 ---
 source_article: when-a-portfolio-answer-confuses-a-spreadsheet-with-a-loan-document
 status: draft
-hook: A portfolio assistant was treating spreadsheet material like a passage from a loan document.[^E1]
+hook: A portfolio assistant was giving spreadsheet content the authority of a loan document.[^E1]
 ---
 
-I changed the document context supplied to the assistant and the way its references appeared to readers. That included identifying the document type and supplying spreadsheet sheet context alongside the material being used.[^E2]
+I changed the source context supplied to the assistant, including the document type and spreadsheet sheet information.[^E2]
 
-The document-handling changes were deployed to production.[^E4]
+The production observation worth discussing was specific: in a spreadsheet check, it recognised the file type and declined to attribute a third-quarter file to the first quarter.[^E3]
 
-In a production check, the assistant identified the retrieved material as a spreadsheet. It declined to present a Q3 file as evidence for the Q1 period requested in the question.[^E3]
+That demonstrated a reporting-period boundary. It did not document a direct retest of the original confusion between spreadsheet content and loan-document language.[^E1][^E3]
 
-A separate production check covered a promissory note. That answer identified the source document as a PDF and included a link to it.[^E3]
+That distinction belongs in the account of the work. A recorded refusal supports a claim about that response. It is no basis for attaching a broader business result to the change.
 
-Follow-up work added attribution for figures drawn from spreadsheets: the source sheet is named using the available sheet name or sheet label.[^E5]
+For an executive, the acceptance question is equally concrete: does the evidence support the assertion you are being asked to rely on?
+
+Require contractual support for obligations and period-matched support for reporting claims.
 
 Book a call at nolangrout.com/book

@@ -1,15 +1,13 @@
 ---
 source_article: when-a-portfolio-answer-confuses-a-spreadsheet-with-a-loan-document
 status: draft
-hook: A portfolio assistant was treating spreadsheet material as loan-document text.[^E1]
+hook: A portfolio assistant was presenting spreadsheet content like language from a loan document.[^E1]
 ---
 
-The change: I updated the document context supplied to the assistant and the presentation of its references, including document type and spreadsheet sheet context.[^E2]
+The decision: I made document type and spreadsheet sheet context explicit in the information supplied to the assistant.[^E2]
 
-The deployment: those document-handling changes went into production.[^E4]
+The observed response: a production spreadsheet check recognised the file type and refused to attribute a third-quarter file to the first quarter.[^E3]
 
-The spreadsheet check: the assistant identified the file type and declined to present a Q3 file as Q1 evidence.[^E3]
-
-The document check: an answer about a promissory note identified its PDF source and linked to it.[^E3]
+The boundary: that result concerned reporting-period attribution. It did not document a direct retest of the original loan-document confusion.[^E1][^E3]
 
 Book a call at nolangrout.com/book
