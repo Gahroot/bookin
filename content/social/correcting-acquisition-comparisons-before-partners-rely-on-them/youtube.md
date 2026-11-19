@@ -1,15 +1,15 @@
 ---
 source_article: correcting-acquisition-comparisons-before-partners-rely-on-them
 status: draft
-hook: Why would an acquisition leave net asset value unchanged?
+hook: The loan balance and interest rate came from separate deal documents.[^E2]
 ---
 
-An acquisition review raised that question and challenged the wider calculations.[^E1]
+An acquisition review questioned unchanged net asset value and the accuracy of the calculations.[^E1]
 
-The loan issue was specific: the assumed balance and interest rate came from different deal documents, prompting a correction request.[^E2]
+The financing issue was specific: the assumed loan’s balance and rate were supplied in different documents.[^E2]
 
-Other requests covered investor fees, a sale at loan maturity, and a purchase option using planned financing.[^E4]
+I delivered the loan correction and a maths audit to the live system.[^E5]
 
-The completion record lists the assumed-loan fix and maths audit as live.[^E5]
+For your own acquisition review, ask which financing treatment changed and what was delivered.
 
-Ask for the transaction assumption behind an unexpected result. Book a call at nolangrout.com/book.
+Book a call at nolangrout.com/book.

@@ -1,21 +1,19 @@
 ---
 source_article: correcting-acquisition-comparisons-before-partners-rely-on-them
 status: draft
-hook: Why would net asset value stay the same with an acquisition?
+hook: An assumed loan’s balance and rate came from different deal documents.[^E2]
 ---
 
-That question appeared in an acquisition review, alongside a broader challenge to the calculations.[^E1]
+The acquisition review started with a question about unchanged net asset value and whether the calculations were correct.[^E1]
 
-A later message asked whether the maths was correct and whether partners should test it.[^E3]
+A later message asked whether the maths was correct and whether partners should test the system.[^E3]
 
-The financing issue was specific: an assumed loan’s balance and rate came from different deal documents, prompting a fix request.[^E2]
+The financing correction had a specific scope: handling an assumed loan whose balance and interest rate were supplied separately.[^E2]
 
-The requested scope also covered net-to-LP fees, a sale at the assumed loan’s maturity, and a purchase option using the planned loan.[^E4]
+I delivered that correction and a maths audit to the live acquisition system.[^E5]
 
-The completion record lists the assumed-loan fix and maths audit as live.[^E5]
+My takeaway for fund executives: ask your team to explain the financing arrangement represented in the comparison. Keep the balance, rate and intended borrowing terms together in that discussion.
 
-I keep that delivery claim tied to the named work. The other requests need their own completion evidence before I describe them as delivered.
-
-My takeaway: ask for an explanation of the transaction assumption behind an unexpected acquisition result. Keep the discussion anchored to the business question the reviewer raised.
+Then ask for a precise account of the treatment changed and what was delivered. Use the transaction question to frame the review before circulating the comparison more widely.
 
 Book a call at nolangrout.com/book
