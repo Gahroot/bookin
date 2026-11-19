@@ -1,19 +1,21 @@
 ---
 source_article: correcting-acquisition-comparisons-before-partners-rely-on-them
 status: draft
-hook: The acquisition review deserves scrutiny before it reaches partners.
+hook: Why would net asset value stay the same with an acquisition?
 ---
 
-At Black Mountain Fund, a manager questioned the acquisition calculations before proposed partner testing.[^E1][^E3]
+That question appeared in an acquisition review, alongside a broader challenge to the calculations.[^E1]
 
-I corrected financing treatment for an assumed loan whose balance and rate came from separate documents.[^E2][^E5]
+A later message asked whether the maths was correct and whether partners should test it.[^E3]
 
-I also corrected investor fees in the acquisition scenarios, aligned sale timing with the assumed loan’s maturity, and added a purchase option using planned financing.[^E4][^E5]
+The financing issue was specific: an assumed loan’s balance and rate came from different deal documents, prompting a fix request.[^E2]
 
-The completion record confirms the work was live.[^E5]
+The requested scope also covered net-to-LP fees, a sale at the assumed loan’s maturity, and a purchase option using the planned loan.[^E4]
 
-For a fund executive, the acceptance questions should be concrete: What assumptions does each scenario represent? Does it describe the option management intends to evaluate? What evidence supports calling the change complete?
+The completion record lists the assumed-loan fix and maths audit as live.[^E5]
 
-Keep the approval of the system change separate from the investment decision. Ask your team or vendor for a business explanation of what changed, with evidence appropriate to the outcome claimed.
+I keep that delivery claim tied to the named work. The other requests need their own completion evidence before I describe them as delivered.
+
+My takeaway: ask for an explanation of the transaction assumption behind an unexpected acquisition result. Keep the discussion anchored to the business question the reviewer raised.
 
 Book a call at nolangrout.com/book

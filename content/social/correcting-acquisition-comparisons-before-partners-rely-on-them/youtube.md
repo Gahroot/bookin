@@ -1,15 +1,15 @@
 ---
 source_article: correcting-acquisition-comparisons-before-partners-rely-on-them
 status: draft
-hook: Before the partner review, challenge the acquisition assumptions.
+hook: Why would an acquisition leave net asset value unchanged?
 ---
 
-At Black Mountain Fund, a manager questioned the calculations before proposed partner testing.[^E1][^E3]
+An acquisition review raised that question and challenged the wider calculations.[^E1]
 
-I corrected financing treatment where an assumed loan’s balance and rate came from separate documents.[^E2][^E5]
+The loan issue was specific: the assumed balance and interest rate came from different deal documents, prompting a correction request.[^E2]
 
-I corrected investor fees, aligned the sale with the assumed loan’s maturity, and added a purchase option using planned financing.[^E4][^E5]
+Other requests covered investor fees, a sale at loan maturity, and a purchase option using planned financing.[^E4]
 
-The completion record confirms those changes were live.[^E5]
+The completion record lists the assumed-loan fix and maths audit as live.[^E5]
 
-Ask what each scenario represents and what evidence supports calling the work complete. Book a call at nolangrout.com/book
+Ask for the transaction assumption behind an unexpected result. Book a call at nolangrout.com/book.
