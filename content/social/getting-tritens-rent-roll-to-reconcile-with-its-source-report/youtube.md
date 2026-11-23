@@ -1,15 +1,15 @@
 ---
 source_article: getting-tritens-rent-roll-to-reconcile-with-its-source-report
 status: draft
-hook: Triten’s rent-roll results were empty or incomplete, and dashboard accuracy was being questioned.[^E1]
+hook: An empty or incomplete rent roll prompted questions about dashboard accuracy.[^E1]
 ---
 
-The standard: I defined accuracy for this assignment as faithfully representing the source.[^E2]
+The standard: Accuracy meant a faithful account of the source information.[^E2]
 
-The result: The rent roll matched the source report’s unit areas, vacant rows and totals.[^E3][^E4]
+The result: The reconciled rent roll agreed with the source report on unit areas, vacant rows and totals.[^E3][^E4]
 
-The exceptions: Remaining differences received cause labels, including deposits held versus required, missing source information and unit-area edits.[^E3][^E4]
+The useful detail: Outstanding discrepancies were attributed to deposits held versus required, absent source information and unit-area changes.[^E3][^E4]
 
-The ongoing check: I added a nightly dashboard comparison against source accounting records and an operating list.[^E5]
+The recurring check: A nightly dashboard comparison used source accounting records and an operating list.[^E5]
 
-Book a call at nolangrout.com/book.
+Before accepting reporting, ask to see the source comparison and an explanation of unresolved differences. Book a call at nolangrout.com/book.

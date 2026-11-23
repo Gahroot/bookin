@@ -1,8 +1,8 @@
 ---
-title: "Triten’s Rent Roll: Matching the Report, Explaining the Differences"
+title: The Rent Roll Matched. The Remaining Differences Still Needed Answers.
 slug: getting-tritens-rent-roll-to-reconcile-with-its-source-report
 type: case-study
-description: At Triten, I reconciled a rent roll with its source report, explained remaining differences and added a nightly dashboard check against source business records.
+description: A rent-roll reconciliation that matched the source report, explained differences and clarified what executives should require before accepting reporting.
 date: 2026-11-23
 updated: 2026-11-23
 status: draft
@@ -12,73 +12,41 @@ primary_keyword: rent roll reconciliation
 secondary_keywords:
   - dashboard accuracy
   - real estate reporting
-  - source report reconciliation
+  - reporting reconciliation
   - reporting reliability
-answer: I aligned Triten’s rent roll with its source report’s unit areas, vacant rows and totals.[^E3][^E4] Remaining differences were labelled by cause, including missing source information, deposit held versus required, and area edits.[^E3][^E4] I also added a nightly dashboard check against source accounting records and an operating list.[^E5]
+answer: The reconciliation brought the rent roll into agreement with its source report’s unit areas, vacant rows and totals.[^E3][^E4] Outstanding discrepancies received explanations covering absent source information, deposit definitions and area changes.[^E3][^E4] A nightly dashboard check also compared against source accounting records and an operating list.[^E5]
 hero_image: /images/articles/getting-tritens-rent-roll-to-reconcile-with-its-source-report.webp
-hero_alt: Conceptual illustration of an executive reviewing a rent roll alongside its source report and annotated discrepancies
-faq:
-  - q: What did accuracy mean for this assignment?
-    a: The acceptance standard was faithful representation of the source information.[^E2]
-  - q: Did reconciliation eliminate every difference?
-    a: The reconciliation retained remaining discrepancies with explanations of their causes.[^E3][^E4]
+hero_alt: Conceptual illustration of a rent roll beside its source report, with a deposit discrepancy highlighted
+faq: []
 cta: book
 claims:
-  - text: At Triten, rent-roll results were empty or incomplete, and dashboard accuracy was being questioned.
+  - text: The starting problem was empty or incomplete rent-roll results, accompanied by questions about dashboard accuracy.
     kind: outcome
     evidence:
       - E1
-  - text: I set the acceptance standard as faithfully representing the source.
+  - text: For this work, accuracy meant faithfully showing what the source contained.
     kind: capability
     evidence:
       - E2
-  - text: For remaining deposit discrepancies, the reconciliation identified the distinction between deposits held and deposits required.
+  - text: The reconciliation identified deposits held versus deposits required as a cause of remaining differences.
     kind: capability
     evidence:
       - E3
       - E4
-  - text: Unit-area edits were identified as another cause of remaining differences.
+  - text: Missing source information and unit-area edits were also labelled as causes of remaining discrepancies.
     kind: capability
     evidence:
       - E3
       - E4
-  - text: Missing source information also received its own discrepancy label.
-    kind: capability
-    evidence:
-      - E3
-      - E4
-  - text: The resulting rent roll matched the source report’s treatment of unit areas, vacant rows and totals.
+  - text: The resulting rent roll matched the source report’s basis for unit areas, vacant rows and totals.
     kind: outcome
     evidence:
       - E3
       - E4
-  - text: I added a nightly dashboard-accuracy check against source accounting records and an operating list.
+  - text: A nightly dashboard-accuracy check compared against source accounting records and an operating list.
     kind: capability
     evidence:
       - E5
-  - text: I aligned Triten’s rent roll with its source report’s unit areas, vacant rows and totals.
-    kind: outcome
-    evidence:
-      - E3
-      - E4
-  - text: Remaining differences were labelled by cause, including missing source information, deposit held versus required, and area edits.
-    kind: capability
-    evidence:
-      - E3
-      - E4
-  - text: I also added a nightly dashboard check against source accounting records and an operating list.
-    kind: capability
-    evidence:
-      - E5
-  - text: The acceptance standard was faithful representation of the source information.
-    kind: capability
-    evidence:
-      - E2
-  - text: The reconciliation retained remaining discrepancies with explanations of their causes.
-    kind: capability
-    evidence:
-      - E3
-      - E4
 evidence:
   - id: E1
     kind: worklog
@@ -112,48 +80,50 @@ evidence:
     ref: triten-os@86ba7d63f0d4
 ---
 
-## Can management accept the rent roll for review?
+## What was wrong with the reporting?
 
-At Triten, rent-roll results were empty or incomplete, and dashboard accuracy was being questioned.[^E1]
+The starting problem was empty or incomplete rent-roll results, accompanied by questions about dashboard accuracy.[^E1]
 
-The immediate management question in that situation is whether to accept the report as a basis for review. Before interpreting occupancy, tenancy or other operating information, establish what the report actually represents. An empty result deserves investigation before anyone assigns it a business meaning.
+For an executive opening that report, the immediate question is basic: what am I actually reviewing? I do not read an empty output as evidence that there is nothing to report. Before discussing the business, I want the reporting problem addressed on its own terms.
 
-For a fund executive or operator, keep that acceptance decision separate from the decisions made using the report. First establish whether the reporting is fit for its stated purpose. Then consider what the information says about the business. Ask the team responsible for delivery to address the reporting question directly, with a comparison that can be examined.
+That distinction matters to how I judge a delivery. A rent roll is supposed to describe something specific. When the output is incomplete, asking whether the dashboard looks finished misses the issue. The review needs to reach the information underneath the presentation.
 
-That was the scope of this assignment: reconciliation. The relevant management decision was about accepting the representation of the source, rather than choosing a course of action for an asset. Keep the sign-off attached to that specific requirement.
+I keep the business question concrete: can the person presenting this report show how it relates to the report it came from? That is the conversation I want with a reporting team or vendor before accepting delivery. Screenshots and demonstrations belong alongside that comparison. Ask to see the actual reporting requirement examined, including the parts that are awkward to explain.
 
-## What did I change, and how did I handle a concrete discrepancy?
+## What changed in the way accuracy was judged?
 
-I set the acceptance standard as faithfully representing the source.[^E2]
+For this work, accuracy meant faithfully showing what the source contained.[^E2]
 
-That decision fixed the reference point for the work. It gave “accurate” a specific meaning for this assignment. In a review, use that definition to judge the delivery; raise proposed changes to the underlying business information as separate requests.
+I use that definition literally. Start with the source report and ask what its entries mean. Resist the urge to treat every disagreement as an instruction to change a value. First establish whether the comparison is asking the same business question on both sides.
 
-The deposit discrepancy makes the distinction concrete. For remaining deposit discrepancies, the reconciliation identified the distinction between deposits held and deposits required.[^E3][^E4]
+The reconciliation identified deposits held versus deposits required as a cause of remaining differences.[^E3][^E4]
 
-Read those terms literally: the amount held and the amount required answer different questions. Before asking someone to make them agree, decide which question the report is supposed to answer. A requirement describes an obligation; a holding describes what is already held. Keep those meanings visible when reviewing the comparison.
+That is the most useful example in this repair. Read the terms as an executive: “held” asks what is held; “required” asks what is required. Before requesting an adjustment, ask which of those questions the report is intended to answer. A request to make the values agree is premature until that meaning is settled.
 
-My handling of that discrepancy was to identify its cause. For an executive reviewing such an exception, the next instruction should be precise: confirm the intended deposit measure before requesting a correction. Avoid giving a team an open-ended instruction to remove a difference without first deciding which value belongs in the report.
+The example requires no invented tenant, amount or transaction. Put the competing definitions beside each other and ask the reviewer to choose the intended measure. Then judge the discrepancy against that choice. My concern is whether the explanation addresses the business meaning of the information, rather than merely describing a visible mismatch.
 
-Unit-area edits were identified as another cause of remaining differences.[^E3][^E4] For this category, ask which version of the area belongs in the comparison and who can approve a change. Keep the approval question tied to the actual edited information.
+Missing source information and unit-area edits were also labelled as causes of remaining discrepancies.[^E3][^E4]
 
-Missing source information also received its own discrepancy label.[^E3][^E4] Treat that category as a request to investigate the reference information. Ask for the absent information or an explicit decision about how its absence should be represented. Do not ask a reporting team to fill a gap with an assumption simply to make the review look complete.
+Those categories call for different review questions. For an absent source entry, ask what information should have been available. For an area edit, ask which version belongs in the comparison. Keep each question attached to the relevant difference. An instruction to “fix the report” leaves too much interpretation to the person receiving it.
 
-## What was different after the reconciliation?
+## What was different in the delivered result?
 
-The resulting rent roll matched the source report’s treatment of unit areas, vacant rows and totals.[^E3][^E4]
+The resulting rent roll matched the source report’s basis for unit areas, vacant rows and totals.[^E3][^E4]
 
-That is the delivered result to assess. For acceptance, keep the comparison attached to those dimensions. Review the entries as well as the aggregate, and give approval a clearly stated scope. A sign-off should say what was checked and which reporting requirement it satisfies.
+Those are concrete dimensions on which to examine the delivery. In a review, I ask to see the area basis, the treatment of vacancy and the aggregate together. Each belongs in the conversation about what the rent roll represents. Do not let the discussion end with a single total displayed on a dashboard.
 
-I added a nightly dashboard-accuracy check against source accounting records and an operating list.[^E5] Its practical role is recurring comparison: checking for discrepancies as part of the reporting operation. Make review of that check part of the operating conversation, including who examines a finding and what evidence is needed to close it.
+Vacant rows deserve a deliberate place in that review. Ask whether the comparison includes them and how the source treats them. For areas, ask which basis is being used. For totals, ask what entries contribute to the figure. These are business questions a reporting owner should be prepared to discuss without taking the executive through implementation details.
 
-Keep the recurring check and the response to a finding together in your requirements. Specify the comparison, the owner and the review expectation. Assess the delivered check on its stated coverage, and assess the handling of exceptions through the decisions recorded against them.
+A nightly dashboard-accuracy check compared against source accounting records and an operating list.[^E5]
 
-## What should you ask of your team or vendor?
+That recurring comparison belongs in the operating review as a separate item. Ask what happens when it finds a discrepancy: who receives the finding, who investigates it and who decides the response. Those are questions to resolve with the provider. Keep the existence of a check and the responsibility for acting on its findings explicit in the discussion.
 
-Start the acceptance conversation with the business decision that the report is intended to support. Name that decision explicitly. Then require the reporting scope to be specific enough for the person making it to understand what they are accepting.
+## What should you require before accepting a reporting system?
 
-Ask for the evidence behind sign-off. Request a representative comparison and walk through an exception with the person responsible for the report. Keep the conversation on the meaning of the information, the reason for the difference and the authority needed to resolve it. Leave presentation preferences until that discussion is complete.
+Require a source comparison and an explanation of unresolved differences. That is my buyer takeaway from this repair.
 
-Assign ownership at the point where a judgment is required. Decide who approves changes to business information, who accepts the reporting and who follows up on unresolved exceptions. Put those responsibilities into the delivery requirements so that acceptance has a named owner.
+Make the request specific enough to examine. Ask the provider to bring the source report, the delivered output and the explanation for an outstanding discrepancy to the same review. Walk through that discrepancy in ordinary business language. Ask what differs, why it differs and whether a change is actually required.
 
-Finally, define what happens after launch. Ask how recurring findings enter the review process, how an unresolved item stays visible and who decides it is closed. Require a concrete answer that fits your organisation’s reporting responsibilities. Make that operating arrangement part of what you buy and part of what you accept.
+Keep the acceptance conversation focused on that evidence. A broad assurance about accuracy gives the reviewer little to inspect. A concrete comparison gives the discussion a defined subject. The person accepting the system should be able to point to what was examined and understand the explanation offered.
+
+I judge reporting work by that standard. Before accepting the delivery, ask the team to demonstrate the relationship to the source and account for what remains unresolved. Make that demonstration part of the purchase and the review.
