@@ -1,36 +1,30 @@
 ---
-title: Getting Triten’s Rent Roll to Reconcile With Its Source Report
+title: Before Calling a Rent Roll Accurate
 slug: getting-tritens-rent-roll-to-reconcile-with-its-source-report
 type: case-study
-description: At Triten, I aligned a rent roll dashboard with its source report and added nightly checks. Here is what executives should ask before relying on the numbers.
+description: An incomplete rent roll raised a reporting question. I defined the source standard, reconciled the report and made remaining differences explicit for review.
 date: 2026-11-23
 updated: 2026-11-23
 status: draft
 project: triten-os
-audience: Asset managers, COOs and operators of real estate funds
-primary_keyword: operating dashboard reconciliation
+audience: Asset managers, fund executives, COOs and real estate operators
+primary_keyword: rent roll reconciliation
 secondary_keywords:
-  - rent roll reconciliation
+  - dashboard accuracy
   - real estate reporting
-  - dashboard source alignment
-  - operating report accuracy
-answer: At Triten, I brought a rent roll dashboard onto its source report’s basis for unit areas, vacant rows and totals.[^E3][^E4] Discrepancies carry explanations, and dashboards receive nightly comparisons with source records.[^E3][^E5] The executive standard is a named reporting basis, visible differences and evidence of continuing checks.
+  - reporting basis
+  - operating report reconciliation
+answer: I reconciled a rent roll to its source report’s treatment of unit areas, vacant entries and totals.[^E3][^E4] Remaining discrepancies received cause labels, including missing source information and area edits.[^E3][^E4] The acceptance criterion was faithful representation of the source, giving the review a specific reporting standard.[^E2]
 hero_image: /images/articles/getting-tritens-rent-roll-to-reconcile-with-its-source-report.webp
-hero_alt: Illustrative comparison of a rent roll dashboard and its source report, showing totals and explanations for differences
-faq:
-  - q: What did the rent roll reconciliation cover?
-    a: The work brought unit areas, vacant entries and report totals onto the same basis as the operating source.[^E3][^E4]
-  - q: How are remaining discrepancies explained?
-    a: The reconciliation identifies reasons for differences, including missing source information and edits to unit areas.[^E3][^E4]
-  - q: Does this establish universal dashboard accuracy?
-    a: No. The evidence covers the rent roll alignment, explanations for remaining differences and nightly dashboard comparisons against source records. That supports a defined reporting result, without proving that every future report will be flawless.[^E3][^E4][^E5]
+hero_alt: Conceptual illustration of a rent roll beside its source report, with a vacant entry and an annotated area difference
+faq: []
 cta: book
 claims:
-  - text: At Triten, rent rolls were returning empty or incomplete results, prompting the team to question whether the dashboards faithfully reflected the operating source.
+  - text: Rent rolls were returning empty or incomplete results, and the review raised a question about dashboard accuracy.
     kind: outcome
     evidence:
       - E1
-  - text: I used faithful representation of the source as the acceptance standard for this work.
+  - text: I made faithful representation of the source the acceptance standard.
     kind: capability
     evidence:
       - E2
@@ -39,12 +33,12 @@ claims:
     evidence:
       - E3
       - E4
-  - text: The reconciliation labels the causes of remaining differences, including missing source information and unit-area changes.
+  - text: The reconciliation labels causes of remaining differences, including missing source information and unit-area edits.
     kind: capability
     evidence:
       - E3
       - E4
-  - text: I added nightly dashboard checks against source accounting and operating records.
+  - text: I added a nightly dashboard accuracy check against source accounting records and an operating list.
     kind: capability
     evidence:
       - E5
@@ -81,56 +75,46 @@ evidence:
     ref: triten-os@86ba7d63f0d4
 ---
 
-## What was wrong with the rent roll?
+## What decision did the incomplete report put in question?
 
-At Triten, rent rolls were returning empty or incomplete results, prompting the team to question whether the dashboards faithfully reflected the operating source.[^E1]
+Rent rolls were returning empty or incomplete results, and the review raised a question about dashboard accuracy.[^E1]
 
-That is the right moment to stop discussing presentation. Before asking whether a dashboard is useful, ask what its figures represent. An empty result deserves a direct question: is there nothing in the underlying report, or is something missing from the dashboard? Those are different situations. An executive should not have to guess which situation they are looking at.
+For an executive looking at that result, the immediate decision is whether to accept the report for use. Does an empty result mean the source contains nothing to report? Does it mean information has been omitted? What evidence belongs beside the dashboard before someone signs off?
 
-For an asset manager, the immediate concern is the basis for a decision. For a COO, it is the standard the organisation uses before calling a report ready. Neither question calls for another chart. Both call for a comparison with the report the team already relies on.
+That distinction deserves attention before discussing presentation. An empty space has no explanation of its own. Reading it as an operating fact requires a basis; treating it as a reporting defect requires investigation. The appearance alone cannot settle which interpretation belongs in the review.
 
-I frame that comparison as an acceptance question: show me the operating report, show me the dashboard, and account for the difference. Do not start with whether the total looks plausible. Start with whether the dashboard represents the same underlying information.
+The useful business problem here is therefore specific: what should count as an acceptable representation of the operating source? That question belongs with whoever accepts the report, alongside whoever builds it. It concerns the meaning of the information presented to management, including the meaning of an absence. A polished screen should face the same scrutiny as a spreadsheet submitted for approval.
 
-That distinction matters to the scope of the assignment. “Make the dashboard accurate” is an ambition. “Make it faithfully reflect this source report” is a requirement against which to review the work. The executive decision is to name that reference before accepting the result.
+## What did I decide accuracy should mean?
 
-## What did I change?
+I made faithful representation of the source the acceptance standard.[^E2]
 
-I used faithful representation of the source as the acceptance standard for this work.[^E2]
+The consequential judgment is where to place the authority for the comparison. For this assignment, that authority was the source report. The review concerned whether the dashboard deserved acceptance on that basis. Any proposed departure needed to be considered as a change in interpretation, with its own justification.
 
-That gives the discussion a concrete boundary. The dashboard should answer for its treatment of the source. Questions about the source itself belong in the review too, but they should be identified as source questions. Otherwise, a conversation about a reporting discrepancy becomes a conversation about everything at once.
+Consider the treatment of unit area. Which area belongs in the comparison: the area recorded in the reference report, or an edited value? Calling either value reasonable does not answer the reconciliation question. The relevant issue is which version the report is supposed to represent. An area correction and a faithful copy are separate requirements; approving a correction should be an explicit business decision.
+
+Vacant entries deserve equally deliberate treatment. Should they appear in the report being reconciled? What does their inclusion mean for the scope of that report? These are questions about the population under review. They belong in the acceptance criteria alongside the total, rather than being dismissed as details of the display.
+
+This is why I treat reporting definitions as part of the assignment itself. The reference report expresses choices about what belongs. A review should examine those choices before judging the presentation. Otherwise, the word “accurate” leaves the most consequential part of the requirement unstated: accurate according to whose definition of the report?
+
+## What was verified, and what still needed explanation?
 
 I aligned the rent roll with the source report’s unit areas, vacant rows and totals.[^E3][^E4]
 
-Those are business definitions, not display preferences. In a review, ask which area belongs in the comparison, whether vacant entries belong in the report, and which total is being reconciled. Require explicit answers before approving the presentation. A total on its own is too narrow an acceptance requirement; ask to see the basis beneath it.
+Those dimensions define the verified result. The outcome is a reconciliation on a specified reporting basis. Acceptance should attach to that scope, with any broader assurance requiring its own evidence.
 
-Require approval for any intentional change in how the business is represented. If a different interpretation is intentional, require it to be named and approved as such.
+The reconciliation labels causes of remaining differences, including missing source information and unit-area edits.[^E3][^E4]
 
-This is also a useful boundary for a vendor conversation. Ask the vendor to explain the report in the language of operations. Keep the discussion on inclusion, omission and meaning. An explanation of how the software was built is no substitute for an answer about what belongs in the report.
+The unit-area category is a concrete example of the judgment involved. An edited area raises a version question: which value belongs in this comparison? The label identifies the nature of the discrepancy. Whether the edit should become the accepted value remains a separate question for the business. Explaining a difference and approving the underlying change are distinct decisions.
 
-## What is different now?
+Missing source information presents a different issue. What should the reporting requirement say when the reference itself lacks an entry? Should the dashboard preserve that absence, identify it for review, or follow an expressly approved rule? The answer belongs in the definition of the report. It should be considered directly, without treating an unexplained blank as sufficient evidence of either correctness or failure.
 
-The reconciliation labels the causes of remaining differences, including missing source information and unit-area changes.[^E3][^E4]
+That distinction also sets the boundary of the accomplishment. The record supports alignment and explanations for remaining differences. Resolving every underlying source issue would be a further result requiring separate verification.
 
-This is the point where the executive review should become specific. For a discrepancy attributed to missing information, ask what is absent. For a discrepancy attributed to an edit, ask which version belongs in the comparison. Require a cause that someone can examine, rather than accepting “the systems differ” as the end of the discussion.
+I added a nightly dashboard accuracy check against source accounting records and an operating list.[^E5]
 
-An explained difference should still receive a decision. Does it require correction? Does it belong with the owner of the source report? Is it an accepted difference in reporting basis? These are management questions. Keep them visible instead of treating every discrepancy as an interchangeable technical defect.
+A recurring comparison raises its own acceptance questions: what happens when it identifies a discrepancy, and what evidence closes the issue? Those questions deserve explicit operating requirements. The existence of a scheduled check should be assessed separately from the organisation’s decisions about review and resolution.
 
-I also added nightly dashboard checks against source accounting and operating records.[^E5]
+## What should you require before accepting your own dashboard?
 
-A recurring check belongs in the operating standard alongside the acceptance review. Ask what is compared, what falls outside the comparison, and what the organisation expects to happen after a discrepancy. Treat those as requirements to verify; the existence of a scheduled check should not answer them by implication.
-
-Keep the conclusion bounded. A promise of flawless reporting under every future condition goes beyond this record. Ask for evidence about the report and the check in front of you, and reserve broader conclusions for broader evidence.
-
-## What should you ask of your organisation or vendor?
-
-Start with the report your executives already use to settle a question. Name it explicitly. Then ask whoever owns the dashboard to describe the relationship between that report and the figures presented for decisions.
-
-Make the review concrete: which entries belong, which definitions apply, and what deserves an explanation? Avoid accepting a general assurance when the question concerns a particular reporting basis. Require the explanation at the level where an operating decision is made.
-
-Ask for the discrepancy discussion before approving the dashboard. What would count as an acceptable difference? Who should decide whether an exception belongs in the source or in the reporting layer? What evidence should accompany that decision? Set those expectations before a disagreement reaches an executive meeting.
-
-Then ask about the continuing standard. What comparison is expected after acceptance? Who should review its scope? What should trigger further investigation? Do not infer an escalation process, ownership arrangement or correction from a statement that checks run. Request evidence for each separately.
-
-For the next dashboard review, bring a sharper question than “Is it accurate?” Ask: “Accurate against which report, on what basis, and how should we handle a difference?”
-
-Take that standard into the room. Approve a defined relationship between an operating source and an executive view. Require explanations where they diverge. Ask for evidence of the continuing comparison. Keep the promise specific enough that your organisation can hold someone accountable for it.
+Bring the reporting basis into the acceptance conversation. Ask your team or vendor to name the reference report, explain the inclusion rules and distinguish a reporting discrepancy from a proposed change to the underlying information. Keep the discussion close to the actual entries under review; a plausible total is an insufficient answer to a question about an omitted row or an edited area. Then decide who has authority to accept each kind of difference. The strongest question to take into that meeting is: “Accurate against which report, on what basis, and how should we handle a difference?”

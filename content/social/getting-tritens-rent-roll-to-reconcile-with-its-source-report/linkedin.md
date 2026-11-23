@@ -1,17 +1,17 @@
 ---
 source_article: getting-tritens-rent-roll-to-reconcile-with-its-source-report
 status: draft
-hook: At Triten, rent rolls were coming back empty or incomplete.
+hook: "An empty rent roll prompted a direct question: was the dashboard accurate?"
 ---
 
-The team needed dashboard figures that faithfully represented the operating source.
+I set the acceptance standard around faithful representation of the operating source.[^E2]
 
-I made source fidelity the acceptance standard: the question was whether the dashboard represented what the operating report actually contained.
+The reconciliation covered the report’s treatment of unit areas, vacant rows and totals. I brought the rent roll onto that source-report basis, including the entries and area values behind the final figures.[^E3][^E4]
 
-I aligned the rent roll with the report’s unit areas, vacant rows and totals. The reconciliation also labels causes for remaining differences, including missing source information and unit-area changes.
+Remaining differences received cause labels. Those explanations included missing source information and unit-area edits, identifying the nature of the discrepancy alongside the reconciliation.[^E3][^E4]
 
-I added nightly dashboard checks against source accounting and operating records.
+I also added a nightly dashboard accuracy check against source accounting records and an operating list.[^E5]
 
-That is the scope of this accomplishment: alignment to a defined report, explanations for discrepancies and recurring comparisons. It is a specific reporting result, with evidence behind it. It does not establish flawless reporting under every future condition.
+That was the reporting work: a defined acceptance criterion, alignment across the specified parts of the rent roll, explanations attached to remaining discrepancies, and a recurring comparison against source records.[^E2][^E3][^E4][^E5]
 
 Book a call at nolangrout.com/book.
